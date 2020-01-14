@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">MobileApp</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string name="title">Scan QR Code or search</string>
+    <string name="menu_header">Test</string>
+</resources>
