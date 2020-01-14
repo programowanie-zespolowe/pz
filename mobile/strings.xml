@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">pz</string>
+    <string name="title_main_activity">Scan QR Code or search</string>
+</resources>
