@@ -9,7 +9,7 @@ namespace linuxWS
 {
     public interface IAuthService
     {
-        bool IsValidUser(ModelAuthentitactions user, WhereToGoEntities.WhereToGo.Models.Authentications authentications);
+        bool IsValidUser(ModelAuthentitactions user, Authentications authentications);
     }
     public class AuthService : IAuthService
     {
@@ -18,7 +18,7 @@ namespace linuxWS
         {
             _context = context;
         }
-        public bool IsValidUser(ModelAuthentitactions user, WhereToGoEntities.WhereToGo.Models.Authentications authentications)
+        public bool IsValidUser(ModelAuthentitactions user, Authentications authentications)
         {
             return _context.Authentications.Any(x => x.MacId.Equals(user.MacId));
         }

@@ -9,5 +9,8 @@ namespace WhereToGoEntities.WhereToGo.Models
         public int? IdPointStart { get; set; }
         public int? IdPointEnd { get; set; }
         public double? Distance { get; set; }
+
+        public virtual Points IdPointEndNavigation { get; set; }
+        public virtual Points IdPointStartNavigation { get; set; }
     }
 }

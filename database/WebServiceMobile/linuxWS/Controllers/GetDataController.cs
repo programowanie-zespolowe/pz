@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using linuxWS.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -24,42 +25,64 @@ namespace linuxWS.Controllers
 
         [HttpGet]
         [Route("Buildings")]
-        public IEnumerable<Buildings> Get()
+        public IEnumerable<MdlBuildings> Get()
         {
-            List<Buildings> buildingImages = new List<Buildings>();
+            List<MdlBuildings> buildingImages = new List<MdlBuildings>();
             using (WhereToGoContext whereToGoEntities = new WhereToGoContext())
             {
+                MdlBuildings mdlBuildings = new MdlBuildings();
                 foreach (var element in whereToGoEntities.Buildings)
                 {
-                    buildingImages.Add(element);
+                    mdlBuildings.IdBuilding = element.IdBuilding;
+                    mdlBuildings.IdUser = element.IdUser;
+                    mdlBuildings.NameBuilding = element.NameBuilding;
+                    mdlBuildings.ImageBuilding = element.ImageBuilding;
+                    buildingImages.Add(mdlBuildings);
                 }
                 return buildingImages.ToList();
             }
         }
         [HttpGet]
         [Route("Buildings/{idBuilding}")]
-        public IEnumerable<BuildingImages> GetBuildings(int idBuilding)
+        public IEnumerable<MdlBuildingImages> GetBuildings(int idBuilding)
         {
-            List<BuildingImages> buildingImages = new List<BuildingImages>();
+            List<MdlBuildingImages> buildingImages = new List<MdlBuildingImages>();
             using (WhereToGoContext whereToGoEntities = new WhereToGoContext())
             {
+                MdlBuildingImages mdlBuildingImages = new MdlBuildingImages();
                 foreach (var element in whereToGoEntities.BuildingImages.Where(i => i.IdBuilding == idBuilding))
                 {
-                    buildingImages.Add(element);
+                    mdlBuildingImages.IdBuilding = element.IdBuilding;
+                    mdlBuildingImages.IdImage = element.IdImage;
+                    mdlBuildingImages.PathImage = element.PathImage;
+                    mdlBuildingImages.BuildingLevel = element.BuildingLevel;
+                    mdlBuildingImages.Scale = element.Scale;
+                    mdlBuildingImages.NorthPointAngle = element.NorthPointAngle;
+                    buildingImages.Add(mdlBuildingImages);
                 }
                 return buildingImages.ToList();
             }
         }
         [HttpGet]
         [Route("Buildings/Points/{idImage}")]
-        public IEnumerable<Points> GetPoints(int idImage)
+        public IEnumerable<MdlPoints> GetPoints(int idImage)
         {
-            List<Points> buildingPoints = new List<Points>();
+            List<MdlPoints> buildingPoints = new List<MdlPoints>();
             using (WhereToGoContext whereToGoEntities = new WhereToGoContext())
             {
+                MdlPoints mdlPoints = new MdlPoints();
                 foreach (var element in whereToGoEntities.Points.Where(i => i.IdImage == idImage))
                 {
-                    buildingPoints.Add(element);
+                    mdlPoints.IdPoint = element.IdPoint;
+                    mdlPoints.IdImage = element.IdImage;
+                    mdlPoints.NamePoint = element.NamePoint;
+                    mdlPoints.X = element.X;
+                    mdlPoints.Y = element.Y;
+                    mdlPoints.IdPointType = element.IdPointType;
+                    mdlPoints.IdGroup = element.IdGroup;
+                    mdlPoints.ImagePoint = element.ImagePoint;
+
+                    buildingPoints.Add(mdlPoints);
                 }
                 return buildingPoints.ToList();
             }

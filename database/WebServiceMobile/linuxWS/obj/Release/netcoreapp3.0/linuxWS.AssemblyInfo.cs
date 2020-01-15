@@ -11,12 +11,12 @@
 using System;
 using System.Reflection;
 
-[assembly: System.Reflection.AssemblyCompanyAttribute("linuxWS")]
+[assembly: System.Reflection.AssemblyCompanyAttribute("LinuxWS")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
-[assembly: System.Reflection.AssemblyProductAttribute("linuxWS")]
-[assembly: System.Reflection.AssemblyTitleAttribute("linuxWS")]
+[assembly: System.Reflection.AssemblyProductAttribute("LinuxWS")]
+[assembly: System.Reflection.AssemblyTitleAttribute("LinuxWS")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
 
 // Wygenerowane przez klasę WriteCodeFragment programu MSBuild.

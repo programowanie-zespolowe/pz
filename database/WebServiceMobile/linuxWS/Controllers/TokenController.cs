@@ -24,7 +24,7 @@ namespace linuxWS.Controllers
         }
 
         [HttpPost]
-        public IActionResult Get([FromBody] Authentications authentications)
+        public IActionResult Post([FromBody] Authentications authentications)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
