@@ -4,4 +4,9 @@
     <string name="drawer_close">Close navigation drawer</string>
     <string name="title">Scan QR Code or search</string>
     <string name="menu_header">Test</string>
+    <string name="title_load_buildings">Wczytane budynki</string>
+    <string name="search_room_hint">Wyszukaj pokój</string>
+    <string name="search_room_title">Wybierz pokój</string>
+    <string name="category_title">Wybierz kategorię</string>
+    <string name="buildings_hint">Wpisz nazwę szukanego budynku</string>
 </resources>

@@ -1,37 +1,32 @@
 package com.example.programowaniezespolowe;
 
+import android.os.Bundle;
+import android.view.MenuItem;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-
 import com.google.android.material.navigation.NavigationView;
 
-
-public class MainActivity extends AppCompatActivity {
+public class Navigation_activity extends AppCompatActivity {
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
     private NavigationView nvDrawer;
 
     private ActionBarDrawerToggle drawerToggle;
-    private Button searchBuildings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
+        setContentView(R.layout.navigation_activity);
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(R.string.title);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         mDrawer = findViewById(R.id.drawer_layout);
         drawerToggle = setupDrawerToggle();
@@ -51,27 +46,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        searchBuildings = findViewById(R.id.searchBtn);
-        searchBuildings.setOnClickListener(searchClickListener);
-
-
 
     }
     private ActionBarDrawerToggle setupDrawerToggle() {
         return new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.drawer_open,  R.string.drawer_close);
     }
-
-    private View.OnClickListener searchClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Intent intent = new Intent(MainActivity.this, BuildingsActivity.class);
-            startActivity(intent);
-        }
-    };
-
-
-
-
-
-
 }

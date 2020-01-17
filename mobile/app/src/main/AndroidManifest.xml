@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.programowaniezespolowe">
 
     <application
@@ -10,11 +9,33 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity android:name=".Navigation_activity"></activity>
+        <activity
+            android:name=".CategoryActivity"
+            android:label="@string/category_title"
+            android:parentActivityName=".BuildingsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".BuildingsActivity" />
+        </activity>
+        <activity
+            android:name=".RoomsActivity"
+            android:label="@string/search_room_title"
+            android:launchMode="singleTask"
+            android:parentActivityName=".CategoryActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".CategoryActivity" />
+        </activity>
+        <activity
+            android:name=".BuildingsActivity"
+            android:label="@string/title_load_buildings"
+            android:parentActivityName=".MainActivity"></activity>
         <activity
             android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
+                <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
