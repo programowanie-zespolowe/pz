@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<BorderPane fx:id="masterWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MasterWindowController">
+   <top>
+      <VBox BorderPane.alignment="CENTER">
+         <fx:include fx:id="menuBar" source="menuBar.fxml" />
+         <fx:include fx:id="topMenuButtons" source="topMenuButtons.fxml" />
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+      </VBox>
+   </top>
+   <bottom>
+      <HBox BorderPane.alignment="CENTER">
+         <fx:include fx:id="bottomMenuButtons" source="bottomMenuButtons.fxml" />
+      </HBox>
+   </bottom>
+   <right>
+      <VBox prefWidth="50.0" BorderPane.alignment="CENTER" />
+   </right>
+   <left>
+      <VBox prefWidth="200.0" BorderPane.alignment="CENTER">
+         <fx:include fx:id="leftMenuButtons" source="leftMenuButtons.fxml">
+         </fx:include>
+      </VBox>
+   </left>
+   <center>
+      <ScrollPane BorderPane.alignment="CENTER">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+        </content>
+         <fx:include fx:id="centerMenuButtons" source="centerMenuButtons.fxml" />
+      </ScrollPane>
+   </center>
+</BorderPane>

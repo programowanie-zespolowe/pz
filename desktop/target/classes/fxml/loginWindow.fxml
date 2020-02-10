@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane
+        fx:id="gp"
+        alignment="center"
+        hgap="10"
+        vgap="10"
+        xmlns="http://javafx.com/javafx/10.0.2-internal"
+        xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="controllers.LoginWindowController">
+   <columnConstraints>
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
+   <children>
+       <Label text="Login" GridPane.rowIndex="0"/>
+      <TextField promptText="Login" GridPane.rowIndex="1" />
+      <PasswordField promptText="Password" GridPane.rowIndex="2" />
+      <Button fx:id="loginButton" mnemonicParsing="false" text="Login" textAlignment="RIGHT" GridPane.rowIndex="3" onAction="#handleLoginAction" />
+   </children>
+</GridPane>
