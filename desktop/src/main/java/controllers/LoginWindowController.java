@@ -4,21 +4,26 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import sample.WebService.WebServiceConnection;
 import utils.FxmlUtils;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class LoginWindowController implements Initializable {
-    @FXML
-    private GridPane gp;
 
     @FXML
+    private GridPane gp;
+    @FXML
     private Button loginButton;
+    @FXML
+    private TextField loginTextField;
+    @FXML
+    private PasswordField passwordField;
 
     public static final String MAIN_FXML = "/fxml/masterWindow.fxml";
 
@@ -31,7 +36,18 @@ public class LoginWindowController implements Initializable {
     @FXML
     private void handleLoginAction(ActionEvent event)
     {
-        ShowMainWindow();
+        if(WebServiceConnection.GetInstance().Login(loginTextField.getText(), passwordField.getText()))
+            ShowMainWindow();
+        else
+            ShowLoginErrorMessageBox();
+    }
+
+    private void ShowLoginErrorMessageBox()
+    {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Login error");
+        alert.setHeaderText("Login or password incorrect!");
+        alert.showAndWait();
     }
 
     private void ShowMainWindow()
