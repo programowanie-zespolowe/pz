@@ -2,6 +2,7 @@ package controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.layout.BorderPane;
+import sample.Structs.Building;
 import sample.WebService.WebServiceConnection;
 import utils.FxmlUtils;
 
@@ -37,7 +38,7 @@ public class MasterWindowController {
 
     public void LoadComponents()
     {
-        WebServiceConnection.GetInstance().BuildingList();
+       Building buildings[] = WebServiceConnection.GetInstance().BuildingList();
     }
 
     public void setCenter(String fxmlPath) {

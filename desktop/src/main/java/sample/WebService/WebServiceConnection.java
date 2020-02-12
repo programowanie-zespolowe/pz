@@ -18,7 +18,7 @@ public class WebServiceConnection {
     private static WebServiceConnection instance;
 
     private final String LoginUrl = "http://54.37.136.172:90/admin/login";
-    private final String BuildingsUrl = "http://54.37.136.172:90/admin/Buildings";
+    private final String BuildingsUrl = "http://54.37.136.172:90/admin/GetData/Buildings";
 
     private TokenStruct tokenStruct;
     private LoginStruct loginStruct;
@@ -95,20 +95,15 @@ public class WebServiceConnection {
         }
     }
 
-    public void BuildingList()
+    public Building[] BuildingList()
     {
         try {
-            String test = MakeGETRequest(BuildingsUrl);
-            System.out.println(test);
+            String response = MakeGETRequest(BuildingsUrl);
+            return JSONConverter.ConvertToObject(response, Building[].class);
         }
         catch (IOException e)
         {
-            System.out.println(e);
-
-        }
-        catch (Exception e)
-        {
-            System.out.println(e);
+            return null;
         }
     }
 
