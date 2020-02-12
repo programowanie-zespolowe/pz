@@ -2,6 +2,7 @@ package controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.layout.BorderPane;
+import sample.WebService.WebServiceConnection;
 import utils.FxmlUtils;
 
 public class MasterWindowController {
@@ -30,6 +31,13 @@ public class MasterWindowController {
         leftMenuButtonsController.setMasterWindowController(this);
         centerMenuButtonsController.setMasterWindowController(this);
         bottomMenuButtonsController.setMasterWindowController(this);
+
+        LoadComponents();
+    }
+
+    public void LoadComponents()
+    {
+        WebServiceConnection.GetInstance().BuildingList();
     }
 
     public void setCenter(String fxmlPath) {

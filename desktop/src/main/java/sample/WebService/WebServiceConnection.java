@@ -1,5 +1,9 @@
 package sample.WebService;
 
+import sample.Structs.Building;
+import sample.Structs.LoginStruct;
+import sample.Structs.TokenStruct;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -7,12 +11,14 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.OffsetDateTime;
+import java.util.List;
 
 public class WebServiceConnection {
 
     private static WebServiceConnection instance;
 
     private final String LoginUrl = "http://54.37.136.172:90/admin/login";
+    private final String BuildingsUrl = "http://54.37.136.172:90/admin/Buildings";
 
     private TokenStruct tokenStruct;
     private LoginStruct loginStruct;
@@ -37,13 +43,12 @@ public class WebServiceConnection {
         if(loginStruct == null)
             return;
 
-        Login(loginStruct.name, loginStruct.password);
+        Login(loginStruct.getName(), loginStruct.getPassword());
     }
 
-    private String MakeRequest(String stringUrl, String JSON) throws IOException {
+    private String MakePOSTRequest(String stringUrl, String JSON) throws IOException {
         URL address = new URL(stringUrl);
         HttpURLConnection connection = (HttpURLConnection) address.openConnection();
-        connection = (HttpURLConnection) address.openConnection();
         connection.setRequestMethod("POST");
         connection.setRequestProperty("Content-Type", "application/json");
         connection.setDoOutput(true);
@@ -59,17 +64,51 @@ public class WebServiceConnection {
         return content;
     }
 
+    private String MakeGETRequest(String stringUrl) throws IOException {
+        CheckToken();
+
+        URL address = new URL(stringUrl);
+        HttpURLConnection connection = (HttpURLConnection) address.openConnection();
+        connection.setRequestMethod("GET");
+        connection.setRequestProperty("Authorization", "Bearer " + tokenStruct.getToken());
+        connection.setDoOutput(true);
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+        String content = br.readLine();
+        connection.disconnect();
+
+        return content;
+    }
+
+
     public boolean Login(String login, String password)
     {
         loginStruct = new LoginStruct(login, password);
         try {
             String JSON = JSONConverter.ConvertTOJson(loginStruct);
-            String response = MakeRequest(LoginUrl, JSON);
+            String response = MakePOSTRequest(LoginUrl, JSON);
             tokenStruct = JSONConverter.ConvertToObject(response, TokenStruct.class);
             return true;
         }
         catch (Exception e) {
             return false;
+        }
+    }
+
+    public void BuildingList()
+    {
+        try {
+            String test = MakeGETRequest(BuildingsUrl);
+            System.out.println(test);
+        }
+        catch (IOException e)
+        {
+            System.out.println(e);
+
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
         }
     }
 

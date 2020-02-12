@@ -1,4 +1,4 @@
-package sample.WebService;
+package sample.Structs;
 
 public class LoginStruct {
     String name;

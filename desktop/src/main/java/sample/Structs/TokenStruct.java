@@ -1,4 +1,4 @@
-package sample.WebService;
+package sample.Structs;
 
 import java.text.SimpleDateFormat;
 import java.time.OffsetDateTime;
