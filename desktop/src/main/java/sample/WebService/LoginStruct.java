@@ -2,16 +2,16 @@ package sample.WebService;
 
 public class LoginStruct {
     String name;
-    String passowrd;
+    String password;
 
     public LoginStruct() {
         this.name = "";
-        this.passowrd = "";
+        this.password = "";
     }
 
-    public LoginStruct(String name, String passowrd) {
+    public LoginStruct(String name, String password) {
         this.name = name;
-        this.passowrd = passowrd;
+        this.password = password;
     }
 
     public String getName() {
@@ -22,11 +22,11 @@ public class LoginStruct {
         this.name = name;
     }
 
-    public String getPassowrd() {
-        return passowrd;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPassowrd(String passowrd) {
-        this.passowrd = passowrd;
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
