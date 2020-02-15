@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import sample.Structs.Building;
+import sample.Structs.BuildingLevel;
 import sample.WebService.WebServiceConnection;
 import utils.FxmlUtils;
 
@@ -33,6 +34,7 @@ public class MasterWindowController {
     private BottomMenuButtonsController bottomMenuButtonsController;
 
     Building buildings[];
+    BuildingLevel levels[];
 
     @FXML
     private void initialize (){
@@ -66,6 +68,7 @@ public class MasterWindowController {
     public void RefreshBuilding()
     {
         try {
+            levels = WebServiceConnection.GetInstance().BuildingLevelList(buildings[topMenuButtonsController.buildingComboBox.getSelectionModel().getSelectedIndex()].getIdBuilding());
             ByteArrayInputStream bis = new ByteArrayInputStream(buildings[topMenuButtonsController.buildingComboBox.getSelectionModel().getSelectedIndex()].getImageBuilding());
             BufferedImage buildingImage = ImageIO.read(bis);
             Image image = SwingFXUtils.toFXImage(buildingImage, null);
