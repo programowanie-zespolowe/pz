@@ -3,6 +3,6 @@
 <?import javafx.scene.layout.FlowPane?>
 
 
-<FlowPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LeftMenuButtonsController" >
+<FlowPane fx:id="flowPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LeftMenuButtonsController" >
 
 </FlowPane>

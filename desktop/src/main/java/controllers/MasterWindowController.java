@@ -2,7 +2,9 @@ package controllers;
 
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import sample.Structs.Building;
 import sample.Structs.BuildingLevel;
@@ -75,6 +77,15 @@ public class MasterWindowController {
             centerMenuButtonsController.canvas.getGraphicsContext2D().drawImage(image,
                     centerMenuButtonsController.canvas.getWidth(),
                     centerMenuButtonsController.canvas.getHeight());
+
+            for(BuildingLevel level : levels)
+            {
+                ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(level.getPathImage());
+                BufferedImage levelBufferedImage = ImageIO.read(byteArrayInputStream);
+                Image levelImage = SwingFXUtils.toFXImage(levelBufferedImage, null);
+                leftMenuButtonsController.flowPane.getChildren().add(new ImageView(levelImage));
+                leftMenuButtonsController.flowPane.getChildren().add(new Label(Integer.toString(level.getBuildingLevel())));
+            }
         }
         catch (IOException e)
         {
