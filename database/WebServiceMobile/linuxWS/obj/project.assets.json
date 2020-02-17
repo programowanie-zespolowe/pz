@@ -8419,11 +8419,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\bbadaczewski\\source\\repos\\linuxWS\\linuxWS\\LinuxWS.csproj",
+      "projectUniqueName": "C:\\Users\\bbadaczewski\\Documents\\pz\\database\\WebServiceMobile\\linuxWS\\LinuxWS.csproj",
       "projectName": "LinuxWS",
-      "projectPath": "C:\\Users\\bbadaczewski\\source\\repos\\linuxWS\\linuxWS\\LinuxWS.csproj",
+      "projectPath": "C:\\Users\\bbadaczewski\\Documents\\pz\\database\\WebServiceMobile\\linuxWS\\LinuxWS.csproj",
       "packagesPath": "C:\\Users\\bbadaczewski\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\bbadaczewski\\source\\repos\\linuxWS\\linuxWS\\obj\\",
+      "outputPath": "C:\\Users\\bbadaczewski\\Documents\\pz\\database\\WebServiceMobile\\linuxWS\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\",
@@ -8448,8 +8448,8 @@
       "frameworks": {
         "netcoreapp3.0": {
           "projectReferences": {
-            "C:\\Users\\bbadaczewski\\source\\repos\\linuxWS\\WhereToGoEntities\\WhereToGoEntities.csproj": {
-              "projectPath": "C:\\Users\\bbadaczewski\\source\\repos\\linuxWS\\WhereToGoEntities\\WhereToGoEntities.csproj"
+            "C:\\Users\\bbadaczewski\\Documents\\pz\\database\\WebServiceMobile\\WhereToGoEntities\\WhereToGoEntities.csproj": {
+              "projectPath": "C:\\Users\\bbadaczewski\\Documents\\pz\\database\\WebServiceMobile\\WhereToGoEntities\\WhereToGoEntities.csproj"
             }
           }
         }
