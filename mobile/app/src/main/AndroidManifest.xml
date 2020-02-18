@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.programowaniezespolowe">
 
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera"/>
+    <uses-feature android:name="android.hardware.camera.autofocus"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,30 +14,30 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".Navigation_activity"></activity>
+        <activity android:name=".Activity.Navigation_activity"></activity>
         <activity
-            android:name=".CategoryActivity"
+            android:name=".Activity.CategoryActivity"
             android:label="@string/category_title"
-            android:parentActivityName=".BuildingsActivity">
+            android:parentActivityName=".Activity.BuildingsActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".BuildingsActivity" />
+                android:value=".Activity.BuildingsActivity" />
         </activity>
         <activity
-            android:name=".RoomsActivity"
+            android:name=".Activity.RoomsActivity"
             android:label="@string/search_room_title"
             android:launchMode="singleTask"
-            android:parentActivityName=".CategoryActivity">
+            android:parentActivityName=".Activity.CategoryActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".CategoryActivity" />
+                android:value=".Activity.CategoryActivity" />
         </activity>
         <activity
-            android:name=".BuildingsActivity"
+            android:name=".Activity.BuildingsActivity"
             android:label="@string/title_load_buildings"
-            android:parentActivityName=".MainActivity"></activity>
+            android:parentActivityName=".Activity.MainActivity"></activity>
         <activity
-            android:name=".MainActivity">
+            android:name=".Activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.DEFAULT" />

@@ -1,4 +1,4 @@
-package com.example.programowaniezespolowe;
+package com.example.programowaniezespolowe.Activity;
 
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.programowaniezespolowe.R;
 import com.google.android.material.navigation.NavigationView;
 
 public class Navigation_activity extends AppCompatActivity {

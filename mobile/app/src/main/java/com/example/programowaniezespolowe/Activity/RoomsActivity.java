@@ -1,17 +1,15 @@
-package com.example.programowaniezespolowe;
+package com.example.programowaniezespolowe.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.GridView;
 import android.widget.SearchView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.google.android.material.navigation.NavigationView;
+import com.example.programowaniezespolowe.R;
 
 public class RoomsActivity extends AppCompatActivity {
 
@@ -23,19 +21,17 @@ public class RoomsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room);
+        int idBuilding = savedInstanceState.getByte("buildingId");
+        int pointNumber = savedInstanceState.getByte("pointNumber");
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
-
-
         gridView = findViewById(R.id.gridRooms);
         searchView = findViewById(R.id.searchRooms);
 
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
