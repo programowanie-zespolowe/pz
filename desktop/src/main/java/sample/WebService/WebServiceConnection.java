@@ -1,9 +1,6 @@
 package sample.WebService;
 
-import sample.Structs.Building;
-import sample.Structs.BuildingLevel;
-import sample.Structs.LoginStruct;
-import sample.Structs.TokenStruct;
+import sample.Structs.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,6 +18,7 @@ public class WebServiceConnection {
     private final String LoginUrl = "http://54.37.136.172:90/admin/login";
     private final String BuildingsUrl = "http://54.37.136.172:90/admin/GetData/Buildings";
     private final String BuildingsLevelUrl = "http://54.37.136.172:90/admin/GetData/Buildings/";
+    private final String GroupsUrl = "http://54.37.136.172:90/admin/GetData/Buildings/Groups";
 
     private TokenStruct tokenStruct;
     private LoginStruct loginStruct;
@@ -114,6 +112,18 @@ public class WebServiceConnection {
         try {
             String response = MakeGETRequest(BuildingsLevelUrl + Integer.toString(buildingId));
             return JSONConverter.ConvertToObject(response, BuildingLevel[].class);
+        }
+        catch (IOException e)
+        {
+            return null;
+        }
+    }
+
+    public Group[] Groups(int buildingId)
+    {
+        try {
+            String response = MakeGETRequest(GroupsUrl + Integer.toString(buildingId));
+            return JSONConverter.ConvertToObject(response, Group[].class);
         }
         catch (IOException e)
         {

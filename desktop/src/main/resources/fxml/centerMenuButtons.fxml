@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.canvas.*?>
+<?import javafx.scene.layout.*?>
 
 
-<Canvas fx:id="canvas" height="500.0" nodeOrientation="INHERIT" pickOnBounds="true" width="500.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CenterMenuButtonsController">
-</Canvas>
+<Pane fx:id="mainPane" nodeOrientation="INHERIT" pickOnBounds="true" prefHeight="200.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CenterMenuButtonsController">
+</Pane>

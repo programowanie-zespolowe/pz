@@ -5,7 +5,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import sample.Structs.Building;
 import sample.Structs.BuildingLevel;
 import sample.WebService.WebServiceConnection;
@@ -14,9 +17,12 @@ import utils.FxmlUtils;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 
 public class MasterWindowController {
+    @FXML
+    public Pane centerMenuButtons;
     @FXML
     private BorderPane masterWindow;
 
@@ -35,11 +41,14 @@ public class MasterWindowController {
     @FXML
     private BottomMenuButtonsController bottomMenuButtonsController;
 
+    @FXML
+    private AnchorPane centerAnchorPane;
+
     Building buildings[];
     BuildingLevel levels[];
 
     @FXML
-    private void initialize (){
+    public void initialize (){
         menuBarController.setMasterWindowController(this);
         topMenuButtonsController.setMasterWindowController(this);
         leftMenuButtonsController.setMasterWindowController(this);
@@ -48,6 +57,9 @@ public class MasterWindowController {
 
         LoadComponents();
         RefreshGUI();
+        centerMenuButtonsController.canvas.layoutBoundsProperty().addListener((obs, oldVal, newVal) -> {
+            RefreshBuilding();
+        });
     }
 
     private void LoadComponents()
@@ -65,19 +77,37 @@ public class MasterWindowController {
             topMenuButtonsController.buildingComboBox.getItems().add(building.getNameBuilding());
         }
         topMenuButtonsController.buildingComboBox.getSelectionModel().select(0);
+        levels = WebServiceConnection.GetInstance().BuildingLevelList(buildings[topMenuButtonsController.buildingComboBox.getSelectionModel().getSelectedIndex()].getIdBuilding());
+        ByteArrayInputStream bis = new ByteArrayInputStream(buildings[topMenuButtonsController.buildingComboBox.getSelectionModel().getSelectedIndex()].getImageBuilding());
+        BufferedImage buildingImage = null;
+        try {
+            buildingImage = ImageIO.read(bis);
+            image = SwingFXUtils.toFXImage(buildingImage, null);
+            centerMenuButtonsController.mainPane.setPrefHeight(image.getHeight());
+            centerMenuButtonsController.mainPane.setPrefWidth(image.getWidth());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
+    Image image = null;
     public void RefreshBuilding()
     {
         try {
-            levels = WebServiceConnection.GetInstance().BuildingLevelList(buildings[topMenuButtonsController.buildingComboBox.getSelectionModel().getSelectedIndex()].getIdBuilding());
-            ByteArrayInputStream bis = new ByteArrayInputStream(buildings[topMenuButtonsController.buildingComboBox.getSelectionModel().getSelectedIndex()].getImageBuilding());
-            BufferedImage buildingImage = ImageIO.read(bis);
-            Image image = SwingFXUtils.toFXImage(buildingImage, null);
-            centerMenuButtonsController.canvas.getGraphicsContext2D().drawImage(image,
+            if(image != null) {
+                centerMenuButtonsController.canvas.getGraphicsContext2D().drawImage(image,
+                        0,
+                        0);
+            }
+            centerMenuButtonsController.canvas.getGraphicsContext2D().setLineWidth(1);
+            centerMenuButtonsController.canvas.getGraphicsContext2D().moveTo(0, 0);
+            centerMenuButtonsController.canvas.getGraphicsContext2D().lineTo(
                     centerMenuButtonsController.canvas.getWidth(),
                     centerMenuButtonsController.canvas.getHeight());
+            centerMenuButtonsController.canvas.getGraphicsContext2D().stroke();
 
+            if(levels == null)
+                return;
             for(BuildingLevel level : levels)
             {
                 ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(level.getPathImage());
