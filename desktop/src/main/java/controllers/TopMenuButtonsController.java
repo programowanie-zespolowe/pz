@@ -19,11 +19,6 @@ public class TopMenuButtonsController {
 
     public void setMasterWindowController(MasterWindowController masterWindowController) {
         this.masterWindowController = masterWindowController;
-
-        buildingComboBox.getSelectionModel().selectedItemProperty().addListener( (options, oldValue, newValue) -> {
-                    masterWindowController.RefreshBuilding();
-                }
-        );
     }
 
     @FXML

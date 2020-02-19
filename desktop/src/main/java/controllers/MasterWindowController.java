@@ -1,13 +1,16 @@
 package controllers;
 
 import javafx.embed.swing.SwingFXUtils;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import sample.Structs.Building;
 import sample.Structs.BuildingLevel;
@@ -55,11 +58,19 @@ public class MasterWindowController {
         centerMenuButtonsController.setMasterWindowController(this);
         bottomMenuButtonsController.setMasterWindowController(this);
 
-        LoadComponents();
-        RefreshGUI();
         centerMenuButtonsController.canvas.layoutBoundsProperty().addListener((obs, oldVal, newVal) -> {
             RefreshBuilding();
         });
+
+        topMenuButtonsController.buildingComboBox.getSelectionModel().selectedItemProperty().addListener( (options, oldValue, newValue) -> {
+            if(image != null) {
+                centerMenuButtonsController.canvas.getGraphicsContext2D().drawImage(image,
+                        0,
+                        0);
+            }
+        });
+        LoadComponents();
+        RefreshGUI();
     }
 
     private void LoadComponents()
@@ -73,8 +84,9 @@ public class MasterWindowController {
 
         if(buildings == null)
             return;
-        for (Building building : buildings) {
-            topMenuButtonsController.buildingComboBox.getItems().add(building.getNameBuilding());
+        for (int i = 0; i < buildings.length; i++) {
+            Building building = buildings[i];
+            topMenuButtonsController.buildingComboBox.getItems().add(Integer.toString(i + 1) + ": " + building.getNameBuilding());
         }
         topMenuButtonsController.buildingComboBox.getSelectionModel().select(0);
         levels = WebServiceConnection.GetInstance().BuildingLevelList(buildings[topMenuButtonsController.buildingComboBox.getSelectionModel().getSelectedIndex()].getIdBuilding());
@@ -85,6 +97,20 @@ public class MasterWindowController {
             image = SwingFXUtils.toFXImage(buildingImage, null);
             centerMenuButtonsController.mainPane.setPrefHeight(image.getHeight());
             centerMenuButtonsController.mainPane.setPrefWidth(image.getWidth());
+
+            new java.util.Timer().schedule(
+                    new java.util.TimerTask() {
+                        @Override
+                        public void run() {
+                            if(image != null) {
+                                centerMenuButtonsController.canvas.getGraphicsContext2D().drawImage(image,
+                                        0,
+                                        0);
+                            }
+                        }
+                    },
+                    1000
+            );
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -94,18 +120,6 @@ public class MasterWindowController {
     public void RefreshBuilding()
     {
         try {
-            if(image != null) {
-                centerMenuButtonsController.canvas.getGraphicsContext2D().drawImage(image,
-                        0,
-                        0);
-            }
-            centerMenuButtonsController.canvas.getGraphicsContext2D().setLineWidth(1);
-            centerMenuButtonsController.canvas.getGraphicsContext2D().moveTo(0, 0);
-            centerMenuButtonsController.canvas.getGraphicsContext2D().lineTo(
-                    centerMenuButtonsController.canvas.getWidth(),
-                    centerMenuButtonsController.canvas.getHeight());
-            centerMenuButtonsController.canvas.getGraphicsContext2D().stroke();
-
             if(levels == null)
                 return;
             for(BuildingLevel level : levels)

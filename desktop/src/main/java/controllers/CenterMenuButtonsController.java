@@ -31,7 +31,7 @@ public class CenterMenuButtonsController {
         canvas.heightProperty().bind(mainPane.heightProperty());
 
         canvas.onMouseClickedProperty().set((EventHandler<MouseEvent>) (MouseEvent t) -> {
-            canvas.getGraphicsContext2D().setFill(Color.rgb(255,255,255,0.3));
+            canvas.getGraphicsContext2D().setFill(Color.rgb(255,0,0,1.0));
             canvas.getGraphicsContext2D().fillOval(t.getX() - 5, t.getY() - 5, 10, 10);
             canvas.getGraphicsContext2D().stroke();
     });
