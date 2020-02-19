@@ -8,6 +8,7 @@ namespace WhereToGoEntities.WhereToGo.Models
         public Buildings()
         {
             BuildingImages = new HashSet<BuildingImages>();
+            Groups = new HashSet<Groups>();
         }
 
         public int IdBuilding { get; set; }
@@ -17,5 +18,6 @@ namespace WhereToGoEntities.WhereToGo.Models
 
         public virtual Users IdUserNavigation { get; set; }
         public virtual ICollection<BuildingImages> BuildingImages { get; set; }
+        public virtual ICollection<Groups> Groups { get; set; }
     }
 }

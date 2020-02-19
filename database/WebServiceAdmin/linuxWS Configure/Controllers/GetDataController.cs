@@ -26,17 +26,17 @@ namespace linuxWS_Configure.Controllers
             List<MdlBuildings> buildingImages = new List<MdlBuildings>();
             using (WhereToGoContext whereToGoEntities = new WhereToGoContext())
             {
-                MdlBuildings mdlBuildings = new MdlBuildings();
                 foreach (var element in whereToGoEntities.Buildings.Where(i => i.IdUser == UserSettings.IdAdmin))
                 {
+                    MdlBuildings mdlBuildings = new MdlBuildings();
                     mdlBuildings.IdBuilding = element.IdBuilding;
                     mdlBuildings.IdUser = element.IdUser;
                     mdlBuildings.NameBuilding = element.NameBuilding;
                     mdlBuildings.ImageBuilding = element.ImageBuilding;
                     buildingImages.Add(mdlBuildings);
                 }
-                return buildingImages.ToList();
             }
+            return buildingImages.ToArray();
         }
         [HttpGet]
         [Route("Buildings/{idBuilding}")]
@@ -45,9 +45,9 @@ namespace linuxWS_Configure.Controllers
             List<MdlBuildingImages> buildingImages = new List<MdlBuildingImages>();
             using (WhereToGoContext whereToGoEntities = new WhereToGoContext())
             {
-                MdlBuildingImages mdlBuildingImages = new MdlBuildingImages();
                 foreach (var element in whereToGoEntities.BuildingImages.Where(i => i.IdBuilding == idBuilding))
                 {
+                    MdlBuildingImages mdlBuildingImages = new MdlBuildingImages();
                     mdlBuildingImages.IdBuilding = element.IdBuilding;
                     mdlBuildingImages.IdImage = element.IdImage;
                     mdlBuildingImages.PathImage = element.PathImage;
@@ -59,47 +59,70 @@ namespace linuxWS_Configure.Controllers
                 return buildingImages.ToList();
             }
         }
+        //[HttpGet]
+        //[Route("Buildings/Points")]
+        //public IEnumerable<MdlPoints> GetPoints()
+        //{
+        //    List<MdlPoints> buildingPoints = new List<MdlPoints>();
+        //    using (WhereToGoContext whereToGoEntities = new WhereToGoContext())
+        //    {
+        //        MdlPoints mdlPoints = new MdlPoints();
+        //        foreach (var element in whereToGoEntities.Points)
+        //        {
+        //            mdlPoints.IdPoint = element.IdPoint;
+        //            mdlPoints.IdImage = element.IdImage;
+        //            mdlPoints.NamePoint = element.NamePoint;
+        //            mdlPoints.X = element.X;
+        //            mdlPoints.Y = element.Y;
+        //            mdlPoints.IdPointType = element.IdPointType;
+        //            mdlPoints.IdGroup = element.IdGroup;
+        //            mdlPoints.ImagePoint = element.ImagePoint;
+
+        //            buildingPoints.Add(mdlPoints);
+        //        }
+        //        return buildingPoints.ToList();
+        //    }
+        //}
         [HttpGet]
-        [Route("Buildings/Points")]
-        public IEnumerable<MdlPoints> GetPoints()
+        [Route("Buildings/{idBuilding}/Points")]
+        public IEnumerable<MdlPoints> GetPointByBuilding(int idBuilding)
         {
             List<MdlPoints> buildingPoints = new List<MdlPoints>();
             using (WhereToGoContext whereToGoEntities = new WhereToGoContext())
             {
-                MdlPoints mdlPoints = new MdlPoints();
-                foreach (var element in whereToGoEntities.Points)
+                foreach (var element in whereToGoEntities.BuildingImages.Where(j => j.IdBuilding == idBuilding))
                 {
-                    mdlPoints.IdPoint = element.IdPoint;
-                    mdlPoints.IdImage = element.IdImage;
-                    mdlPoints.NamePoint = element.NamePoint;
-                    mdlPoints.X = element.X;
-                    mdlPoints.Y = element.Y;
-                    mdlPoints.IdPointType = element.IdPointType;
-                    mdlPoints.IdGroup = element.IdGroup;
-                    mdlPoints.ImagePoint = element.ImagePoint;
+                    foreach (var elementIn in whereToGoEntities.Points.Where(i => i.IdImage == element.IdImage))
+                    {
+                        MdlPoints mdlPoints = new MdlPoints();
+                        mdlPoints.IdPoint = elementIn.IdPoint;
+                        mdlPoints.IdImage = elementIn.IdImage;
+                        mdlPoints.X = elementIn.X;
+                        mdlPoints.Y = elementIn.Y;
+                        mdlPoints.IdPointType = elementIn.IdPointType;
+                        mdlPoints.ImagePoint = elementIn.ImagePoint;
 
-                    buildingPoints.Add(mdlPoints);
+                        buildingPoints.Add(mdlPoints);
+                    }
                 }
                 return buildingPoints.ToList();
             }
         }
         [HttpGet]
-        [Route("Buildings/Points/{idImage}")]
+        [Route("BuildingsImage/{idImage}/Points")]
         public IEnumerable<MdlPoints> GetPointByImage(int idImage)
         {
             List<MdlPoints> buildingPoints = new List<MdlPoints>();
             using (WhereToGoContext whereToGoEntities = new WhereToGoContext())
             {
-                MdlPoints mdlPoints = new MdlPoints();
                 foreach (var element in whereToGoEntities.Points.Where(i => i.IdImage == idImage))
                 {
+                    MdlPoints mdlPoints = new MdlPoints();
                     mdlPoints.IdPoint = element.IdPoint;
                     mdlPoints.IdImage = element.IdImage;
-                    mdlPoints.NamePoint = element.NamePoint;
                     mdlPoints.X = element.X;
                     mdlPoints.Y = element.Y;
                     mdlPoints.IdPointType = element.IdPointType;
-                    mdlPoints.IdGroup = element.IdGroup;
                     mdlPoints.ImagePoint = element.ImagePoint;
 
                     buildingPoints.Add(mdlPoints);
@@ -108,23 +131,21 @@ namespace linuxWS_Configure.Controllers
             }
         }
         [HttpGet]
-        [Route("Buildings/Point/{idPoint}")]
-        public IEnumerable<MdlPoints> GetPoint(int idPoint)
+        [Route("BuildingsImage/{idImage}/Point/{idPoint}")]
+        public IEnumerable<MdlPoints> GetPoint(int idImage, int idPoint)
         {
             List<MdlPoints> buildingPoints = new List<MdlPoints>();
             using (WhereToGoContext whereToGoEntities = new WhereToGoContext())
             {
-                MdlPoints mdlPoints = new MdlPoints();
-                foreach (var element in whereToGoEntities.Points.Where(i => i.IdPoint == idPoint))
+                foreach (var elementIn in whereToGoEntities.Points.Where(i => i.IdPoint == idPoint && i.IdImage == idImage))
                 {
-                    mdlPoints.IdPoint = element.IdPoint;
-                    mdlPoints.IdImage = element.IdImage;
-                    mdlPoints.NamePoint = element.NamePoint;
-                    mdlPoints.X = element.X;
-                    mdlPoints.Y = element.Y;
-                    mdlPoints.IdPointType = element.IdPointType;
-                    mdlPoints.IdGroup = element.IdGroup;
-                    mdlPoints.ImagePoint = element.ImagePoint;
+                    MdlPoints mdlPoints = new MdlPoints();
+                    mdlPoints.IdPoint = elementIn.IdPoint;
+                    mdlPoints.IdImage = elementIn.IdImage;
+                    mdlPoints.X = elementIn.X;
+                    mdlPoints.Y = elementIn.Y;
+                    mdlPoints.IdPointType = elementIn.IdPointType;
+                    mdlPoints.ImagePoint = elementIn.ImagePoint;
 
                     buildingPoints.Add(mdlPoints);
                 }
@@ -138,12 +159,13 @@ namespace linuxWS_Configure.Controllers
             List<MdlGroups> listGroups = new List<MdlGroups>();
             using (WhereToGoContext whereToGoEntities = new WhereToGoContext())
             {
-                MdlGroups mdlGroups = new MdlGroups();
                 foreach (var element in whereToGoEntities.Groups)
                 {
+                    MdlGroups mdlGroups = new MdlGroups();
                     mdlGroups.IdGroup = element.IdGroup;
                     mdlGroups.NameGroup = element.NameGroup;
                     mdlGroups.ImageGroup = element.ImageGroup;
+                    mdlGroups.IdBuilding = element.IdBuilding;
 
                     listGroups.Add(mdlGroups);
                 }
@@ -157,12 +179,33 @@ namespace linuxWS_Configure.Controllers
             List<MdlGroups> listGroups = new List<MdlGroups>();
             using (WhereToGoContext whereToGoEntities = new WhereToGoContext())
             {
-                MdlGroups mdlGroups = new MdlGroups();
-                foreach (var element in whereToGoEntities.Groups.Where(i=>i.IdGroup == idGroup))
+                foreach (var element in whereToGoEntities.Groups.Where(i => i.IdGroup == idGroup))
                 {
+                    MdlGroups mdlGroups = new MdlGroups();
                     mdlGroups.IdGroup = element.IdGroup;
                     mdlGroups.NameGroup = element.NameGroup;
                     mdlGroups.ImageGroup = element.ImageGroup;
+                    mdlGroups.IdBuilding = element.IdBuilding;
+
+                    listGroups.Add(mdlGroups);
+                }
+                return listGroups.ToList();
+            }
+        }
+        [HttpGet]
+        [Route("Buildings/{idBuilding}/Groups")]
+        public IEnumerable<MdlGroups> GetGroupByBuilding(int idBuilding)
+        {
+            List<MdlGroups> listGroups = new List<MdlGroups>();
+            using (WhereToGoContext whereToGoEntities = new WhereToGoContext())
+            {
+                foreach (var element in whereToGoEntities.Groups.Where(i => i.IdBuilding == idBuilding))
+                {
+                    MdlGroups mdlGroups = new MdlGroups();
+                    mdlGroups.IdGroup = element.IdGroup;
+                    mdlGroups.NameGroup = element.NameGroup;
+                    mdlGroups.ImageGroup = element.ImageGroup;
+                    mdlGroups.IdBuilding = element.IdBuilding;
 
                     listGroups.Add(mdlGroups);
                 }
@@ -176,17 +219,13 @@ namespace linuxWS_Configure.Controllers
             List<MdlPointDetails> listPointsDetails = new List<MdlPointDetails>();
             using (WhereToGoContext whereToGoEntities = new WhereToGoContext())
             {
-                MdlPointDetails mdlPointsDetails = new MdlPointDetails();
                 foreach (var element in whereToGoEntities.PointsDetail)
                 {
+                    MdlPointDetails mdlPointsDetails = new MdlPointDetails();
                     mdlPointsDetails.IdPointDetails = element.IdPointDetails;
                     mdlPointsDetails.IdPoint = element.IdPoint;
                     mdlPointsDetails.NamePoint = element.NamePoint;
-                    mdlPointsDetails.Detail1 = element.Detail1;
-                    mdlPointsDetails.Detail2 = element.Detail2;
-                    mdlPointsDetails.Detail3 = element.Detail3;
-                    mdlPointsDetails.Detail4 = element.Detail4;
-                    mdlPointsDetails.Detail5 = element.Detail5;
+                    mdlPointsDetails.IdGroup = element.IdGroup;
 
                     listPointsDetails.Add(mdlPointsDetails);
                 }
@@ -200,17 +239,33 @@ namespace linuxWS_Configure.Controllers
             List<MdlPointDetails> listPointsDetails = new List<MdlPointDetails>();
             using (WhereToGoContext whereToGoEntities = new WhereToGoContext())
             {
-                MdlPointDetails mdlPointsDetails = new MdlPointDetails();
                 foreach (var element in whereToGoEntities.PointsDetail.Where(i => i.IdPoint == idPoint))
                 {
+                    MdlPointDetails mdlPointsDetails = new MdlPointDetails();
                     mdlPointsDetails.IdPointDetails = element.IdPointDetails;
                     mdlPointsDetails.IdPoint = element.IdPoint;
                     mdlPointsDetails.NamePoint = element.NamePoint;
-                    mdlPointsDetails.Detail1 = element.Detail1;
-                    mdlPointsDetails.Detail2 = element.Detail2;
-                    mdlPointsDetails.Detail3 = element.Detail3;
-                    mdlPointsDetails.Detail4 = element.Detail4;
-                    mdlPointsDetails.Detail5 = element.Detail5;
+                    mdlPointsDetails.IdGroup = element.IdGroup;
+
+                    listPointsDetails.Add(mdlPointsDetails);
+                }
+                return listPointsDetails.ToList();
+            }
+        }
+        [HttpGet]
+        [Route("Buildings/Groups/{idGroup}/PointsDetails")]
+        public IEnumerable<MdlPointDetails> GetPointsDetailsByGroup(int idGroup)
+        {
+            List<MdlPointDetails> listPointsDetails = new List<MdlPointDetails>();
+            using (WhereToGoContext whereToGoEntities = new WhereToGoContext())
+            {
+                foreach (var element in whereToGoEntities.PointsDetail.Where(i => i.IdGroup == idGroup))
+                {
+                    MdlPointDetails mdlPointsDetails = new MdlPointDetails();
+                    mdlPointsDetails.IdPointDetails = element.IdPointDetails;
+                    mdlPointsDetails.IdPoint = element.IdPoint;
+                    mdlPointsDetails.NamePoint = element.NamePoint;
+                    mdlPointsDetails.IdGroup = element.IdGroup;
 
                     listPointsDetails.Add(mdlPointsDetails);
                 }
@@ -224,17 +279,13 @@ namespace linuxWS_Configure.Controllers
             List<MdlPointDetails> listPointsDetails = new List<MdlPointDetails>();
             using (WhereToGoContext whereToGoEntities = new WhereToGoContext())
             {
-                MdlPointDetails mdlPointsDetails = new MdlPointDetails();
                 foreach (var element in whereToGoEntities.PointsDetail.Where(i => i.IdPointDetails == idPointDetails))
                 {
+                    MdlPointDetails mdlPointsDetails = new MdlPointDetails();
                     mdlPointsDetails.IdPointDetails = element.IdPointDetails;
                     mdlPointsDetails.IdPoint = element.IdPoint;
                     mdlPointsDetails.NamePoint = element.NamePoint;
-                    mdlPointsDetails.Detail1 = element.Detail1;
-                    mdlPointsDetails.Detail2 = element.Detail2;
-                    mdlPointsDetails.Detail3 = element.Detail3;
-                    mdlPointsDetails.Detail4 = element.Detail4;
-                    mdlPointsDetails.Detail5 = element.Detail5;
+                    mdlPointsDetails.IdGroup = element.IdGroup;
 
                     listPointsDetails.Add(mdlPointsDetails);
                 }

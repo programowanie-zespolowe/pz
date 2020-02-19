@@ -12,7 +12,7 @@ namespace WhereToGoEntities.WhereToGo.Models
 
         public int IdImage { get; set; }
         public int? IdBuilding { get; set; }
-        public string PathImage { get; set; }
+        public byte[] PathImage { get; set; }
         public int? BuildingLevel { get; set; }
         public double? Scale { get; set; }
         public double? NorthPointAngle { get; set; }

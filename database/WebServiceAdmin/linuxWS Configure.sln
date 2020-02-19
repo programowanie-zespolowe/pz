@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29519.181
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhereToGo.Admin", "linuxWS Configure\WhereToGo.Admin.csproj", "{9273D29F-1D09-444D-BE51-6B4DE2A5E46B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhereToGoEntities", "..\linuxWS\WhereToGoEntities\WhereToGoEntities.csproj", "{AD793F2F-3504-4580-9010-DF998C81DC8A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhereToGoEntities", "..\WebServiceMobile\WhereToGoEntities\WhereToGoEntities.csproj", "{57A091D9-B7C0-4B3C-BC6A-5137BD5F3690}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{9273D29F-1D09-444D-BE51-6B4DE2A5E46B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9273D29F-1D09-444D-BE51-6B4DE2A5E46B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9273D29F-1D09-444D-BE51-6B4DE2A5E46B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AD793F2F-3504-4580-9010-DF998C81DC8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AD793F2F-3504-4580-9010-DF998C81DC8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AD793F2F-3504-4580-9010-DF998C81DC8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AD793F2F-3504-4580-9010-DF998C81DC8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57A091D9-B7C0-4B3C-BC6A-5137BD5F3690}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57A091D9-B7C0-4B3C-BC6A-5137BD5F3690}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57A091D9-B7C0-4B3C-BC6A-5137BD5F3690}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57A091D9-B7C0-4B3C-BC6A-5137BD5F3690}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

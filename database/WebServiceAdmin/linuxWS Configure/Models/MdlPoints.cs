@@ -9,11 +9,9 @@ namespace linuxWS_Configure.Models
     {
         public int IdPoint { get; set; }
         public int? IdImage { get; set; }
-        public string NamePoint { get; set; }
         public double? X { get; set; }
         public double? Y { get; set; }
         public int? IdPointType { get; set; }
-        public int? IdGroup { get; set; }
         public byte[] ImagePoint { get; set; }
     }
 }

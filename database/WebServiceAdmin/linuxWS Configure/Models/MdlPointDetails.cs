@@ -10,10 +10,6 @@ namespace WhereToGo.Admin.Models
         public int IdPointDetails { get; set; }
         public int IdPoint { get; set; }
         public string NamePoint { get; set; }
-        public string Detail1 { get; set; }
-        public string Detail2 { get; set; }
-        public string Detail3 { get; set; }
-        public string Detail4 { get; set; }
-        public string Detail5 { get; set; }
+        public int? IdGroup { get; set; }
     }
 }

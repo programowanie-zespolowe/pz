@@ -21,7 +21,8 @@ namespace WhereToGoEntities.WhereToGo.Models
         public virtual DbSet<Groups> Groups { get; set; }
         public virtual DbSet<PointType> PointType { get; set; }
         public virtual DbSet<Points> Points { get; set; }
-        public virtual DbSet<PointsConnections> PointsConnections { get; set; }
+        public virtual DbSet<PointsConnection> PointsConnection { get; set; }
+        public virtual DbSet<PointsDetail> PointsDetail { get; set; }
         public virtual DbSet<Users> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -75,7 +76,8 @@ namespace WhereToGoEntities.WhereToGo.Models
                 entity.HasOne(d => d.IdBuildingNavigation)
                     .WithMany(p => p.BuildingImages)
                     .HasForeignKey(d => d.IdBuilding)
-                    .HasConstraintName("FK_BuildingImages_Buildings");
+                    .HasConstraintName("FK_BuildingImages_Buildings")
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<Buildings>(entity =>
@@ -98,7 +100,8 @@ namespace WhereToGoEntities.WhereToGo.Models
                 entity.HasOne(d => d.IdUserNavigation)
                     .WithMany(p => p.Buildings)
                     .HasForeignKey(d => d.IdUser)
-                    .HasConstraintName("FK_Buildings_Users");
+                    .HasConstraintName("FK_Buildings_Users")
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<Groups>(entity =>
@@ -106,6 +109,8 @@ namespace WhereToGoEntities.WhereToGo.Models
                 entity.HasKey(e => e.IdGroup);
 
                 entity.Property(e => e.IdGroup).HasColumnName("idGroup");
+
+                entity.Property(e => e.IdBuilding).HasColumnName("idBuilding");
 
                 entity.Property(e => e.ImageGroup)
                     .HasColumnName("imageGroup")
@@ -115,6 +120,12 @@ namespace WhereToGoEntities.WhereToGo.Models
                     .HasColumnName("nameGroup")
                     .HasMaxLength(255)
                     .IsUnicode(false);
+
+                entity.HasOne(d => d.IdBuildingNavigation)
+                    .WithMany(p => p.Groups)
+                    .HasForeignKey(d => d.IdBuilding)
+                    .HasConstraintName("FK_Groups_Buildings")
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<PointType>(entity =>
@@ -137,8 +148,6 @@ namespace WhereToGoEntities.WhereToGo.Models
 
                 entity.Property(e => e.IdPoint).HasColumnName("idPoint");
 
-                entity.Property(e => e.IdGroup).HasColumnName("idGroup");
-
                 entity.Property(e => e.IdImage).HasColumnName("idImage");
 
                 entity.Property(e => e.IdPointType).HasColumnName("idPointType");
@@ -147,52 +156,74 @@ namespace WhereToGoEntities.WhereToGo.Models
                     .HasColumnName("imagePoint")
                     .HasColumnType("image");
 
-                entity.Property(e => e.NamePoint)
-                    .HasColumnName("namePoint")
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
-
                 entity.Property(e => e.X).HasColumnName("x");
 
                 entity.Property(e => e.Y).HasColumnName("y");
 
-                entity.HasOne(d => d.IdGroupNavigation)
-                    .WithMany(p => p.Points)
-                    .HasForeignKey(d => d.IdGroup)
-                    .HasConstraintName("FK_Points_Groups");
-
                 entity.HasOne(d => d.IdImageNavigation)
                     .WithMany(p => p.Points)
                     .HasForeignKey(d => d.IdImage)
-                    .HasConstraintName("FK_Points_BuildingImages");
+                    .HasConstraintName("FK_Points_BuildingImages")
+                    .OnDelete(DeleteBehavior.Cascade);
 
                 entity.HasOne(d => d.IdPointTypeNavigation)
                     .WithMany(p => p.Points)
                     .HasForeignKey(d => d.IdPointType)
-                    .HasConstraintName("FK_Points_PointType");
+                    .HasConstraintName("FK_Points_PointType")
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
-            modelBuilder.Entity<PointsConnections>(entity =>
+            modelBuilder.Entity<PointsConnection>(entity =>
             {
                 entity.HasKey(e => e.IdPointConnection);
 
-                entity.Property(e => e.IdPointConnection).HasColumnName("idPointConnection");
-
-                entity.Property(e => e.Distance).HasColumnName("distance");
+                entity.Property(e => e.IdPointConnection)
+                    .HasColumnName("idPointConnection")
+                    .ValueGeneratedNever();
 
                 entity.Property(e => e.IdPointEnd).HasColumnName("idPointEnd");
 
                 entity.Property(e => e.IdPointStart).HasColumnName("idPointStart");
 
                 entity.HasOne(d => d.IdPointEndNavigation)
-                    .WithMany(p => p.PointsConnectionsIdPointEndNavigation)
+                    .WithMany(p => p.PointsConnectionIdPointEndNavigation)
                     .HasForeignKey(d => d.IdPointEnd)
-                    .HasConstraintName("FK_PointsConnections_Points1");
+                    .HasConstraintName("FK_PointsConnection_Points1")
+                    .OnDelete(DeleteBehavior.Cascade);
 
                 entity.HasOne(d => d.IdPointStartNavigation)
-                    .WithMany(p => p.PointsConnectionsIdPointStartNavigation)
+                    .WithMany(p => p.PointsConnectionIdPointStartNavigation)
                     .HasForeignKey(d => d.IdPointStart)
-                    .HasConstraintName("FK_PointsConnections_Points");
+                    .HasConstraintName("FK_PointsConnection_Points")
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<PointsDetail>(entity =>
+            {
+                entity.HasKey(e => e.IdPointDetails);
+
+                entity.Property(e => e.IdPointDetails).HasColumnName("idPointDetails");
+
+                entity.Property(e => e.IdGroup).HasColumnName("idGroup");
+
+                entity.Property(e => e.IdPoint).HasColumnName("idPoint");
+
+                entity.Property(e => e.NamePoint)
+                    .HasColumnName("namePoint")
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.IdGroupNavigation)
+                    .WithMany(p => p.PointsDetail)
+                    .HasForeignKey(d => d.IdGroup)
+                    .HasConstraintName("FK_PointsDetail_Groups")
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(d => d.IdPointNavigation)
+                    .WithMany(p => p.PointsDetail)
+                    .HasForeignKey(d => d.IdPoint)
+                    .HasConstraintName("FK_PointsDetail_Points")
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<Users>(entity =>

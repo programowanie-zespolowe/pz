@@ -21,10 +21,6 @@ namespace WhereToGo.Admin.Controllers
         [Route("Buildings/{idBuilding}")]
         public IActionResult PostBuildings(int idBuilding, [FromForm] Buildings buildings, [FromForm] IFormFile ImageRead)
         {
-            if (idBuilding != buildings.IdBuilding)
-            {
-                return BadRequest();
-            }
             using (var ms = new MemoryStream())
             {
                 using WhereToGoContext whereToGo = new WhereToGoContext();
@@ -51,20 +47,16 @@ namespace WhereToGo.Admin.Controllers
             }
         }
         [HttpPost]
-        [Route("BuildingImages/{idImage}")]
-        public IActionResult PostBuildingImage(int idImage, [FromForm] BuildingImages buildingImages, [FromForm] IFormFile ImageRead)
+        [Route("Buildings/{idBuilding}/BuildingImages/{idImage}")]
+        public IActionResult PostBuildingImage(int idBuilding, int idImage, [FromForm] BuildingImages buildingImages, [FromForm] IFormFile ImageRead)
         {
-            if (idImage != buildingImages.IdImage)
-            {
-                return BadRequest();
-            }
             using (var ms = new MemoryStream())
             {
                 using WhereToGoContext whereToGo = new WhereToGoContext();
                 BuildingImages mdlBuildings = new BuildingImages();
-                mdlBuildings = whereToGo.BuildingImages.Where(i => i.IdImage == idImage).FirstOrDefault();
+                mdlBuildings = whereToGo.BuildingImages.Where(i => i.IdImage == idImage && i.IdBuilding == idBuilding).FirstOrDefault();
 
-                mdlBuildings.IdBuilding = buildingImages.IdBuilding;
+                mdlBuildings.IdBuilding = idBuilding;
                 mdlBuildings.BuildingLevel = buildingImages.BuildingLevel;
                 ImageRead.CopyTo(ms);
                 mdlBuildings.PathImage = ms.GetBuffer();
@@ -89,10 +81,6 @@ namespace WhereToGo.Admin.Controllers
         [Route("Groups/{idGroup}")]
         public IActionResult PostGroup(int idGroup, [FromForm] Groups groups, [FromForm] IFormFile ImageRead)
         {
-            if (idGroup != groups.IdGroup)
-            {
-                return BadRequest();
-            }
             using (var ms = new MemoryStream())
             {
                 using WhereToGoContext whereToGo = new WhereToGoContext();
@@ -101,6 +89,7 @@ namespace WhereToGo.Admin.Controllers
                 mdlGroups.NameGroup = groups.NameGroup;
                 ImageRead.CopyTo(ms);
                 mdlGroups.ImageGroup = ms.GetBuffer();
+                mdlGroups.IdBuilding = groups.IdBuilding;
                 whereToGo.Groups.Update(mdlGroups);
 
                 try
@@ -120,10 +109,6 @@ namespace WhereToGo.Admin.Controllers
         [Route("PointType/{idPointType}")]
         public IActionResult PostPointType(int idPointType, [FromBody] PointType pointType)
         {
-            if (idPointType != pointType.IdPointType)
-            {
-                return BadRequest();
-            }
             using (var ms = new MemoryStream())
             {
                 using WhereToGoContext whereToGo = new WhereToGoContext();
@@ -146,24 +131,18 @@ namespace WhereToGo.Admin.Controllers
             }
         }
         [HttpPost]
-        [Route("Points/{idPoint}")]
-        public IActionResult PostPoint(int idPoint, [FromForm] Points points, [FromForm] IFormFile ImageRead)
+        [Route("Buildings/{idBuilding}/BuildingImages/{idImage}/Points/{idPoint}")]
+        public IActionResult PostPoint(int idBuilding, int idImage, int idPoint, [FromForm] Points points, [FromForm] IFormFile ImageRead)
         {
-            if (idPoint != points.IdPoint)
-            {
-                return BadRequest();
-            }
             using (var ms = new MemoryStream())
             {
                 using WhereToGoContext whereToGo = new WhereToGoContext();
                 Points mdlPoints = new Points();
-                mdlPoints = whereToGo.Points.Where(i => i.IdPoint == idPoint).FirstOrDefault();
-                mdlPoints.IdImage = points.IdImage;
-                mdlPoints.NamePoint = points.NamePoint;
+                mdlPoints = whereToGo.Points.Where(i => i.IdPoint == idPoint && i.IdImage == idImage).FirstOrDefault();
+                mdlPoints.IdImage = idImage;
                 mdlPoints.X = points.X;
                 mdlPoints.Y = points.Y;
                 mdlPoints.IdPointType = points.IdPointType;
-                mdlPoints.IdGroup = points.IdGroup;
                 ImageRead.CopyTo(ms);
                 mdlPoints.ImagePoint = ms.GetBuffer();
                 whereToGo.Points.Update(mdlPoints);
@@ -182,25 +161,17 @@ namespace WhereToGo.Admin.Controllers
             }
         }
         [HttpPost]
-        [Route("PointsDetail/{idPointDetail}")]
-        public IActionResult PostPointDetail(int idPointDetail, [FromBody] PointsDetail pointsDetail)
+        [Route("Points/{idPoint}/PointsDetail/{idPointDetail}")]
+        public IActionResult PostPointDetail(int idPoint, int idPointDetail, [FromBody] PointsDetail pointsDetail)
         {
-            if (idPointDetail != pointsDetail.IdPointDetails)
-            {
-                return BadRequest();
-            }
             using (var ms = new MemoryStream())
             {
                 using WhereToGoContext whereToGo = new WhereToGoContext();
                 PointsDetail mdlPointDetails = new PointsDetail();
-                mdlPointDetails = whereToGo.PointsDetail.Where(i => i.IdPointDetails == idPointDetail).FirstOrDefault();
-                mdlPointDetails.IdPoint = pointsDetail.IdPoint;
+                mdlPointDetails = whereToGo.PointsDetail.Where(i => i.IdPointDetails == idPointDetail && i.IdPoint == idPoint).FirstOrDefault();
+                mdlPointDetails.IdPoint = idPoint;
                 mdlPointDetails.NamePoint = pointsDetail.NamePoint;
-                mdlPointDetails.Detail1 = pointsDetail.Detail1;
-                mdlPointDetails.Detail2 = pointsDetail.Detail2;
-                mdlPointDetails.Detail3 = pointsDetail.Detail3;
-                mdlPointDetails.Detail4 = pointsDetail.Detail4;
-                mdlPointDetails.Detail5 = pointsDetail.Detail5;
+                mdlPointDetails.IdGroup = pointsDetail.IdGroup;
                 whereToGo.PointsDetail.Update(mdlPointDetails);
 
                 try
