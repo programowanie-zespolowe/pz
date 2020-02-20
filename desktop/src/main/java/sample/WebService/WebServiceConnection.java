@@ -8,7 +8,9 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.MessageFormat;
 import java.time.OffsetDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 public class WebServiceConnection {
@@ -17,8 +19,10 @@ public class WebServiceConnection {
 
     private final String LoginUrl = "http://54.37.136.172:90/admin/login";
     private final String BuildingsUrl = "http://54.37.136.172:90/admin/GetData/Buildings";
-    private final String BuildingsLevelUrl = "http://54.37.136.172:90/admin/GetData/Buildings/";
-    private final String GroupsUrl = "http://54.37.136.172:90/admin/GetData/Buildings/Groups";
+    private final String BuildingsLevelUrl = "http://54.37.136.172:90/admin/GetData/Buildings/{0}";
+    private final String GroupsUrl = "http://54.37.136.172:90/admin/GetData/Buildings/{0}/Groups";
+    private final String PointDetailUrl = "http://54.37.136.172:90/admin/GetData/Buildings/Points/{0}/PointsDetails";
+    private final String PointsUrl = "http://54.37.136.172:90/admin/GetData/Buildings/{0}/Points";
 
     private TokenStruct tokenStruct;
     private LoginStruct loginStruct;
@@ -110,7 +114,7 @@ public class WebServiceConnection {
     public BuildingLevel[] BuildingLevelList(int buildingId)
     {
         try {
-            String response = MakeGETRequest(BuildingsLevelUrl + Integer.toString(buildingId));
+            String response = MakeGETRequest(MessageFormat.format(BuildingsLevelUrl, buildingId));
             return JSONConverter.ConvertToObject(response, BuildingLevel[].class);
         }
         catch (IOException e)
@@ -122,8 +126,31 @@ public class WebServiceConnection {
     public Group[] Groups(int buildingId)
     {
         try {
-            String response = MakeGETRequest(GroupsUrl + Integer.toString(buildingId));
+            String response = MakeGETRequest(MessageFormat.format(GroupsUrl, buildingId));
             return JSONConverter.ConvertToObject(response, Group[].class);
+        }
+        catch (IOException e)
+        {
+            return null;
+        }
+    }
+
+    public Point[] Points(int buildingId)
+    {
+        try {
+            String response = MakeGETRequest(MessageFormat.format(PointsUrl, buildingId));
+            return JSONConverter.ConvertToObject(response, Point[].class);
+        }
+        catch (IOException e)
+        {
+            return null;
+        }
+    }
+    public List<PointDetail> PointDetail(int pointId)
+    {
+        try {
+            String response = MakeGETRequest(MessageFormat.format(PointDetailUrl, pointId));
+            return Arrays.asList(JSONConverter.ConvertToObject(response, PointDetail[].class));
         }
         catch (IOException e)
         {

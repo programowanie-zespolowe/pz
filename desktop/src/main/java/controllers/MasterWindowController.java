@@ -12,8 +12,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import sample.Structs.Building;
-import sample.Structs.BuildingLevel;
+import sample.Structs.*;
 import sample.WebService.WebServiceConnection;
 import utils.FxmlUtils;
 
@@ -22,6 +21,8 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MasterWindowController {
     @FXML
@@ -47,8 +48,11 @@ public class MasterWindowController {
     @FXML
     private AnchorPane centerAnchorPane;
 
-    Building buildings[];
-    BuildingLevel levels[];
+    Building[] buildings;
+    BuildingLevel[] levels;
+    Point[] points;
+    Group[] groups;
+    List<PointDetail>[] pointDetails;
 
     @FXML
     public void initialize (){
@@ -67,6 +71,19 @@ public class MasterWindowController {
                 centerMenuButtonsController.canvas.getGraphicsContext2D().drawImage(image,
                         0,
                         0);
+            }
+
+            int buildingId = buildings[topMenuButtonsController.buildingComboBox.getSelectionModel().getSelectedIndex()].getIdBuilding();
+            points = WebServiceConnection.GetInstance().Points(buildingId);
+            groups = WebServiceConnection.GetInstance().Groups(buildingId);
+
+            if(points == null)
+                return;
+            pointDetails = new ArrayList[points.length];
+            for(int i = 0; i < points.length; i++)
+            {
+                Point point = points[i];
+                pointDetails[i] = WebServiceConnection.GetInstance().PointDetail(point.getIdPoint());
             }
         });
         LoadComponents();

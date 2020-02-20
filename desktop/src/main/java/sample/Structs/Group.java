@@ -1,9 +1,18 @@
 package sample.Structs;
 
 public class Group {
-    int idGroup;
-    String nameGroup;
+    private int idGroup;
+    private String nameGroup;
     private byte[] imageGroup;
+    private int idBuilding;
+
+    public int getIdBuilding() {
+        return idBuilding;
+    }
+
+    public void setIdBuilding(int idBuilding) {
+        this.idBuilding = idBuilding;
+    }
 
     public int getIdGroup() {
         return idGroup;
