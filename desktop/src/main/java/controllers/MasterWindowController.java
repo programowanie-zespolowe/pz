@@ -68,6 +68,13 @@ public class MasterWindowController {
 
         topMenuButtonsController.buildingComboBox.getSelectionModel().selectedItemProperty().addListener( (options, oldValue, newValue) -> {
             if(image != null) {
+                try{
+
+                }
+                catch (Exception e)
+                {
+
+                }
                 centerMenuButtonsController.canvas.getGraphicsContext2D().drawImage(image,
                         0,
                         0);
@@ -107,9 +114,10 @@ public class MasterWindowController {
         }
         topMenuButtonsController.buildingComboBox.getSelectionModel().select(0);
         levels = WebServiceConnection.GetInstance().BuildingLevelList(buildings[topMenuButtonsController.buildingComboBox.getSelectionModel().getSelectedIndex()].getIdBuilding());
-        ByteArrayInputStream bis = new ByteArrayInputStream(buildings[topMenuButtonsController.buildingComboBox.getSelectionModel().getSelectedIndex()].getImageBuilding());
-        BufferedImage buildingImage = null;
+
         try {
+            ByteArrayInputStream bis = new ByteArrayInputStream(buildings[topMenuButtonsController.buildingComboBox.getSelectionModel().getSelectedIndex()].getImageBuilding());
+            BufferedImage buildingImage = null;
             buildingImage = ImageIO.read(bis);
             image = SwingFXUtils.toFXImage(buildingImage, null);
             centerMenuButtonsController.mainPane.setPrefHeight(image.getHeight());
@@ -128,7 +136,7 @@ public class MasterWindowController {
                     },
                     1000
             );
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

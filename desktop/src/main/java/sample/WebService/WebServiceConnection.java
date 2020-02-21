@@ -10,6 +10,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.MessageFormat;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -150,7 +151,10 @@ public class WebServiceConnection {
     {
         try {
             String response = MakeGETRequest(MessageFormat.format(PointDetailUrl, pointId));
-            return Arrays.asList(JSONConverter.ConvertToObject(response, PointDetail[].class));
+            PointDetail[] details = JSONConverter.ConvertToObject(response, PointDetail[].class);
+            return new ArrayList<>(Arrays.asList(details));
+
+
         }
         catch (IOException e)
         {
