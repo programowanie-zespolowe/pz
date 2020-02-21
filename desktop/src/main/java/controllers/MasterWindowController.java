@@ -68,33 +68,33 @@ public class MasterWindowController {
 
         topMenuButtonsController.buildingComboBox.getSelectionModel().selectedItemProperty().addListener( (options, oldValue, newValue) -> {
             if(image != null) {
-                try{
-
-                }
-                catch (Exception e)
-                {
-
-                }
                 centerMenuButtonsController.canvas.getGraphicsContext2D().drawImage(image,
                         0,
                         0);
             }
 
             int buildingId = buildings[topMenuButtonsController.buildingComboBox.getSelectionModel().getSelectedIndex()].getIdBuilding();
+            levels = WebServiceConnection.GetInstance().BuildingLevelList(buildingId);
             points = WebServiceConnection.GetInstance().Points(buildingId);
             groups = WebServiceConnection.GetInstance().Groups(buildingId);
 
-            if(points == null)
-                return;
-            pointDetails = new ArrayList[points.length];
-            for(int i = 0; i < points.length; i++)
-            {
-                Point point = points[i];
-                pointDetails[i] = WebServiceConnection.GetInstance().PointDetail(point.getIdPoint());
-            }
+            leftMenuButtonsController.RefreshLevels(levels);
+            GetPointDetails();
         });
         LoadComponents();
         RefreshGUI();
+    }
+
+
+    private void GetPointDetails() {
+        if(points == null)
+            return;
+        pointDetails = new ArrayList[points.length];
+        for(int i = 0; i < points.length; i++)
+        {
+            Point point = points[i];
+            pointDetails[i] = WebServiceConnection.GetInstance().PointDetail(point.getIdPoint());
+        }
     }
 
     private void LoadComponents()
