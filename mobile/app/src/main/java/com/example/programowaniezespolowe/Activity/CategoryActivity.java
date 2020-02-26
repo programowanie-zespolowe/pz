@@ -46,9 +46,6 @@ public class CategoryActivity extends AppCompatActivity {
                 startActivity(a1_intent);
                 finish();
                 return true;
-
-
-
         }
         return false;
     }

@@ -14,16 +14,22 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.MessageFormat;
 
 public class ConnectWebService {
     private static ConnectWebService instance;
     private final static String TOKEN = "http://54.37.136.172:91/api/token";
-    private final static String ALL_BUILDINGS = "http://54.37.136.172:91/GetData/Buildings";
-    private final static String SELECTED_BUILDING = "http://54.37.136.172:91/GetData/Buildings/";
-    private final static String BUILDING_POINT = "http://54.37.136.172:91/GetData/Buildings/Points/";
+    private final static String SELECTED_BUILDING = "http://54.37.136.172:91/GetData/Buildings/All/{0}";
+    private final String Groups = "http://54.37.136.172:91/GetData/Buildings/{0}/Groups";
+    private final String PointDetail = "http://54.37.136.172:91/GetData/Buildings/Points/{0}/PointsDetails";
+    private final String BUILDING_POINT = "http://54.37.136.172:91/GetData/Buildings/{0}/Points";
 
     private Token token;
     private Device device;
+
+    public void setDevice(Device device) {
+        this.device = device;
+    }
 
     public static ConnectWebService GetInstance()
     {
@@ -89,7 +95,7 @@ public class ConnectWebService {
 
     public JSONArray getSelectedBuilding(int buildingId){
         try {
-            JSONArray response = GetRequest(SELECTED_BUILDING + buildingId);
+            JSONArray response = GetRequest(MessageFormat.format(SELECTED_BUILDING, buildingId));
             return response;
         } catch (IOException e) {
             e.printStackTrace();
@@ -100,7 +106,31 @@ public class ConnectWebService {
     }
     public JSONArray getBuildingPoints(int buildingId){
         try {
-            JSONArray response = GetRequest(BUILDING_POINT + buildingId);
+            JSONArray response = GetRequest(MessageFormat.format( BUILDING_POINT, buildingId));
+            return response;
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public JSONArray getGroups(int buildingId){
+        try {
+            JSONArray response = GetRequest( MessageFormat.format(Groups, buildingId));
+            return response;
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public JSONArray getPointDetail(int buildingId){
+        try {
+            JSONArray response = GetRequest(MessageFormat.format( PointDetail, buildingId));
             return response;
         } catch (IOException e) {
             e.printStackTrace();

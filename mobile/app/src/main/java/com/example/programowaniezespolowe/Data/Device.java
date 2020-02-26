@@ -1,5 +1,9 @@
 package com.example.programowaniezespolowe.Data;
 
+import android.content.Context;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
+
 public class Device {
     private String name;
     private String macId;
@@ -24,4 +28,5 @@ public class Device {
     public void setMacId(String macId) {
         this.macId = macId;
     }
+
 }
