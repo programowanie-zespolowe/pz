@@ -22,6 +22,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MasterWindowController {
@@ -81,16 +82,40 @@ public class MasterWindowController {
             leftMenuButtonsController.RefreshLevels(levels);
             GetPointDetails();
         });
+
         LoadComponents();
         RefreshGUI();
+    }
+
+    public void BuildingLevelChanged(BuildingLevel level)
+    {
+        try {
+            ByteArrayInputStream bis = new ByteArrayInputStream(level.getPathImage());
+            BufferedImage buildingImage = null;
+            buildingImage = ImageIO.read(bis);
+            image = SwingFXUtils.toFXImage(buildingImage, null);
+            centerMenuButtonsController.canvas.getGraphicsContext2D().drawImage(image,
+                    0,
+                    0,
+                    image.getRequestedWidth(),
+                    image.getRequestedHeight());
+
+            centerMenuButtonsController.ShowPoints(points, level);
+        }
+        catch (IOException exception)
+        {
+            centerMenuButtonsController.canvas.getGraphicsContext2D().clearRect(0,
+                    0,
+                    1000,
+                    1000);
+
+        }
     }
 
     public int GetCurrentBuildingId()
     {
         return buildings[topMenuButtonsController.buildingComboBox.getSelectionModel().getSelectedIndex()].getIdBuilding();
     }
-
-
 
     private void GetPointDetails() {
         if(points == null)
@@ -101,6 +126,14 @@ public class MasterWindowController {
             Point point = points[i];
             pointDetails[i] = WebServiceConnection.GetInstance().PointDetail(point.getIdPoint());
         }
+        centerMenuButtonsController.ShowPoints(points, leftMenuButtonsController.getCurrentBuildLevel());
+    }
+
+    public void PointAdded(Point point)
+    {
+        List<Point> pointList = Arrays.asList(points);
+        pointList.add(point);
+        points = (Point[])pointList.toArray();
     }
 
     private void LoadComponents()

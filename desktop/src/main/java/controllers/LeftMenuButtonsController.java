@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -13,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import sample.Structs.BuildingLevel;
@@ -26,12 +28,17 @@ import java.util.ArrayList;
 
 public class LeftMenuButtonsController  {
     @FXML
-    public FlowPane flowPane;
+    public VBox flowPane;
     private MasterWindowController masterWindowController;
+    private BuildingLevel currentBuildLevel;
     public static final String WINDOW_ADD_BUILDING_LEVEL_FXML = "/fxml/AddBuildingLevelWindow.fxml";
 
     public void setMasterWindowController(MasterWindowController masterWindowController) {
         this.masterWindowController = masterWindowController;
+    }
+
+    public BuildingLevel getCurrentBuildLevel() {
+        return currentBuildLevel;
     }
 
     final ArrayList<LeftMenuObject> leftMenuObjects = new ArrayList<>();
@@ -71,6 +78,7 @@ public class LeftMenuButtonsController  {
             }
             Label label = new Label();
             label.setText("Poziom: " + level.getBuildingLevel());
+            label.setAlignment(Pos.CENTER);
             flowPane.getChildren().add(label);
 
             label.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
@@ -90,6 +98,7 @@ public class LeftMenuButtonsController  {
 
     void SetSelectedColor(BuildingLevel level)
     {
+        currentBuildLevel = level;
         for (LeftMenuObject menuObject : leftMenuObjects)
         {
             if(menuObject.level == level)
@@ -97,6 +106,7 @@ public class LeftMenuButtonsController  {
             else
                 menuObject.label.setTextFill(Color.BLACK);
         }
+        masterWindowController.BuildingLevelChanged(level);
     }
 
     @FXML
