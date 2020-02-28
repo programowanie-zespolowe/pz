@@ -85,6 +85,12 @@ public class MasterWindowController {
         RefreshGUI();
     }
 
+    public int GetCurrentBuildingId()
+    {
+        return buildings[topMenuButtonsController.buildingComboBox.getSelectionModel().getSelectedIndex()].getIdBuilding();
+    }
+
+
 
     private void GetPointDetails() {
         if(points == null)

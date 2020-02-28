@@ -11,7 +11,7 @@ import utils.FxmlUtils;
 
 public class TopMenuButtonsController {
     private MasterWindowController masterWindowController;
-    public static final String OKNO_ADD_BUILDING_FXML = "/fxml/AddBuildingWindow.fxml";
+    public static final String WINDOW_ADD_BUILDING_FXML = "/fxml/AddBuildingWindow.fxml";
 
     public TopMenuButtonsController()
     {
@@ -26,7 +26,7 @@ public class TopMenuButtonsController {
 
     @FXML
     public void addBuilding(){
-        Pane borderpane = FxmlUtils.fxmlLoader(OKNO_ADD_BUILDING_FXML);
+        Pane borderpane = FxmlUtils.fxmlLoader(WINDOW_ADD_BUILDING_FXML);
         Stage stage = new Stage();
         Scene scene = new Scene (borderpane);
         stage.setScene(scene);

@@ -22,8 +22,8 @@
    </rowConstraints>
    <children>
        <Label text="Login" GridPane.rowIndex="0"/>
-      <TextField fx:id="loginTextField" promptText="Login" GridPane.rowIndex="1" />
-      <PasswordField fx:id="passwordField" promptText="Password" GridPane.rowIndex="2" />
+      <TextField fx:id="loginTextField" promptText="Login" GridPane.rowIndex="1" text="admin2" />
+      <PasswordField fx:id="passwordField" promptText="Password" GridPane.rowIndex="2" text="F5s4+FzNDGY=" />
       <Button fx:id="loginButton" mnemonicParsing="false" text="Login" textAlignment="RIGHT" GridPane.rowIndex="3" onAction="#handleLoginAction" />
    </children>
 </GridPane>

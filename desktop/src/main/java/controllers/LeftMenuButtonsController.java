@@ -2,26 +2,33 @@ package controllers;
 
 
 import javafx.embed.swing.SwingFXUtils;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import sample.Structs.Building;
+import javafx.stage.Stage;
 import sample.Structs.BuildingLevel;
+import utils.FxmlUtils;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class LeftMenuButtonsController  {
     @FXML
     public FlowPane flowPane;
     private MasterWindowController masterWindowController;
+    public static final String WINDOW_ADD_BUILDING_LEVEL_FXML = "/fxml/AddBuildingLevelWindow.fxml";
 
     public void setMasterWindowController(MasterWindowController masterWindowController) {
         this.masterWindowController = masterWindowController;
@@ -89,6 +96,26 @@ public class LeftMenuButtonsController  {
                 menuObject.label.setTextFill(Color.RED);
             else
                 menuObject.label.setTextFill(Color.BLACK);
+        }
+    }
+
+    @FXML
+    public void addBuildingLevel(ActionEvent actionEvent)
+    {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            Pane p = fxmlLoader.load(getClass().getResource(WINDOW_ADD_BUILDING_LEVEL_FXML).openStream());
+            AddBuildingLevelWindowController controller = (AddBuildingLevelWindowController) fxmlLoader.getController();
+            controller.setBuildingId(masterWindowController.GetCurrentBuildingId());
+            Stage stage = new Stage();
+            Scene scene = new Scene(p);
+            stage.setScene(scene);
+            stage.showAndWait();
+
+        }
+        catch (IOException e)
+        {
+
         }
     }
 
