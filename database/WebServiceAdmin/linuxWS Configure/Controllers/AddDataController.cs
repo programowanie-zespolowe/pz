@@ -7,6 +7,7 @@ using linuxWS_Configure.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using WhereToGoEntities.WhereToGo.Models;
 
 namespace WhereToGo.Admin.Controllers
@@ -16,6 +17,11 @@ namespace WhereToGo.Admin.Controllers
     [Route("Admin/[controller]")]
     public class AddDataController : Controller
     {
+        readonly ILogger<AddDataController> _log;
+        public AddDataController(ILogger<AddDataController> log)
+        {
+            _log = log;
+        }
         [Route("Buildings")]
         [HttpPost]
         public IActionResult PostBuildings([FromForm] Buildings buildings, [FromForm] IFormFile ImageRead)
@@ -45,22 +51,27 @@ namespace WhereToGo.Admin.Controllers
 
 
         }
-        [Route("BuildingImage/{idBuilding}")]
+        [Route("BuildingImage/{idBuilding}/{BuildingLevel}/{Scale}/{NorthPointAngle}")]
         [HttpPost]
-        public IActionResult PostBuildingImages(int idBuilding, [FromForm] BuildingImages buildingImages, [FromForm] IFormFile ImageRead)
+        public IActionResult PostBuildingImages(int idBuilding, int BuildingLevel, int Scale, int NorthPointAngle, [FromForm] IFormFile ImageRead)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
+            _log.LogInformation("Jest okej ide dalej");
             using (var ms = new MemoryStream())
             {
                 using WhereToGoContext whereToGo = new WhereToGoContext();
                 BuildingImages mdlBuildings = new BuildingImages();
                 mdlBuildings.IdBuilding = idBuilding;
-                mdlBuildings.BuildingLevel = buildingImages.BuildingLevel;
+                _log.LogInformation($"Zwracam idBuilding:{idBuilding}");
+                mdlBuildings.BuildingLevel = BuildingLevel;
+                _log.LogInformation($"Zwracam BuildingLevel:{BuildingLevel}");
                 ImageRead.CopyTo(ms);
                 mdlBuildings.PathImage = ms.GetBuffer();
-                mdlBuildings.Scale = buildingImages.Scale;
-                mdlBuildings.NorthPointAngle = buildingImages.NorthPointAngle;
+                mdlBuildings.Scale = Scale;
+                _log.LogInformation($"Zwracam BuildingLevel:{Scale}");
+                mdlBuildings.NorthPointAngle = NorthPointAngle;
+                _log.LogInformation($"Zwracam BuildingLevel:{NorthPointAngle}");
                 whereToGo.BuildingImages.Add(mdlBuildings);
                 try
                 {
@@ -107,17 +118,19 @@ namespace WhereToGo.Admin.Controllers
         }
         [Route("PointType")]
         [HttpPost]
-        public IActionResult PostPointType([FromBody] PointType pointType)
+        public IActionResult PostPointType([FromForm] PointType pointType)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
                 using WhereToGoContext whereToGo = new WhereToGoContext();
                 PointType mdlPointType = new PointType();
-                mdlPointType.TypePoint = pointType.TypePoint;
+            _log.LogInformation("Jest okej ide dalej");
+            mdlPointType.TypePoint = pointType.TypePoint;
                 whereToGo.PointType.Add(mdlPointType);
             try
             {
                 whereToGo.SaveChanges();
+                _log.LogInformation("zapisalem");
             }
             catch (Exception)
             {
@@ -161,7 +174,7 @@ namespace WhereToGo.Admin.Controllers
         }
         [Route("Points/{idPoint}/PointDetails")]
         [HttpPost]
-        public IActionResult PostPoint(int idPoint, [FromBody] PointsDetail pointsDetail)
+        public IActionResult PostPoint(int idPoint, [FromForm] PointsDetail pointsDetail)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -190,7 +203,7 @@ namespace WhereToGo.Admin.Controllers
         }
         [Route("Points/PointsConnection")]
         [HttpPost]
-        public IActionResult PostPointConnection([FromBody] PointsConnection pointsConnection)
+        public IActionResult PostPointConnection([FromForm] PointsConnection pointsConnection)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
