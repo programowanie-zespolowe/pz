@@ -7,6 +7,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.methods.RequestBuilder;
 import org.apache.http.entity.ContentType;
+import org.apache.http.entity.mime.FormBodyPart;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -31,12 +32,13 @@ public class WebServiceConnection {
     private final String LoginUrl = "http://54.37.136.172:90/admin/login";
     private final String BuildingsUrl = "http://54.37.136.172:90/admin/GetData/Buildings";
     private final String BuildingsLevelUrl = "http://54.37.136.172:90/admin/GetData/Buildings/{0}";
-    private final String AddBuildingsLevelUrl = "http://54.37.136.172:90/admin/AddData/BuildingImage/{0}";
+    private final String AddBuildingsLevelUrl = "http://54.37.136.172:90/admin/AddData/BuildingImage/{0}/{1}/{2}/{3}";
     private final String AddPointUrl = "http://54.37.136.172:90/admin/AddData/BuildingsImage/{0}/Points";
     private final String GroupsUrl = "http://54.37.136.172:90/admin/GetData/Buildings/{0}/Groups";
     private final String PointDetailUrl = "http://54.37.136.172:90/admin/GetData/Buildings/Points/{0}/PointsDetails";
     private final String PointsUrl = "http://54.37.136.172:90/admin/GetData/Buildings/{0}/Points";
-//
+    private final String AddPointType = "http://54.37.136.172:90/Admin/AddData/PointType";
+
 //    private final String LoginUrl = "http://localhost:6000/admin/login";
 //    private final String BuildingsUrl = "http://localhost:6000/admin/GetData/Buildings";
 //    private final String BuildingsLevelUrl = "http://localhost:6000/admin/GetData/Buildings/{0}";
@@ -184,32 +186,16 @@ public class WebServiceConnection {
     public int AddBuildingLevel(BuildingLevel buildingLevel, int buildingId, String filePath)
     {
         try{
-//            CloseableHttpClient httpClient = HttpClients.createDefault();
-//            HttpPost uploadFile = new HttpPost(MessageFormat.format(AddBuildingsLevelUrl, buildingId));
-//            uploadFile.addHeader("Content-type", "multipart/form-data");
-//            uploadFile.addHeader("Authorization", "Bearer " + tokenStruct.getToken());
-//            MultipartEntityBuilder builder = MultipartEntityBuilder.create();
-//            builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
             File file = new File(filePath);
-//            builder.addBinaryBody("ImageRead", file, ContentType.APPLICATION_OCTET_STREAM, file.getName());
-//            builder.addTextBody("BuildingLevel", Integer.toString(buildingLevel.getBuildingLevel()));
-//            builder.addTextBody("Scale", Double.toString(buildingLevel.getScale()));
-//            builder.addTextBody("NorthPointAngle", Double.toString(buildingLevel.getNorthPointAngle()));
-//
-//
-//            HttpEntity multipart = builder.build();
-//            uploadFile.setEntity(multipart);
-//            CloseableHttpResponse response = httpClient.execute(uploadFile);
             CloseableHttpClient httpClient = HttpClients.createDefault();
             HttpEntity entity = MultipartEntityBuilder
                     .create()
-                    .addTextBody("BuildingLevel", Integer.toString(buildingLevel.getBuildingLevel()))
-                    .addTextBody("Scale", Double.toString(buildingLevel.getScale()))
                     .addBinaryBody("ImageRead", file, ContentType.create("application/octet-stream"), "filename")
-                    .addTextBody("NorthPointAngle", Double.toString(buildingLevel.getNorthPointAngle()))
+                    .setMode(HttpMultipartMode.STRICT)
                     .build();
 
-            HttpPost httpPost = new HttpPost(MessageFormat.format(AddBuildingsLevelUrl, buildingId));
+            String url = MessageFormat.format(AddBuildingsLevelUrl, buildingId, buildingLevel.getBuildingLevel(), buildingLevel.getScale(), buildingLevel.getNorthPointAngle());
+            HttpPost httpPost = new HttpPost(url);
             httpPost.addHeader("Authorization", "Bearer " + tokenStruct.getToken());
 //            httpPost.addHeader("Content-type", "multipart/form-data");
             String name = entity.getContentType().getName();
