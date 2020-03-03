@@ -6,6 +6,6 @@ Ten plik jest wykorzystywany przez proces publikowania/pakowania projektu sieci 
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <_PublishTargetUrl>C:\Users\bbadaczewski\source\repos\linuxWS\linuxWS\bin\Release\netcoreapp3.0\publish\</_PublishTargetUrl>
+    <_PublishTargetUrl>C:\Users\bbadaczewski\Documents\pz\database\WebServiceMobile\linuxWS\bin\Release\netcoreapp3.0\publish\</_PublishTargetUrl>
   </PropertyGroup>
 </Project>

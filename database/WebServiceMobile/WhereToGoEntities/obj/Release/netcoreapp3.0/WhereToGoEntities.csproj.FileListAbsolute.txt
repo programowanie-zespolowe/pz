@@ -8,3 +8,13 @@ C:\Users\bbadaczewski\source\repos\linuxWS\WhereToGoEntities\obj\Release\netcore
 C:\Users\bbadaczewski\source\repos\linuxWS\WhereToGoEntities\obj\Release\netcoreapp3.0\WhereToGoEntities.dll
 C:\Users\bbadaczewski\source\repos\linuxWS\WhereToGoEntities\obj\Release\netcoreapp3.0\WhereToGoEntities.pdb
 C:\Users\bbadaczewski\source\repos\linuxWS\WhereToGoEntities\obj\Release\netcoreapp3.0\WhereToGoEntities.csprojAssemblyReference.cache
+C:\Users\bbadaczewski\Documents\pz\database\WebServiceMobile\WhereToGoEntities\bin\Release\netcoreapp3.0\WhereToGoEntities.deps.json
+C:\Users\bbadaczewski\Documents\pz\database\WebServiceMobile\WhereToGoEntities\bin\Release\netcoreapp3.0\WhereToGoEntities.runtimeconfig.json
+C:\Users\bbadaczewski\Documents\pz\database\WebServiceMobile\WhereToGoEntities\bin\Release\netcoreapp3.0\WhereToGoEntities.runtimeconfig.dev.json
+C:\Users\bbadaczewski\Documents\pz\database\WebServiceMobile\WhereToGoEntities\bin\Release\netcoreapp3.0\WhereToGoEntities.dll
+C:\Users\bbadaczewski\Documents\pz\database\WebServiceMobile\WhereToGoEntities\bin\Release\netcoreapp3.0\WhereToGoEntities.pdb
+C:\Users\bbadaczewski\Documents\pz\database\WebServiceMobile\WhereToGoEntities\obj\Release\netcoreapp3.0\WhereToGoEntities.csprojAssemblyReference.cache
+C:\Users\bbadaczewski\Documents\pz\database\WebServiceMobile\WhereToGoEntities\obj\Release\netcoreapp3.0\WhereToGoEntities.AssemblyInfoInputs.cache
+C:\Users\bbadaczewski\Documents\pz\database\WebServiceMobile\WhereToGoEntities\obj\Release\netcoreapp3.0\WhereToGoEntities.AssemblyInfo.cs
+C:\Users\bbadaczewski\Documents\pz\database\WebServiceMobile\WhereToGoEntities\obj\Release\netcoreapp3.0\WhereToGoEntities.dll
+C:\Users\bbadaczewski\Documents\pz\database\WebServiceMobile\WhereToGoEntities\obj\Release\netcoreapp3.0\WhereToGoEntities.pdb

@@ -36,7 +36,7 @@ namespace linuxWS_Configure.Controllers
                     buildingImages.Add(mdlBuildings);
                 }
             }
-            return buildingImages.ToArray();
+            return buildingImages.ToList();
         }
         [HttpGet]
         [Route("Buildings/{idBuilding}")]
@@ -290,6 +290,24 @@ namespace linuxWS_Configure.Controllers
                     listPointsDetails.Add(mdlPointsDetails);
                 }
                 return listPointsDetails.ToList();
+            }
+        }
+        [HttpGet]
+        [Route("Buildings/PointsConnection")]
+        public IEnumerable<MdlPointsConnection> GetPointConnection()
+        {
+            List<MdlPointsConnection> listPointsConnection = new List<MdlPointsConnection>();
+            using (WhereToGoContext whereToGoEntities = new WhereToGoContext())
+            {
+                foreach (var element in whereToGoEntities.PointsConnection)
+                {
+                    MdlPointsConnection mdlPointsConnection = new MdlPointsConnection();
+                    mdlPointsConnection.IdPointStart = element.IdPointStart;
+                    mdlPointsConnection.IdPointEnd = element.IdPointEnd;
+
+                    listPointsConnection.Add(mdlPointsConnection);
+                }
+                return listPointsConnection.ToList();
             }
         }
     }
