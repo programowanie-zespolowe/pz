@@ -166,9 +166,6 @@ public class MasterWindowController {
             BufferedImage buildingImage = null;
             buildingImage = ImageIO.read(bis);
             image = SwingFXUtils.toFXImage(buildingImage, null);
-//            centerMenuButtonsController.mainPane.setPrefHeight(image.getHeight());
-//            centerMenuButtonsController.mainPane.setPrefWidth(image.getWidth());
-
             new java.util.Timer().schedule(
                     new java.util.TimerTask() {
                         @Override
@@ -183,7 +180,6 @@ public class MasterWindowController {
                     1000
             );
         } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
