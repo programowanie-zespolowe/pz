@@ -58,6 +58,7 @@ public class MasterWindowController {
     Point[] points;
     Group[] groups;
     List<PointDetail>[] pointDetails;
+    PointsConnection[] pointsConnections;
 
     @FXML
     public void initialize (){
@@ -78,6 +79,7 @@ public class MasterWindowController {
             levels = WebServiceConnection.GetInstance().BuildingLevelList(buildingId);
             points = WebServiceConnection.GetInstance().Points(buildingId);
             groups = WebServiceConnection.GetInstance().Groups(buildingId);
+            pointsConnections = WebServiceConnection.GetInstance().PointsConnections(buildingId);
 
             leftMenuButtonsController.RefreshLevels(levels);
             GetPointDetails();
@@ -105,6 +107,7 @@ public class MasterWindowController {
                     image.getRequestedHeight());
 
             centerMenuButtonsController.ShowPoints(points, level);
+            centerMenuButtonsController.ShowPointsConnections(pointsConnections, points, level);
         }
         catch (IOException exception)
         {
@@ -210,5 +213,10 @@ public class MasterWindowController {
     public void LevelAdded(BuildingLevel buildingLevel) {
         levels = ArrayUtils.add(levels, buildingLevel);
         leftMenuButtonsController.RefreshLevels(levels);
+    }
+
+    public void ConnectionAdded(PointsConnection connection) {
+        pointsConnections = ArrayUtils.add(pointsConnections, connection);
+        centerMenuButtonsController.ShowPointsConnections(pointsConnections, points, leftMenuButtonsController.getCurrentBuildLevel());
     }
 }

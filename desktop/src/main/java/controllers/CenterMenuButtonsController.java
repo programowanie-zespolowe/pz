@@ -14,6 +14,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import sample.Structs.BuildingLevel;
 import sample.Structs.Point;
+import sample.Structs.PointsConnection;
 import sample.WebService.WebServiceConnection;
 
 public class CenterMenuButtonsController {
@@ -30,6 +31,23 @@ public class CenterMenuButtonsController {
 
     }
 
+    Point points[];
+    Point selectedPoint_1 = null;
+    Point selectedPoint_2 = null;
+
+    public Point FindPoint(double x, double y)
+    {
+        for(Point point : points)
+        {
+            if(point.getIdImage() != level.getIdImage())
+                continue;
+            if(point.getX() - 5 <= x && x <= point.getX() + 5 &&
+                point.getY() - 5 <= y && y <= point.getY() + 5)
+                return point;
+        }
+        return null;
+    }
+
     @FXML
     public void initialize()
     {
@@ -37,8 +55,20 @@ public class CenterMenuButtonsController {
         scrollPane.setContent(canvas);
 
         canvas.onMouseClickedProperty().set((EventHandler<MouseEvent>) (MouseEvent t) -> {
-            if(t.getButton() != MouseButton.PRIMARY)
+            if(t.getButton() != MouseButton.PRIMARY) {
+                if(selectedPoint_1 == null) {
+                    selectedPoint_1 = FindPoint(t.getX(), t.getY());
+                }
+                else if(selectedPoint_2 == null) {
+                    selectedPoint_2 = FindPoint(t.getX(), t.getY());
+                    PointsConnection connection = WebServiceConnection.GetInstance().AddPointConnection(selectedPoint_1, selectedPoint_2);
+                    if(connection != null)
+                        masterWindowController.ConnectionAdded(connection);
+                    selectedPoint_1 = null;
+                    selectedPoint_2 = null;
+                }
                 return;
+            }
             Point point = new Point();
             point.setX(t.getX());
             point.setY(t.getY());
@@ -61,13 +91,45 @@ public class CenterMenuButtonsController {
 
     public void ShowPoints(Point[] points, BuildingLevel level)
     {
+        this.points = points;
         this.level = level;
+        selectedPoint_1 = null;
+        selectedPoint_2 = null;
         for(Point point : points)
         {
             if(point.IdImage != level.getIdImage())
                 continue;
             canvas.getGraphicsContext2D().setFill(Color.rgb(255,0,0,1.0));
             canvas.getGraphicsContext2D().fillOval(point.getX() - 5, point.getY() - 5, 10, 10);
+            canvas.getGraphicsContext2D().stroke();
+        }
+    }
+
+    private Point FindPoint(int pointId)
+    {
+        for(Point point : points)
+        {
+            if(point.getIdPoint() == pointId)
+            {
+                return point;
+            }
+        }
+        return null;
+    }
+
+    public void ShowPointsConnections(PointsConnection[] pointsConnections, Point[] points, BuildingLevel level) {
+        for(PointsConnection connection : pointsConnections)
+        {
+            Point startPoint = FindPoint(connection.getIdPointStart());
+            Point endPoint = FindPoint(connection.getIdPointEnd());
+            if(startPoint == null || endPoint == null)
+                continue;
+            if(startPoint.getIdImage() != level.getIdImage())
+                continue;
+            if(endPoint.getIdImage() != level.getIdImage())
+                continue;
+            canvas.getGraphicsContext2D().setStroke(Color.rgb(255,0,0,1.0));
+            canvas.getGraphicsContext2D().strokeLine(startPoint.getX(), startPoint.getY(), endPoint.getX(), endPoint.getY());
             canvas.getGraphicsContext2D().stroke();
         }
     }

@@ -38,6 +38,8 @@ public class WebServiceConnection {
     private final String GroupsUrl = "http://54.37.136.172:90/admin/GetData/Buildings/{0}/Groups";
     private final String PointDetailUrl = "http://54.37.136.172:90/admin/GetData/Buildings/Points/{0}/PointsDetails";
     private final String PointsUrl = "http://54.37.136.172:90/admin/GetData/Buildings/{0}/Points";
+    private final String PointsConnectionsUrl = "http://54.37.136.172:90/admin/GetData/Buildings/{0}/PointsConnection";
+    private final String AddPointsConnectionUrl = "http://54.37.136.172:90/admin/AddData/Points/{0}/{1}/PointsConnection";
     private final String AddPointType = "http://54.37.136.172:90/Admin/AddData/PointType";
 
 //    private final String LoginUrl = "http://localhost:6000/admin/login";
@@ -348,6 +350,17 @@ public class WebServiceConnection {
             return null;
         }
     }
+    public PointsConnection[] PointsConnections(int buildingId)
+    {
+        try {
+            String response = MakeGETRequest(MessageFormat.format(PointsConnectionsUrl, buildingId));
+            return JSONConverter.ConvertToObject(response, PointsConnection[].class);
+        }
+        catch (IOException e)
+        {
+            return null;
+        }
+    }
     public List<PointDetail> PointDetail(int pointId)
     {
         try {
@@ -356,6 +369,41 @@ public class WebServiceConnection {
             return new ArrayList<>(Arrays.asList(details));
         }
         catch (IOException e)
+        {
+            return null;
+        }
+    }
+
+    public PointsConnection AddPointConnection(Point selectedPoint_1, Point selectedPoint_2) {
+        try{
+            CloseableHttpClient httpClient = HttpClients.createDefault();
+            HttpEntity entity = MultipartEntityBuilder
+                    .create()
+                    .setMode(HttpMultipartMode.STRICT)
+                    .build();
+
+            String url = MessageFormat.format(AddPointsConnectionUrl, selectedPoint_1.getIdPoint(), selectedPoint_2.getIdPoint());
+            HttpPost httpPost = new HttpPost(url);
+            httpPost.addHeader("Authorization", "Bearer " + tokenStruct.getToken());
+            String name = entity.getContentType().getName();
+            String value = entity.getContentType().getValue();
+            httpPost.addHeader(name, value);
+            httpPost.setEntity(entity);
+            HttpResponse response = httpClient.execute(httpPost);
+            HttpEntity result = response.getEntity();
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(result.getContent()));
+            String content = br.readLine();
+            Integer id = Integer.parseInt(content);
+            if(id == null)
+                return null;
+            PointsConnection pointsConnection = new PointsConnection();
+            pointsConnection.setIdPointConnection(id);
+            pointsConnection.setIdPointStart(selectedPoint_1.getIdPoint());
+            pointsConnection.setIdPointEnd(selectedPoint_2.getIdPoint());
+            return pointsConnection;
+        }
+        catch (Exception e)
         {
             return null;
         }
