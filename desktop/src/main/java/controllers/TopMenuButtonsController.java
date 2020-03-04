@@ -2,8 +2,10 @@ package controllers;
 
 import javafx.application.Application;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -25,12 +27,29 @@ public class TopMenuButtonsController {
     public ComboBox buildingComboBox;
 
     @FXML
+    Label scaleLabel;
+
+    @FXML
     public void addBuilding(){
-        Pane borderpane = FxmlUtils.fxmlLoader(WINDOW_ADD_BUILDING_FXML);
-        Stage stage = new Stage();
-        Scene scene = new Scene (borderpane);
-        stage.setScene(scene);
-        stage.showAndWait();
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            Pane p = fxmlLoader.load(getClass().getResource(WINDOW_ADD_BUILDING_FXML).openStream());
+            AddBuildingWindow controller = (AddBuildingWindow) fxmlLoader.getController();
+            controller.setMasterWindowController(masterWindowController);
+            Stage stage = new Stage();
+            Scene scene = new Scene(p);
+            stage.setScene(scene);
+            stage.showAndWait();
+        }
+        catch (Exception e)
+        {
+
+        }
+    }
+
+    public void SetScale(double currentScale)
+    {
+        scaleLabel.setText(Double.toString(currentScale));
     }
 
 }

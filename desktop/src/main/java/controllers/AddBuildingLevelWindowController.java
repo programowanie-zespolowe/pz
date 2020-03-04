@@ -5,14 +5,14 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import org.apache.commons.io.IOUtils;
 import sample.Structs.BuildingLevel;
 import sample.WebService.WebServiceConnection;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
 public class AddBuildingLevelWindowController {
     final FileChooser fileChooser = new FileChooser();
@@ -20,14 +20,18 @@ public class AddBuildingLevelWindowController {
     @FXML
     private TextField imageFilePath;
     @FXML
-    private TextField levelName;
-    @FXML
     private Spinner buildingLevelSpinner;
 
     private int buildingId = -1;
 
     public void setBuildingId(int buildingId) {
         this.buildingId = buildingId;
+    }
+
+    @FXML
+    public void initialize()
+    {
+        buildingLevelSpinner.getValueFactory().setValue(0);
     }
 
     @FXML
@@ -41,24 +45,36 @@ public class AddBuildingLevelWindowController {
     public void AddBuildingLevel(ActionEvent actionEvent) {
         if(imageFilePath.getText() == null || imageFilePath.getText().length() == 0)
             return;
-        if(levelName.getText() == null || levelName.getText().length() == 0)
-            return;
         BuildingLevel buildingLevel = new BuildingLevel();
 
-//        BufferedImage image = null;
-//        try {
-//            image = ImageIO.read(new File(imageFilePath.getText()));
-//            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-//            ImageIO.write(image, "png", bos );
-//            buildingLevel.setPathImage(bos.toByteArray());
-
-//        } catch (IOException e) {
-//        }
         buildingLevel.setBuildingLevel((int)buildingLevelSpinner.getValue());
         buildingLevel.setIdBuilding(buildingId);
         buildingLevel.setNorthPointAngle(0);
         buildingLevel.setScale(1);
 
-        WebServiceConnection.GetInstance().AddBuildingLevel(buildingLevel, buildingId, imageFilePath.getText());
+        Integer buildingLevelId = WebServiceConnection.GetInstance().AddBuildingLevel(buildingLevel, buildingId, imageFilePath.getText());
+        if(buildingLevelId != null)
+        {
+            try {
+                buildingLevel.setIdBuilding(buildingLevelId);
+                InputStream inputStream = new FileInputStream(imageFilePath.getText());
+                buildingLevel.setPathImage(IOUtils.readFully(inputStream, inputStream.available()));
+                masterWindowController.LevelAdded(buildingLevel);
+
+                Stage stage = (Stage) imageFilePath.getScene().getWindow();
+                stage.close();
+            }
+            catch (Exception e)
+            {
+
+            }
+        }
+
+    }
+
+    private  MasterWindowController masterWindowController;
+    public void setMasterWindowController(MasterWindowController masterWindowController)
+    {
+        this.masterWindowController = masterWindowController;
     }
 }

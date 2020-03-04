@@ -16,15 +16,13 @@
        <RowConstraints />
    </rowConstraints>
    <children>
-      <Label text="Name:" />
-      <TextField fx:id="levelName" GridPane.columnIndex="1" />
       <Label text="Image:" GridPane.columnSpan="2" GridPane.rowIndex="1" />
       <TextField fx:id="imageFilePath" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
       <Button mnemonicParsing="false" onAction="#BrowseImage" text="Browse..." GridPane.columnIndex="2" GridPane.rowIndex="1" />
       <Label text="Building level:" GridPane.rowIndex="2" />
       <Spinner fx:id="buildingLevelSpinner" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" >
           <valueFactory>
-              <SpinnerValueFactory.IntegerSpinnerValueFactory min="-2" max="100"/>
+              <SpinnerValueFactory.IntegerSpinnerValueFactory min="-100" max="100"/>
           </valueFactory>
       </Spinner>
       <Button onAction="#AddBuildingLevel" mnemonicParsing="false" text="Add level" GridPane.columnIndex="2" GridPane.rowIndex="3" />

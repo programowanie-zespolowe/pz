@@ -7,6 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <BorderPane fx:id="masterWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MasterWindowController">
    <top>
       <VBox BorderPane.alignment="CENTER">
@@ -32,11 +33,8 @@
       </VBox>
    </left>
    <center>
-      <ScrollPane fx:id="centerScrollPane" BorderPane.alignment="CENTER">
-        <content>
-          <AnchorPane fx:id="centerAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
-        </content>
+      <Pane fx:id="centerScrollPane" BorderPane.alignment="CENTER">
          <fx:include fx:id="centerMenuButtons" source="centerMenuButtons.fxml" />
-      </ScrollPane>
+      </Pane>
    </center>
 </BorderPane>

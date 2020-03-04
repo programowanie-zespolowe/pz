@@ -3,5 +3,8 @@
 <?import javafx.scene.layout.*?>
 
 
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.canvas.Canvas?>
 <Pane fx:id="mainPane" nodeOrientation="INHERIT" pickOnBounds="true" prefHeight="200.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CenterMenuButtonsController">
+    <ScrollPane fx:id="scrollPane"/>
 </Pane>

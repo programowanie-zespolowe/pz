@@ -12,6 +12,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import org.apache.commons.lang3.ArrayUtils;
 import sample.Structs.*;
 import sample.WebService.WebServiceConnection;
 import utils.FxmlUtils;
@@ -49,6 +50,9 @@ public class MasterWindowController {
     @FXML
     private AnchorPane centerAnchorPane;
 
+    @FXML
+    private Pane centerScrollPane;
+
     Building[] buildings;
     BuildingLevel[] levels;
     Point[] points;
@@ -62,10 +66,6 @@ public class MasterWindowController {
         leftMenuButtonsController.setMasterWindowController(this);
         centerMenuButtonsController.setMasterWindowController(this);
         bottomMenuButtonsController.setMasterWindowController(this);
-
-        centerMenuButtonsController.canvas.layoutBoundsProperty().addListener((obs, oldVal, newVal) -> {
-            RefreshBuilding();
-        });
 
         topMenuButtonsController.buildingComboBox.getSelectionModel().selectedItemProperty().addListener( (options, oldValue, newValue) -> {
             if(image != null) {
@@ -82,6 +82,8 @@ public class MasterWindowController {
             leftMenuButtonsController.RefreshLevels(levels);
             GetPointDetails();
         });
+        centerScrollPane.widthProperty().addListener((observableValue, number, t1) -> centerMenuButtonsController.mainPane.setPrefWidth(centerScrollPane.getWidth()));
+        centerScrollPane.heightProperty().addListener((observableValue, number, t1) -> centerMenuButtonsController.mainPane.setPrefHeight(centerScrollPane.getHeight()));
 
         LoadComponents();
         RefreshGUI();
@@ -94,6 +96,8 @@ public class MasterWindowController {
             BufferedImage buildingImage = null;
             buildingImage = ImageIO.read(bis);
             image = SwingFXUtils.toFXImage(buildingImage, null);
+            centerMenuButtonsController.canvas.setWidth(image.getRequestedWidth());
+            centerMenuButtonsController.canvas.setHeight(image.getRequestedHeight());
             centerMenuButtonsController.canvas.getGraphicsContext2D().drawImage(image,
                     0,
                     0,
@@ -110,6 +114,7 @@ public class MasterWindowController {
                     1000);
 
         }
+        topMenuButtonsController.SetScale(level.getScale());
     }
 
     public int GetCurrentBuildingId()
@@ -131,9 +136,8 @@ public class MasterWindowController {
 
     public void PointAdded(Point point)
     {
-        List<Point> pointList = Arrays.asList(points);
-        pointList.add(point);
-        points = (Point[])pointList.toArray();
+        points = ArrayUtils.add(points, point);
+        centerMenuButtonsController.ShowPoints(points, leftMenuButtonsController.getCurrentBuildLevel());
     }
 
     private void LoadComponents()
@@ -159,8 +163,8 @@ public class MasterWindowController {
             BufferedImage buildingImage = null;
             buildingImage = ImageIO.read(bis);
             image = SwingFXUtils.toFXImage(buildingImage, null);
-            centerMenuButtonsController.mainPane.setPrefHeight(image.getHeight());
-            centerMenuButtonsController.mainPane.setPrefWidth(image.getWidth());
+//            centerMenuButtonsController.mainPane.setPrefHeight(image.getHeight());
+//            centerMenuButtonsController.mainPane.setPrefWidth(image.getWidth());
 
             new java.util.Timer().schedule(
                     new java.util.TimerTask() {
@@ -181,28 +185,30 @@ public class MasterWindowController {
     }
 
     Image image = null;
-    public void RefreshBuilding()
-    {
-        try {
-            if(levels == null)
-                return;
-            for(BuildingLevel level : levels)
-            {
-                ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(level.getPathImage());
-                BufferedImage levelBufferedImage = ImageIO.read(byteArrayInputStream);
-                Image levelImage = SwingFXUtils.toFXImage(levelBufferedImage, null);
-                leftMenuButtonsController.flowPane.getChildren().add(new ImageView(levelImage));
-                leftMenuButtonsController.flowPane.getChildren().add(new Label(Integer.toString(level.getBuildingLevel())));
-            }
-        }
-        catch (IOException e)
-        {
-
-        }
-    }
 
     public void setCenter(String fxmlPath) {
 
         masterWindow.setCenter(FxmlUtils.fxmlLoader(fxmlPath));
+    }
+
+    public void LevelRemoved(int idImage) {
+        for(int i = 0; i < levels.length; i++)
+        {
+            if(levels[i].getIdImage() == idImage) {
+                levels = ArrayUtils.remove(levels, i);
+                break;
+            }
+        }
+        leftMenuButtonsController.RefreshLevels(levels);
+    }
+
+    public void BuildingAdded(Building building) {
+        buildings = ArrayUtils.add(buildings, building);
+        RefreshGUI();
+    }
+
+    public void LevelAdded(BuildingLevel buildingLevel) {
+        levels = ArrayUtils.add(levels, buildingLevel);
+        leftMenuButtonsController.RefreshLevels(levels);
     }
 }

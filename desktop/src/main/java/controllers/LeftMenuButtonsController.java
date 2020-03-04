@@ -8,7 +8,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -18,6 +20,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import sample.Structs.BuildingLevel;
+import sample.WebService.WebServiceConnection;
 import utils.FxmlUtils;
 
 import javax.imageio.ImageIO;
@@ -53,15 +56,29 @@ public class LeftMenuButtonsController  {
                 levels) {
             LeftMenuObject menuObject = new LeftMenuObject();
             menuObject.level = level;
+            MenuItem removeMenuItem = new MenuItem("Remove");
+            removeMenuItem.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    if(WebServiceConnection.GetInstance().RemoveBuildingLevel(level.getIdBuilding(), level.getIdImage()))
+                    {
+                        masterWindowController.LevelRemoved(level.getIdImage());
+                    }
+                }
+            });
+            ContextMenu contextMenu = new ContextMenu();
+            contextMenu.getItems().add(removeMenuItem);
+
             try {
                 ByteArrayInputStream bis = new ByteArrayInputStream(level.getPathImage());
                 BufferedImage buildingImage = null;
                 buildingImage = ImageIO.read(bis);
                 Image image = SwingFXUtils.toFXImage(buildingImage, null);
                 ImageView imageView = new ImageView(image);
-                imageView.setFitHeight(100);
+                imageView.setFitWidth(100);
                 imageView.setFitHeight(100);
                 imageView.setPreserveRatio(true);
+                flowPane.setMaxWidth(100);
                 flowPane.getChildren().add(imageView);
                 imageView.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                     @Override
@@ -70,6 +87,9 @@ public class LeftMenuButtonsController  {
                         event.consume();
                     }
                 });
+                imageView.setOnContextMenuRequested(e ->
+                        contextMenu.show(imageView, e.getScreenX(), e.getScreenY())
+                );
                 menuObject.imageView = imageView;
             }
             catch (Exception e)
@@ -77,6 +97,7 @@ public class LeftMenuButtonsController  {
 
             }
             Label label = new Label();
+            label.setContextMenu(contextMenu);
             label.setText("Poziom: " + level.getBuildingLevel());
             label.setAlignment(Pos.CENTER);
             flowPane.getChildren().add(label);
@@ -117,6 +138,7 @@ public class LeftMenuButtonsController  {
             Pane p = fxmlLoader.load(getClass().getResource(WINDOW_ADD_BUILDING_LEVEL_FXML).openStream());
             AddBuildingLevelWindowController controller = (AddBuildingLevelWindowController) fxmlLoader.getController();
             controller.setBuildingId(masterWindowController.GetCurrentBuildingId());
+            controller.setMasterWindowController(masterWindowController);
             Stage stage = new Stage();
             Scene scene = new Scene(p);
             stage.setScene(scene);
