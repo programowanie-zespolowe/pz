@@ -178,8 +178,7 @@ namespace WhereToGoEntities.WhereToGo.Models
                 entity.HasKey(e => e.IdPointConnection);
 
                 entity.Property(e => e.IdPointConnection)
-                    .HasColumnName("idPointConnection")
-                    .ValueGeneratedNever();
+                    .HasColumnName("idPointConnection");
 
                 entity.Property(e => e.IdPointEnd).HasColumnName("idPointEnd");
 
@@ -212,6 +211,10 @@ namespace WhereToGoEntities.WhereToGo.Models
                     .HasColumnName("namePoint")
                     .HasMaxLength(255)
                     .IsUnicode(false);
+
+                entity.Property(e => e.ImagePoint)
+                    .HasColumnName("imagePoint")
+                    .HasColumnType("image");
 
                 entity.HasOne(d => d.IdGroupNavigation)
                     .WithMany(p => p.PointsDetail)

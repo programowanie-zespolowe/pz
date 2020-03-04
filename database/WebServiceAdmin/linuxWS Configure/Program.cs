@@ -21,10 +21,10 @@ namespace linuxWS_Configure
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>().UseUrls(new[] { "http://localhost:6000" })
-                    .UseKestrel(options =>
-                    {
-                        options.Limits.MaxRequestBodySize = 52428800; 
-                    })
+                    //.UseKestrel(options =>
+                    //{
+                    //    options.Limits.MaxRequestBodySize = 52428800; 
+                    //})
                     ; 
                     ;
                 });

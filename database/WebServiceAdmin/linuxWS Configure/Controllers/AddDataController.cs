@@ -22,9 +22,9 @@ namespace WhereToGo.Admin.Controllers
         {
             _log = log;
         }
-        [Route("Buildings")]
+        [Route("Buildings/{NameBuilding}")]
         [HttpPost]
-        public IActionResult PostBuildings([FromForm] Buildings buildings, [FromForm] IFormFile ImageRead)
+        public IActionResult PostBuildings(string NameBuilding, [FromForm] IFormFile ImageRead)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -33,9 +33,14 @@ namespace WhereToGo.Admin.Controllers
                 using WhereToGoContext whereToGo = new WhereToGoContext();
                 Buildings mdlBuildings = new Buildings();
                 mdlBuildings.IdUser = UserSettings.IdAdmin;
-                mdlBuildings.NameBuilding = buildings.NameBuilding;
-                ImageRead.CopyTo(ms);
-                mdlBuildings.ImageBuilding = ms.GetBuffer();
+                mdlBuildings.NameBuilding = NameBuilding;
+                if (ImageRead != null)
+                {
+                    ImageRead.CopyTo(ms);
+                    mdlBuildings.ImageBuilding = ms.GetBuffer();
+                }
+                else
+                    mdlBuildings.ImageBuilding = null;
                 whereToGo.Buildings.Add(mdlBuildings);
                 try
                 {
@@ -45,7 +50,7 @@ namespace WhereToGo.Admin.Controllers
                 {
                     return BadRequest(999);
                 }
-                return Ok(mdlBuildings);
+                return Ok(mdlBuildings.IdBuilding);
 
             }
 
@@ -53,25 +58,208 @@ namespace WhereToGo.Admin.Controllers
         }
         [Route("BuildingImage/{idBuilding}/{BuildingLevel}/{Scale}/{NorthPointAngle}")]
         [HttpPost]
-        public IActionResult PostBuildingImages(int idBuilding, int BuildingLevel, int Scale, int NorthPointAngle, [FromForm] IFormFile ImageRead)
+        public IActionResult PostBuildingImages(int idBuilding, int BuildingLevel, double Scale, double NorthPointAngle, [FromForm] IFormFile ImageRead)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            _log.LogInformation("Jest okej ide dalej");
             using (var ms = new MemoryStream())
             {
                 using WhereToGoContext whereToGo = new WhereToGoContext();
                 BuildingImages mdlBuildings = new BuildingImages();
                 mdlBuildings.IdBuilding = idBuilding;
-                _log.LogInformation($"Zwracam idBuilding:{idBuilding}");
                 mdlBuildings.BuildingLevel = BuildingLevel;
-                _log.LogInformation($"Zwracam BuildingLevel:{BuildingLevel}");
-                ImageRead.CopyTo(ms);
-                mdlBuildings.PathImage = ms.GetBuffer();
+                if(ImageRead != null)
+                {
+                    ImageRead.CopyTo(ms);
+                    mdlBuildings.PathImage = ms.GetBuffer();
+                }
+                else
+                    mdlBuildings.PathImage = null;
                 mdlBuildings.Scale = Scale;
-                _log.LogInformation($"Zwracam BuildingLevel:{Scale}");
                 mdlBuildings.NorthPointAngle = NorthPointAngle;
-                _log.LogInformation($"Zwracam BuildingLevel:{NorthPointAngle}");
+                whereToGo.BuildingImages.Add(mdlBuildings);
+                try
+                {
+                    whereToGo.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    return BadRequest(999);
+                }
+
+                return Ok(mdlBuildings.IdImage);
+            }
+        }
+        [Route("Groups/{NameGroup}/{IdBuilding}")]
+        [HttpPost]
+        public IActionResult PostGroups(string NameGroup, int IdBuilding, [FromForm] IFormFile ImageRead)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            using (var ms = new MemoryStream())
+            {
+                using WhereToGoContext whereToGo = new WhereToGoContext();
+                Groups mdlGroups = new Groups();
+                mdlGroups.NameGroup = NameGroup;
+                if (ImageRead != null)
+                {
+                    ImageRead.CopyTo(ms);
+                    mdlGroups.ImageGroup = ms.GetBuffer();
+                }
+                else
+                    mdlGroups.ImageGroup = null;
+                mdlGroups.IdBuilding = IdBuilding;
+                whereToGo.Groups.Add(mdlGroups);
+                try
+                {
+                    whereToGo.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    return BadRequest(999);
+                }
+
+                return Ok(mdlGroups.IdGroup);
+
+            }
+
+        }
+        [Route("PointType/{TypePoint}")]
+        [HttpPost]
+        public IActionResult PostPointType(string TypePoint)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+                using WhereToGoContext whereToGo = new WhereToGoContext();
+                PointType mdlPointType = new PointType();
+                mdlPointType.TypePoint = TypePoint;
+                whereToGo.PointType.Add(mdlPointType);
+            try
+            {
+                whereToGo.SaveChanges();
+            }
+            catch (Exception)
+            {
+                return BadRequest(999);
+            }
+
+            return Ok(mdlPointType.IdPointType);
+
+        }
+        [Route("BuildingsImage/{idBuildingImage}/{X}/{Y}/{IdPointType}/Points")]
+        [HttpPost]
+        public IActionResult PostPointByBuildingImages(int idBuildingImage, double X, double Y, int IdPointType)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            using (var ms = new MemoryStream())
+            {
+                using WhereToGoContext whereToGo = new WhereToGoContext();
+                Points mdlPoints = new Points();
+                mdlPoints.IdImage = idBuildingImage;
+                mdlPoints.X = X;
+                mdlPoints.Y = Y;
+                mdlPoints.IdPointType = IdPointType;
+                mdlPoints.ImagePoint = null;
+                whereToGo.Points.Add(mdlPoints);
+                try
+                {
+                    whereToGo.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    return BadRequest(999);
+                }
+
+                return Ok(mdlPoints.IdPoint);
+
+            }
+
+
+        }
+        [Route("Points/{idPoint}/{NamePoint}/{IdGroup}/PointDetails")]
+        [HttpPost]
+        public IActionResult PostPoint(int idPoint, string NamePoint, int IdGroup, [FromForm] IFormFile ImageRead)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            using (var ms = new MemoryStream())
+            {
+                using WhereToGoContext whereToGo = new WhereToGoContext();
+                PointsDetail mdlPointsDetails = new PointsDetail();
+                mdlPointsDetails.IdPoint = idPoint;
+                mdlPointsDetails.NamePoint = NamePoint;
+                mdlPointsDetails.IdGroup = IdGroup;
+                if (ImageRead != null)
+                {
+                    ImageRead.CopyTo(ms);
+                    mdlPointsDetails.ImagePoint = ms.GetBuffer();
+                }
+                else
+                    mdlPointsDetails.ImagePoint = null;
+                whereToGo.PointsDetail.Add(mdlPointsDetails);
+                try
+                {
+                    whereToGo.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    return BadRequest(999);
+                }
+
+                return Ok(mdlPointsDetails.IdPointDetails);
+
+
+            }
+
+        }
+        [Route("Points/{IdPointStart}/{IdPointEnd}/PointsConnection")]
+        [HttpPost]
+        public IActionResult PostPointConnection(int IdPointStart, int IdPointEnd)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            using (var ms = new MemoryStream())
+            {
+                using WhereToGoContext whereToGo = new WhereToGoContext();
+                PointsConnection mdlPointsConnection = new PointsConnection();
+                mdlPointsConnection.IdPointStart = IdPointStart;
+                mdlPointsConnection.IdPointEnd = IdPointEnd;
+                whereToGo.PointsConnection.Add(mdlPointsConnection);
+                try
+                {
+                    whereToGo.SaveChanges();
+                }catch(Exception)
+                {
+                    return BadRequest(999);
+                }
+
+                return Ok(mdlPointsConnection.IdPointConnection);
+
+            }
+
+        }
+        [Route("TestowyImage/{idBuilding}")]
+        [HttpPost]
+        public IActionResult PostTestImages(int idBuilding, [FromForm] BuildingImages buildingImages, [FromForm] IFormFile ImageRead)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            using (var ms = new MemoryStream())
+            {
+                using WhereToGoContext whereToGo = new WhereToGoContext();
+                BuildingImages mdlBuildings = new BuildingImages();
+                mdlBuildings.IdBuilding = idBuilding;
+                mdlBuildings.BuildingLevel = buildingImages.BuildingLevel;
+                if (ImageRead != null)
+                {
+                    ImageRead.CopyTo(ms);
+                    mdlBuildings.PathImage = ms.GetBuffer();
+                }
+                else
+                    mdlBuildings.PathImage = null;
+                mdlBuildings.Scale = buildingImages.Scale;
+                mdlBuildings.NorthPointAngle = buildingImages.NorthPointAngle;
                 whereToGo.BuildingImages.Add(mdlBuildings);
                 try
                 {
@@ -84,148 +272,6 @@ namespace WhereToGo.Admin.Controllers
 
                 return Ok(mdlBuildings);
             }
-
-
-        }
-        [Route("Groups")]
-        [HttpPost]
-        public IActionResult PostGroups([FromForm] Groups groups, [FromForm] IFormFile ImageRead)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-            using (var ms = new MemoryStream())
-            {
-                using WhereToGoContext whereToGo = new WhereToGoContext();
-                Groups mdlGroups = new Groups();
-                mdlGroups.NameGroup = groups.NameGroup;
-                ImageRead.CopyTo(ms);
-                mdlGroups.ImageGroup = ms.GetBuffer();
-                mdlGroups.IdBuilding = groups.IdBuilding;
-                whereToGo.Groups.Add(mdlGroups);
-                try
-                {
-                    whereToGo.SaveChanges();
-                }
-                catch (Exception)
-                {
-                    return BadRequest(999);
-                }
-
-                return Ok(mdlGroups);
-
-            }
-
-        }
-        [Route("PointType")]
-        [HttpPost]
-        public IActionResult PostPointType([FromForm] PointType pointType)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-                using WhereToGoContext whereToGo = new WhereToGoContext();
-                PointType mdlPointType = new PointType();
-            _log.LogInformation("Jest okej ide dalej");
-            mdlPointType.TypePoint = pointType.TypePoint;
-                whereToGo.PointType.Add(mdlPointType);
-            try
-            {
-                whereToGo.SaveChanges();
-                _log.LogInformation("zapisalem");
-            }
-            catch (Exception)
-            {
-                return BadRequest(999);
-            }
-
-            return Ok(mdlPointType);
-
-        }
-        [Route("BuildingsImage/{idBuildingImage}/Points")]
-        [HttpPost]
-        public IActionResult PostPointByBuildingImages(int idBuildingImage, [FromForm] Points points, [FromForm] IFormFile ImageRead)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-            using (var ms = new MemoryStream())
-            {
-                using WhereToGoContext whereToGo = new WhereToGoContext();
-                Points mdlPoints = new Points();
-                mdlPoints.IdImage = idBuildingImage;
-                mdlPoints.X = points.X;
-                mdlPoints.Y = points.Y;
-                mdlPoints.IdPointType = points.IdPointType;
-                ImageRead.CopyTo(ms);
-                mdlPoints.ImagePoint = ms.GetBuffer();
-                whereToGo.Points.Add(mdlPoints);
-                try
-                {
-                    whereToGo.SaveChanges();
-                }
-                catch (Exception)
-                {
-                    return BadRequest(999);
-                }
-
-                return Ok(mdlPoints);
-
-            }
-
-
-        }
-        [Route("Points/{idPoint}/PointDetails")]
-        [HttpPost]
-        public IActionResult PostPoint(int idPoint, [FromForm] PointsDetail pointsDetail)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-            using (var ms = new MemoryStream())
-            {
-                using WhereToGoContext whereToGo = new WhereToGoContext();
-                PointsDetail mdlPointsDetails = new PointsDetail();
-                mdlPointsDetails.IdPoint = idPoint;
-                mdlPointsDetails.NamePoint = pointsDetail.NamePoint;
-                mdlPointsDetails.IdGroup = pointsDetail.IdGroup;
-                whereToGo.PointsDetail.Add(mdlPointsDetails);
-                try
-                {
-                    whereToGo.SaveChanges();
-                }
-                catch (Exception)
-                {
-                    return BadRequest(999);
-                }
-
-                return Ok(mdlPointsDetails);
-
-
-            }
-
-        }
-        [Route("Points/PointsConnection")]
-        [HttpPost]
-        public IActionResult PostPointConnection([FromForm] PointsConnection pointsConnection)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-            using (var ms = new MemoryStream())
-            {
-                using WhereToGoContext whereToGo = new WhereToGoContext();
-                PointsConnection mdlPointsConnection = new PointsConnection();
-                mdlPointsConnection.IdPointStart = pointsConnection.IdPointStart;
-                mdlPointsConnection.IdPointEnd = pointsConnection.IdPointEnd;
-                whereToGo.PointsConnection.Add(mdlPointsConnection);
-                try
-                {
-                    whereToGo.SaveChanges();
-                }catch(Exception)
-                {
-                    return BadRequest(999);
-                }
-
-                return Ok(mdlPointsConnection);
-
-            }
-
         }
     }
 }

@@ -9,6 +9,7 @@ namespace WhereToGoEntities.WhereToGo.Models
         public int IdPoint { get; set; }
         public string NamePoint { get; set; }
         public int? IdGroup { get; set; }
+        public byte[] ImagePoint { get; set; }
 
         public virtual Groups IdGroupNavigation { get; set; }
         public virtual Points IdPointNavigation { get; set; }
