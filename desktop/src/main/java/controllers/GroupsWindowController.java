@@ -9,6 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import sample.Structs.Group;
 import sample.WebService.WebServiceConnection;
@@ -17,6 +18,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 
 public class GroupsWindowController {
     @FXML
@@ -51,6 +53,8 @@ public class GroupsWindowController {
         {
             listView.getItems().add(group.getNameGroup());
         }
+        if(listView.getItems().size() > 0)
+            listView.getSelectionModel().select(0);
     }
 
     @FXML
@@ -132,6 +136,27 @@ public class GroupsWindowController {
 
     public void Save(ActionEvent actionEvent)
     {
+        int num = listView.getSelectionModel().selectedIndexProperty().get();
+        if(num < 0)
+            return;
+        if(num >= groups.length)
+            return;
+        try {
+            Group group = groups[num];
+            group.setNameGroup(nameTextField.getText());
+            if(imagePath.isVisible())
+                group.setImageGroup(IOUtils.toByteArray(new FileInputStream(imagePath.getText())));
+            if(WebServiceConnection.GetInstance().EditGroup(group, imagePath.getText(), masterWindowController.GetCurrentBuildingId()))
+            {
+                masterWindowController.GroupEditted(group);
+                RefreshList();
+                listView.getSelectionModel().select(num);
+            }
+        }
+        catch (Exception e)
+        {
+
+        }
 
     }
 

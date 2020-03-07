@@ -277,4 +277,34 @@ public class MasterWindowController {
             }
         }
     }
+
+    public void GroupEditted(Group group) {
+        for(int i = 0; i < groups.length; i++)
+        {
+            if(groups[i].getIdGroup() == group.getIdGroup())
+            {
+                groups[i] = group;
+                return;
+            }
+        }
+    }
+
+    public void PointDetailsEditted(PointDetail pointDetail, Point point) {
+        for(int i = 0; i < points.length; i++)
+        {
+            if(points[i].getIdPoint() == point.getIdPoint())
+            {
+                for(int j = 0; j < pointDetails[i].size(); j++)
+                {
+                    if(pointDetails[i].get(j).getIdPointDetails() == pointDetail.getIdPoint())
+                    {
+                        pointDetails[i].get(j).setImagePoint(pointDetail.getImagePoint());
+                        pointDetails[i].get(j).setIdGroup(pointDetail.getIdGroup());
+                        pointDetails[i].get(j).setNamePoint(pointDetail.getNamePoint());
+                    }
+                }
+                return;
+            }
+        }
+    }
 }

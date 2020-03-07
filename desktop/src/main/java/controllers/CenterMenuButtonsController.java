@@ -104,8 +104,8 @@ public class CenterMenuButtonsController {
             Pane p = fxmlLoader.load(getClass().getResource(WINDOW_POINT_DETAILS).openStream());
             PointDetailsController controller = (PointDetailsController) fxmlLoader.getController();
             controller.setPoint(point);
-            controller.setPointDetails(masterWindowController.GetPointDetails(point));
             controller.setGroups(masterWindowController.getGroups());
+            controller.setPointDetails(masterWindowController.GetPointDetails(point));
             controller.setMasterWindowController(masterWindowController);
             Stage stage = new Stage();
             Scene scene = new Scene(p);

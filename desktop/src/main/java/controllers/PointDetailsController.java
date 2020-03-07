@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.apache.commons.io.IOUtils;
 import sample.QrCodeGeneration;
 import sample.Structs.Group;
 import sample.Structs.Point;
@@ -18,6 +19,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -223,4 +225,29 @@ public class PointDetailsController {
         }
     }
 
+    public void SavePointDetail(ActionEvent actionEvent)
+    {
+        int num = listView.getSelectionModel().selectedIndexProperty().get();
+        if(num < 0)
+            return;
+        if(num >= pointDetails.size())
+            return;
+        try {
+            PointDetail pointDetail = pointDetails.get(num);
+            pointDetail.setNamePoint(nameTextField.getText());
+            pointDetail.setIdGroup(groups[groupComboBox.getSelectionModel().getSelectedIndex()].getIdGroup());
+            if(imagePath.isVisible())
+                pointDetail.setImagePoint(IOUtils.toByteArray(new FileInputStream(imagePath.getText())));
+            if(WebServiceConnection.GetInstance().EditPointDetails(pointDetail, imagePath.getText()))
+            {
+                masterWindowController.PointDetailsEditted(pointDetail, point);
+                RefreshListView();
+                listView.getSelectionModel().select(num);
+            }
+        }
+        catch (Exception e)
+        {
+
+        }
+    }
 }
