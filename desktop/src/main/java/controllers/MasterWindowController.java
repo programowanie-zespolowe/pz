@@ -215,4 +215,22 @@ public class MasterWindowController {
         pointsConnections = ArrayUtils.add(pointsConnections, connection);
         centerMenuButtonsController.ShowPointsConnections(pointsConnections, points, leftMenuButtonsController.getCurrentBuildLevel());
     }
+
+    public Group[] getGroups() {
+        return groups;
+    }
+
+    public void groupAdded(Group group) {
+        groups = ArrayUtils.add(groups, group);
+    }
+
+    public void GroupRemoved(int idGroup) {
+        for(int i = 0; i < groups.length; i++)
+        {
+            if(groups[i].getIdGroup() == idGroup) {
+                groups = ArrayUtils.remove(groups, i);
+                break;
+            }
+        }
+    }
 }

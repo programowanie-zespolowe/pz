@@ -11,9 +11,12 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import utils.FxmlUtils;
 
+import java.io.IOException;
+
 public class TopMenuButtonsController {
     private MasterWindowController masterWindowController;
     public static final String WINDOW_ADD_BUILDING_FXML = "/fxml/AddBuildingWindow.fxml";
+    public static final String WINDOW_SHOW_GROUPS = "/fxml/groupsWindow.fxml";
 
     public TopMenuButtonsController()
     {
@@ -50,6 +53,28 @@ public class TopMenuButtonsController {
     public void SetScale(double currentScale)
     {
         scaleLabel.setText(Double.toString(currentScale));
+    }
+
+    @FXML
+    public void showGroups()
+    {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            Pane p = fxmlLoader.load(getClass().getResource(WINDOW_SHOW_GROUPS).openStream());
+            GroupsWindowController controller = (GroupsWindowController) fxmlLoader.getController();
+            controller.setGroups(masterWindowController.getGroups());
+            controller.setIdBuilding(masterWindowController.GetCurrentBuildingId());
+            controller.setMasterWindowController(masterWindowController);
+            Stage stage = new Stage();
+            Scene scene = new Scene(p);
+            stage.setScene(scene);
+            stage.showAndWait();
+
+        }
+        catch (IOException e)
+        {
+
+        }
     }
 
 }

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.image.ImageView?>
+<GridPane xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controllers.GroupsWindowController"
+      prefHeight="400.0" prefWidth="600.0">
+    <ListView fx:id="listView" GridPane.columnIndex="0" GridPane.rowIndex="0" prefWidth="200" prefHeight="500"/>
+
+    <VBox fx:id="options" GridPane.columnIndex="1" GridPane.rowIndex="0" prefWidth="200" prefHeight="500">
+        <TextField fx:id="nameTextField" promptText="Name:"/>
+        <Label fx:id="noImageLabel" text="No image" visible="false"/>
+        <ImageView fx:id="imageView" />
+        <TextField fx:id="imagePath" visible="false"/>
+        <Button fx:id="browseButton" onAction="#Browse" text="Browse..." alignment="CENTER"/>
+        <Button fx:id="saveButton" text="Save" alignment="CENTER" onAction="#Save"/>
+        <Button fx:id="deleteButton" text="Delete" alignment="CENTER" onAction="#Delete"/>
+    </VBox>
+
+    <Button fx:id="addNewGroup" onAction="#addGroup" text="Add new group" alignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.columnSpan="2"/>
+
+</GridPane>

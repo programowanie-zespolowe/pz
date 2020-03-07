@@ -35,21 +35,16 @@ public class WebServiceConnection {
     private final String RemoveBuildingsLevelUrl = "http://54.37.136.172:90/admin/DeleteData/BuildingImages/{0}";
 
     private final String AddPointUrl = "http://54.37.136.172:90/admin/AddData/BuildingsImage/{0}/{1}/{2}/{3}/Points";
+
     private final String GroupsUrl = "http://54.37.136.172:90/admin/GetData/Buildings/{0}/Groups";
+    private final String AddGroupUrl = "http://54.37.136.172:90/admin/AddData/Groups/{0}/{1}";
+    private final String RemoveGroupUrl = "http://54.37.136.172:90/admin/DeleteData/Groups/{0}";
+
     private final String PointDetailUrl = "http://54.37.136.172:90/admin/GetData/Buildings/Points/{0}/PointsDetails";
     private final String PointsUrl = "http://54.37.136.172:90/admin/GetData/Buildings/{0}/Points";
     private final String PointsConnectionsUrl = "http://54.37.136.172:90/admin/GetData/Buildings/{0}/PointsConnection";
     private final String AddPointsConnectionUrl = "http://54.37.136.172:90/admin/AddData/Points/{0}/{1}/PointsConnection";
     private final String AddPointType = "http://54.37.136.172:90/Admin/AddData/PointType";
-
-//    private final String LoginUrl = "http://localhost:6000/admin/login";
-//    private final String BuildingsUrl = "http://localhost:6000/admin/GetData/Buildings";
-//    private final String BuildingsLevelUrl = "http://localhost:6000/admin/GetData/Buildings/{0}";
-//    private final String AddBuildingsLevelUrl = "http://localhost:6000/admin/AddData/BuildingImage/{0}";
-//    private final String AddPointUrl = "http://localhost:6000/admin/AddData/BuildingsImage/{0}/Points";
-//    private final String GroupsUrl = "http://localhost:6000/admin/GetData/Buildings/{0}/Groups";
-//    private final String PointDetailUrl = "http://localhost:6000/admin/GetData/Buildings/Points/{0}/PointsDetails";
-//    private final String PointsUrl = "http://localhost:6000/admin/GetData/Buildings/{0}/Points";
 
     private TokenStruct tokenStruct;
     private LoginStruct loginStruct;
@@ -228,7 +223,7 @@ public class WebServiceConnection {
                     .setMode(HttpMultipartMode.STRICT)
                     .build();
 
-            String url = MessageFormat.format(AddBuilding, buildingName);
+            String url = MessageFormat.format(AddBuilding, buildingName.replace(" ", "_"));
             HttpPost httpPost = new HttpPost(url);
             httpPost.addHeader("Authorization", "Bearer " + tokenStruct.getToken());
             String name = entity.getContentType().getName();
@@ -406,6 +401,49 @@ public class WebServiceConnection {
         catch (Exception e)
         {
             return null;
+        }
+    }
+
+    public Group AddGroup(Group group, String filePath, int idBuilding)
+    {
+        try{
+//            File file = new File(filePath);
+            CloseableHttpClient httpClient = HttpClients.createDefault();
+            HttpEntity entity = MultipartEntityBuilder
+                    .create()
+//                    .addBinaryBody("ImageRead", file, ContentType.create("application/octet-stream"), "filename")
+                    .setMode(HttpMultipartMode.STRICT)
+                    .build();
+
+            String url = MessageFormat.format(AddGroupUrl, group.getNameGroup().replace(" ", "_"), idBuilding);
+            HttpPost httpPost = new HttpPost(url);
+            httpPost.addHeader("Authorization", "Bearer " + tokenStruct.getToken());
+            String name = entity.getContentType().getName();
+            String value = entity.getContentType().getValue();
+            httpPost.addHeader(name, value);
+            httpPost.setEntity(entity);
+            HttpResponse response = httpClient.execute(httpPost);
+            HttpEntity result = response.getEntity();
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(result.getContent()));
+            String content = br.readLine();
+            group.setIdGroup(Integer.parseInt(content));
+            return group;
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
+    }
+
+    public boolean RemoveGroup(Group group) {
+        try{
+            DeleteRequest(MessageFormat.format(RemoveGroupUrl, group.getIdGroup()));
+            return true;
+        }
+        catch (Exception e)
+        {
+            return false;
         }
     }
 }
