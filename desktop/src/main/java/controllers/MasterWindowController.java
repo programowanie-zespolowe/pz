@@ -1,17 +1,11 @@
 package controllers;
 
 import javafx.embed.swing.SwingFXUtils;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 import org.apache.commons.lang3.ArrayUtils;
 import sample.Structs.*;
 import sample.WebService.WebServiceConnection;
@@ -20,10 +14,8 @@ import utils.FxmlUtils;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class MasterWindowController {
@@ -82,7 +74,7 @@ public class MasterWindowController {
             pointsConnections = WebServiceConnection.GetInstance().PointsConnections(buildingId);
 
             leftMenuButtonsController.RefreshLevels(levels);
-            GetPointDetails();
+            LoadPointDetails();
         });
         centerScrollPane.widthProperty().addListener((observableValue, number, t1) -> centerMenuButtonsController.mainPane.setPrefWidth(centerScrollPane.getWidth()));
         centerScrollPane.heightProperty().addListener((observableValue, number, t1) -> centerMenuButtonsController.mainPane.setPrefHeight(centerScrollPane.getHeight()));
@@ -125,7 +117,7 @@ public class MasterWindowController {
         return buildings[topMenuButtonsController.buildingComboBox.getSelectionModel().getSelectedIndex()].getIdBuilding();
     }
 
-    private void GetPointDetails() {
+    private void LoadPointDetails() {
         if(points == null)
             return;
         pointDetails = new ArrayList[points.length];
@@ -140,6 +132,7 @@ public class MasterWindowController {
     public void PointAdded(Point point)
     {
         points = ArrayUtils.add(points, point);
+        pointDetails = ArrayUtils.add(pointDetails, new ArrayList<PointDetail>());
         centerMenuButtonsController.ShowPoints(points, leftMenuButtonsController.getCurrentBuildLevel());
     }
 
@@ -230,6 +223,57 @@ public class MasterWindowController {
             if(groups[i].getIdGroup() == idGroup) {
                 groups = ArrayUtils.remove(groups, i);
                 break;
+            }
+        }
+    }
+
+    public List<PointDetail> GetPointDetails(Point point) {
+        for(int i = 0; i < points.length; i++)
+        {
+            if(points[i].getIdPoint() == point.getIdPoint()) {
+                List<PointDetail> list = pointDetails[i];
+                return list;
+            }
+        }
+        return null;
+    }
+
+    public void PointDetailsAdded(PointDetail pointDetail) {
+        for(int i = 0; i < points.length; i++)
+        {
+            if(pointDetail.getIdPoint() == points[i].getIdPoint())
+            {
+                pointDetails[i].add(pointDetail);
+                break;
+            }
+        }
+    }
+
+    public void PointDetailsRemoved(Point point, PointDetail pointDetail) {
+        for(int i = 0; i < points.length; i++)
+        {
+            if(point.getIdPoint() == points[i].getIdPoint())
+            {
+                for(PointDetail detail : pointDetails[i])
+                {
+                    if(detail.getIdPointDetails() == pointDetail.getIdPointDetails()) {
+                        pointDetails[i].remove(detail);
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+    }
+
+    public void PointRemoved(Point point) {
+        for(int i = 0; i < points.length; i++)
+        {
+            if(point.getIdPoint() == points[i].getIdPoint())
+            {
+                pointDetails = ArrayUtils.remove(pointDetails, i);
+                points = ArrayUtils.remove(points, i);
+                BuildingLevelChanged(leftMenuButtonsController.getCurrentBuildLevel());
             }
         }
     }

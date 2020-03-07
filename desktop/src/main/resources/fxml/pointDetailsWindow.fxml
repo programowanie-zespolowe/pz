@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.image.ImageView?>
+<GridPane xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml"
+          fx:controller="controllers.PointDetailsController"
+          prefHeight="400.0" prefWidth="600.0">
+    <Label alignment="CENTER" text="Point details" GridPane.rowIndex="0" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
+    <ListView fx:id="listView" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+    <VBox GridPane.columnIndex="1" GridPane.rowIndex="1">
+        <TextField fx:id="nameTextField" promptText="Name:"/>
+        <ComboBox fx:id="groupComboBox"/>
+        <Label fx:id="noImageLabel" text="No image"/>
+        <ImageView fx:id="imageView"/>
+        <TextField fx:id="imagePath"/>
+        <Button fx:id="browseImage" text="Browse..." onAction="#Browse"/>
+        <Button fx:id="savePointDetail" text="Save point detail"/>
+        <Button fx:id="removePointDetail" text="Remove point detail" onAction="#RemovePointDetail"/>
+    </VBox>
+    <Button fx:id="addNewPointDetail" GridPane.rowIndex="2" GridPane.columnIndex="0" GridPane.columnSpan="2" text="Add new point detail" onAction="#AddPointDetail"/>
+    <Button fx:id="removePointButton" GridPane.rowIndex="3" GridPane.columnIndex="0" GridPane.columnSpan="2" text="Remove point" onAction="#RemovePoint"/>
+</GridPane>

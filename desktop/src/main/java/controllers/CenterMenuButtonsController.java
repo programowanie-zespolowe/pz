@@ -3,6 +3,8 @@ package controllers;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
@@ -12,12 +14,16 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import sample.Structs.BuildingLevel;
 import sample.Structs.Point;
 import sample.Structs.PointsConnection;
 import sample.WebService.WebServiceConnection;
 
+import java.io.IOException;
+
 public class CenterMenuButtonsController {
+    private static final String WINDOW_POINT_DETAILS = "/fxml/pointDetailsWindow.fxml";
     @FXML
     public Pane mainPane;
     @FXML
@@ -61,6 +67,14 @@ public class CenterMenuButtonsController {
                 }
                 else if(selectedPoint_2 == null) {
                     selectedPoint_2 = FindPoint(t.getX(), t.getY());
+
+                    if(selectedPoint_2 == selectedPoint_1) {
+                        ShowPointDetails(selectedPoint_1);
+                        selectedPoint_1 = null;
+                        selectedPoint_2 = null;
+                        return;
+                    }
+
                     PointsConnection connection = WebServiceConnection.GetInstance().AddPointConnection(selectedPoint_1, selectedPoint_2);
                     if(connection != null)
                         masterWindowController.ConnectionAdded(connection);
@@ -81,6 +95,28 @@ public class CenterMenuButtonsController {
         mainPane.widthProperty().addListener((observableValue, number, t1) -> scrollPane.setMaxWidth(mainPane.getWidth()));
         mainPane.heightProperty().addListener((observableValue, number, t1) -> scrollPane.setMaxHeight(mainPane.getHeight()));
 
+    }
+
+    private void ShowPointDetails(Point point)
+    {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            Pane p = fxmlLoader.load(getClass().getResource(WINDOW_POINT_DETAILS).openStream());
+            PointDetailsController controller = (PointDetailsController) fxmlLoader.getController();
+            controller.setPoint(point);
+            controller.setPointDetails(masterWindowController.GetPointDetails(point));
+            controller.setGroups(masterWindowController.getGroups());
+            controller.setMasterWindowController(masterWindowController);
+            Stage stage = new Stage();
+            Scene scene = new Scene(p);
+            stage.setScene(scene);
+            stage.showAndWait();
+
+        }
+        catch (IOException e)
+        {
+
+        }
     }
 
     public Canvas canvas;
