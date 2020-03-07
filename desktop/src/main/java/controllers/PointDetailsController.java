@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import sample.QrCodeGeneration;
 import sample.Structs.Group;
 import sample.Structs.Point;
 import sample.Structs.PointDetail;
@@ -17,6 +18,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +41,8 @@ public class PointDetailsController {
     private ImageView imageView;
     @FXML
     private TextField imagePath;
+    @FXML
+    private ImageView qrCodeImageView;
 
     @FXML
     public void initialize()
@@ -111,6 +115,23 @@ public class PointDetailsController {
     public void setPoint(Point point)
     {
         this.point = point;
+        SetQRCodeImage(point);
+    }
+
+    private void SetQRCodeImage(Point point) {
+        if(point != null && masterWindowController != null)
+        {
+            try {
+                qrCodeImageView.setImage(QrCodeGeneration.GetQRCodeImage(MessageFormat.format("BUILDING:{0}:{1}", masterWindowController.GetCurrentBuildingId(), point.getIdPoint())));
+                qrCodeImageView.setFitWidth(125);
+                qrCodeImageView.setFitHeight(125);
+                qrCodeImageView.setPreserveRatio(true);
+            }
+            catch (Exception e)
+            {
+                System.out.println(e.getStackTrace());
+            }
+        }
     }
 
     public void setPointDetails(List<PointDetail> pointDetailList)
@@ -133,6 +154,7 @@ public class PointDetailsController {
 
     public void setMasterWindowController(MasterWindowController masterWindowController) {
         this.masterWindowController = masterWindowController;
+        SetQRCodeImage(point);
     }
 
     public void RemovePoint(ActionEvent actionEvent) {
@@ -182,4 +204,23 @@ public class PointDetailsController {
             masterWindowController.PointDetailsAdded(pointDetail);
         }
     }
+    public void QrCodeToFile(ActionEvent actionEvent) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select place to write file");
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.png");
+        fileChooser.getExtensionFilters().add(extFilter);
+        File file = fileChooser.showSaveDialog(null);
+        if(file != null)
+        {
+            try {
+                QrCodeGeneration.GeneratePNG(MessageFormat.format("BUILDING:{0}:{1}", masterWindowController.GetCurrentBuildingId(), point.getIdPoint()),
+                        file.getAbsolutePath());
+            }
+            catch (Exception e)
+            {
+
+            }
+        }
+    }
+
 }

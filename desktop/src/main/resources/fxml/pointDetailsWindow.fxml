@@ -23,6 +23,8 @@
         <Button fx:id="savePointDetail" text="Save point detail"/>
         <Button fx:id="removePointDetail" text="Remove point detail" onAction="#RemovePointDetail"/>
     </VBox>
-    <Button fx:id="addNewPointDetail" GridPane.rowIndex="2" GridPane.columnIndex="0" GridPane.columnSpan="2" text="Add new point detail" onAction="#AddPointDetail"/>
-    <Button fx:id="removePointButton" GridPane.rowIndex="3" GridPane.columnIndex="0" GridPane.columnSpan="2" text="Remove point" onAction="#RemovePoint"/>
+    <ImageView fx:id="qrCodeImageView" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+    <Button GridPane.rowIndex="2" GridPane.columnIndex="1" text="Qr code to file..." onAction="#QrCodeToFile"/>
+    <Button fx:id="addNewPointDetail" GridPane.rowIndex="3" GridPane.columnIndex="0" GridPane.columnSpan="2" text="Add new point detail" onAction="#AddPointDetail"/>
+    <Button fx:id="removePointButton" GridPane.rowIndex="4" GridPane.columnIndex="0" GridPane.columnSpan="2" text="Remove point" onAction="#RemovePoint"/>
 </GridPane>

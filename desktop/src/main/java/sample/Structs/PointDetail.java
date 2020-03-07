@@ -6,6 +6,7 @@ public class PointDetail {
     public int IdPoint;
     public String NamePoint;
     public int IdGroup;
+    public byte[] ImagePoint;
 
     public int getIdPointDetails() {
         return IdPointDetails;
@@ -37,5 +38,13 @@ public class PointDetail {
 
     public void setIdGroup(int idGroup) {
         IdGroup = idGroup;
+    }
+
+    public void setImagePoint(byte[] imageRead) {
+        ImagePoint = imageRead;
+    }
+
+    public byte[] getImagePoint() {
+        return ImagePoint;
     }
 }

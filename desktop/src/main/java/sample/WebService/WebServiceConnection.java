@@ -41,7 +41,12 @@ public class WebServiceConnection {
     private final String RemoveGroupUrl = "http://54.37.136.172:90/admin/DeleteData/Groups/{0}";
 
     private final String PointDetailUrl = "http://54.37.136.172:90/admin/GetData/Buildings/Points/{0}/PointsDetails";
+    private final String AddPointDetailUrl = "http://54.37.136.172:90/admin/AddData/Points/{0}/{1}/{2}/PointDetails";
+    private final String RemovePointDetailUrl = "http://54.37.136.172:90/admin/DeleteData/PointsDetails/{0}";
+
     private final String PointsUrl = "http://54.37.136.172:90/admin/GetData/Buildings/{0}/Points";
+    private final String RemovePointUrl = "http://54.37.136.172:90/admin/DeleteData/Point/{0}";
+
     private final String PointsConnectionsUrl = "http://54.37.136.172:90/admin/GetData/Buildings/{0}/PointsConnection";
     private final String AddPointsConnectionUrl = "http://54.37.136.172:90/admin/AddData/Points/{0}/{1}/PointsConnection";
     private final String AddPointType = "http://54.37.136.172:90/Admin/AddData/PointType";
@@ -407,11 +412,9 @@ public class WebServiceConnection {
     public Group AddGroup(Group group, String filePath, int idBuilding)
     {
         try{
-//            File file = new File(filePath);
             CloseableHttpClient httpClient = HttpClients.createDefault();
             HttpEntity entity = MultipartEntityBuilder
                     .create()
-//                    .addBinaryBody("ImageRead", file, ContentType.create("application/octet-stream"), "filename")
                     .setMode(HttpMultipartMode.STRICT)
                     .build();
 
@@ -439,6 +442,59 @@ public class WebServiceConnection {
     public boolean RemoveGroup(Group group) {
         try{
             DeleteRequest(MessageFormat.format(RemoveGroupUrl, group.getIdGroup()));
+            return true;
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+    }
+
+    public PointDetail AddPointDetail(PointDetail pointDetail)
+    {
+        try{
+            CloseableHttpClient httpClient = HttpClients.createDefault();
+            HttpEntity entity = MultipartEntityBuilder
+                    .create()
+                    .setMode(HttpMultipartMode.STRICT)
+                    .build();
+
+            String url = MessageFormat.format(AddPointDetailUrl, pointDetail.getIdPoint(),
+                    pointDetail.getNamePoint().replace(" ", "_"),
+                    pointDetail.getIdGroup());
+            HttpPost httpPost = new HttpPost(url);
+            httpPost.addHeader("Authorization", "Bearer " + tokenStruct.getToken());
+            String name = entity.getContentType().getName();
+            String value = entity.getContentType().getValue();
+            httpPost.addHeader(name, value);
+            httpPost.setEntity(entity);
+            HttpResponse response = httpClient.execute(httpPost);
+            HttpEntity result = response.getEntity();
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(result.getContent()));
+            String content = br.readLine();
+            pointDetail.setIdPointDetails(Integer.parseInt(content));
+            return pointDetail;
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
+    }
+
+    public boolean RemovePointDetail(PointDetail pointDetail) {
+        try{
+            DeleteRequest(MessageFormat.format(RemovePointDetailUrl, pointDetail.getIdPointDetails()));
+            return true;
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+    }
+    public boolean RemovePoint(Point point) {
+        try{
+            DeleteRequest(MessageFormat.format(RemovePointUrl, point.getIdPoint()));
             return true;
         }
         catch (Exception e)
