@@ -146,9 +146,9 @@ namespace WhereToGo.Admin.Controllers
             return Ok(mdlPointType.IdPointType);
 
         }
-        [Route("BuildingsImage/{idBuildingImage}/{X}/{Y}/{IdPointType}/Points")]
+        [Route("BuildingsImage/{idBuildingImage}/{X}/{Y}/{IdPointType}/{Direction}/{OnOffDirection}/Points")]
         [HttpPost]
-        public IActionResult PostPointByBuildingImages(int idBuildingImage, double X, double Y, int IdPointType)
+        public IActionResult PostPointByBuildingImages(int idBuildingImage, double X, double Y, int IdPointType, double Direction, bool OnOffDirection)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -161,6 +161,8 @@ namespace WhereToGo.Admin.Controllers
                 mdlPoints.Y = Y;
                 mdlPoints.IdPointType = IdPointType;
                 mdlPoints.ImagePoint = null;
+                mdlPoints.Direction = Direction;
+                mdlPoints.OnOffDirection = OnOffDirection;
                 whereToGo.Points.Add(mdlPoints);
                 try
                 {

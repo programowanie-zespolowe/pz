@@ -18,6 +18,8 @@ namespace WhereToGoEntities.WhereToGo.Models
         public double? Y { get; set; }
         public int? IdPointType { get; set; }
         public byte[] ImagePoint { get; set; }
+        public double? Direction { get; set; }
+        public bool OnOffDirection { get; set; }
 
         public virtual BuildingImages IdImageNavigation { get; set; }
         public virtual PointType IdPointTypeNavigation { get; set; }

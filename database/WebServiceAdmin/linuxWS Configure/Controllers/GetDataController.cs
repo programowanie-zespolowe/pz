@@ -102,6 +102,8 @@ namespace linuxWS_Configure.Controllers
                         mdlPoints.Y = elementIn.Y;
                         mdlPoints.IdPointType = elementIn.IdPointType;
                         mdlPoints.ImagePoint = elementIn.ImagePoint;
+                        mdlPoints.Direction = elementIn.Direction;
+                        mdlPoints.OnOffDirection = elementIn.OnOffDirection;
 
                         buildingPoints.Add(mdlPoints);
                     }
@@ -125,6 +127,8 @@ namespace linuxWS_Configure.Controllers
                     mdlPoints.Y = element.Y;
                     mdlPoints.IdPointType = element.IdPointType;
                     mdlPoints.ImagePoint = element.ImagePoint;
+                    mdlPoints.Direction = element.Direction;
+                    mdlPoints.OnOffDirection = element.OnOffDirection;
 
                     buildingPoints.Add(mdlPoints);
                 }
@@ -147,6 +151,8 @@ namespace linuxWS_Configure.Controllers
                     mdlPoints.Y = elementIn.Y;
                     mdlPoints.IdPointType = elementIn.IdPointType;
                     mdlPoints.ImagePoint = elementIn.ImagePoint;
+                    mdlPoints.Direction = elementIn.Direction;
+                    mdlPoints.OnOffDirection = elementIn.OnOffDirection;
 
                     buildingPoints.Add(mdlPoints);
                 }

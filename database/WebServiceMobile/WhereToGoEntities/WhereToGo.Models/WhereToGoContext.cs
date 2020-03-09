@@ -160,6 +160,9 @@ namespace WhereToGoEntities.WhereToGo.Models
 
                 entity.Property(e => e.Y).HasColumnName("y");
 
+                entity.Property(e => e.Direction).HasColumnName("Direction");
+                entity.Property(e => e.OnOffDirection).HasColumnName("OnOffDirection");
+
                 entity.HasOne(d => d.IdImageNavigation)
                     .WithMany(p => p.Points)
                     .HasForeignKey(d => d.IdImage)
