@@ -15,6 +15,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import sample.Constants;
 import sample.Structs.BuildingLevel;
 import sample.Structs.Point;
 import sample.Structs.PointsConnection;
@@ -138,7 +139,12 @@ public class CenterMenuButtonsController {
         {
             if(point.IdImage != level.getIdImage())
                 continue;
-            canvas.getGraphicsContext2D().setFill(Color.rgb(255,0,0,1.0));
+            Color color = Color.rgb(255,0,0,1.0);
+            if((point.getIdPointType() & Constants.STAIRS_POINT_TYPE_MASK) != 0) //Stairs
+                color = Color.rgb(0, 255, 0, 1.0);
+            if((point.getIdPointType() & Constants.ELEVATOR_POINT_TYPE_MASK) != 0) //Elevator
+                color = Color.rgb(0, 0, 255, 1.0);
+            canvas.getGraphicsContext2D().setFill(color);
             canvas.getGraphicsContext2D().fillOval(point.getX() - 5, point.getY() - 5, 10, 10);
             canvas.getGraphicsContext2D().stroke();
         }

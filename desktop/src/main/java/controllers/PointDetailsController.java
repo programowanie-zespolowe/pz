@@ -9,6 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.apache.commons.io.IOUtils;
+import sample.Constants;
 import sample.QrCodeGeneration;
 import sample.Structs.Group;
 import sample.Structs.Point;
@@ -285,15 +286,23 @@ public class PointDetailsController {
         point.setDirection((int)direction.getValueFactory().getValue());
         int pointType = 0;
         if(entryPointType.isSelected())
-            pointType |= (1 << 0);
+            pointType |= Constants.ENTRY_POINT_TYPE_MASK;
         if(stairsPointType.isSelected())
-            pointType |= (1 << 1);
+            pointType |= Constants.STAIRS_POINT_TYPE_MASK;
         if(elevatorPointType.isSelected())
-            pointType |= (1 << 2);
+            pointType |= Constants.ELEVATOR_POINT_TYPE_MASK;
         if(emergencyExitPointType.isSelected())
-            pointType |= (1 << 3);
+            pointType |= Constants.EMERGENCY_EXIT_POINT_TYPE_MASK;
         if(noQrCodePointType.isSelected())
-            pointType |= (1 << 4);
+            pointType |= Constants.NO_QR_CODE_POINT_TYPE_MASK;
+        if(stairsPointType.isSelected() && (point.getIdPointType() & Constants.STAIRS_POINT_TYPE_MASK) == 0)
+            masterWindowController.AddStairs(point);
+        if(!stairsPointType.isSelected() && (point.getIdPointType() & Constants.STAIRS_POINT_TYPE_MASK) == 1)
+            masterWindowController.RemoveStairs(point);
+        if(elevatorPointType.isSelected() && (point.getIdPointType() & Constants.ELEVATOR_POINT_TYPE_MASK) == 0)
+            masterWindowController.AddElevator(point);
+        if(!elevatorPointType.isSelected() && (point.getIdPointType() & Constants.ELEVATOR_POINT_TYPE_MASK) == 1)
+            masterWindowController.RemoveElevator(point);
         point.setIdPointType(pointType);
         WebServiceConnection.GetInstance().EditPoint(point, masterWindowController.GetCurrentBuildingId(), masterWindowController.getCurrentLevel().getIdImage());
     }
