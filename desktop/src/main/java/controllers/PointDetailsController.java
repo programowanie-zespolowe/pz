@@ -136,15 +136,15 @@ public class PointDetailsController {
         this.directionEnabled.setSelected(point.isOnOffDirection());
         this.direction.getValueFactory().setValue((int)point.getDirection());
         int pointType = point.getIdPointType();
-        if((pointType & (1 << 0)) != 0)
+        if((pointType & Constants.ENTRY_POINT_TYPE_MASK) != 0)
             entryPointType.setSelected(true);
-        if((pointType & (1 << 1)) != 0)
+        if((pointType & Constants.STAIRS_POINT_TYPE_MASK) != 0)
             stairsPointType.setSelected(true);
-        if((pointType & (1 << 2)) != 0)
+        if((pointType & Constants.ELEVATOR_POINT_TYPE_MASK) != 0)
             elevatorPointType.setSelected(true);
-        if((pointType & (1 << 3)) != 0)
+        if((pointType & Constants.EMERGENCY_EXIT_POINT_TYPE_MASK) != 0)
             emergencyExitPointType.setSelected(true);
-        if((pointType & (1 << 3)) != 0)
+        if((pointType & Constants.NO_QR_CODE_POINT_TYPE_MASK) != 0)
             noQrCodePointType.setSelected(true);
     }
 
@@ -297,11 +297,11 @@ public class PointDetailsController {
             pointType |= Constants.NO_QR_CODE_POINT_TYPE_MASK;
         if(stairsPointType.isSelected() && (point.getIdPointType() & Constants.STAIRS_POINT_TYPE_MASK) == 0)
             masterWindowController.AddStairs(point);
-        if(!stairsPointType.isSelected() && (point.getIdPointType() & Constants.STAIRS_POINT_TYPE_MASK) == 1)
+        if(!stairsPointType.isSelected() && (point.getIdPointType() & Constants.STAIRS_POINT_TYPE_MASK) != 0)
             masterWindowController.RemoveStairs(point);
         if(elevatorPointType.isSelected() && (point.getIdPointType() & Constants.ELEVATOR_POINT_TYPE_MASK) == 0)
             masterWindowController.AddElevator(point);
-        if(!elevatorPointType.isSelected() && (point.getIdPointType() & Constants.ELEVATOR_POINT_TYPE_MASK) == 1)
+        if(!elevatorPointType.isSelected() && (point.getIdPointType() & Constants.ELEVATOR_POINT_TYPE_MASK) != 0)
             masterWindowController.RemoveElevator(point);
         point.setIdPointType(pointType);
         WebServiceConnection.GetInstance().EditPoint(point, masterWindowController.GetCurrentBuildingId(), masterWindowController.getCurrentLevel().getIdImage());
