@@ -302,7 +302,7 @@ public class MasterWindowController {
             {
                 for(int j = 0; j < pointDetails[i].size(); j++)
                 {
-                    if(pointDetails[i].get(j).getIdPointDetails() == pointDetail.getIdPoint())
+                    if(pointDetails[i].get(j).getIdPointDetails() == pointDetail.getIdPointDetails())
                     {
                         pointDetails[i].get(j).setImagePoint(pointDetail.getImagePoint());
                         pointDetails[i].get(j).setIdGroup(pointDetail.getIdGroup());

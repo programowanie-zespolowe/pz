@@ -49,6 +49,16 @@ public class PointDetailsController {
     private CheckBox directionEnabled;
     @FXML
     private Spinner direction;
+    @FXML
+    private CheckBox entryPointType;
+    @FXML
+    private CheckBox stairsPointType;
+    @FXML
+    private CheckBox elevatorPointType;
+    @FXML
+    private CheckBox emergencyExitPointType;
+    @FXML
+    private CheckBox noQrCodePointType;
 
     @FXML
     public void initialize()
@@ -124,6 +134,17 @@ public class PointDetailsController {
         SetQRCodeImage(point);
         this.directionEnabled.setSelected(point.isOnOffDirection());
         this.direction.getValueFactory().setValue((int)point.getDirection());
+        int pointType = point.getIdPointType();
+        if((pointType & (1 << 0)) != 0)
+            entryPointType.setSelected(true);
+        if((pointType & (1 << 1)) != 0)
+            stairsPointType.setSelected(true);
+        if((pointType & (1 << 2)) != 0)
+            elevatorPointType.setSelected(true);
+        if((pointType & (1 << 3)) != 0)
+            emergencyExitPointType.setSelected(true);
+        if((pointType & (1 << 3)) != 0)
+            noQrCodePointType.setSelected(true);
     }
 
     private void SetQRCodeImage(Point point) {
@@ -207,9 +228,8 @@ public class PointDetailsController {
         pointDetail = WebServiceConnection.GetInstance().AddPointDetail(pointDetail);
         if(pointDetail != null)
         {
-            pointDetails.add(pointDetail);
-            RefreshListView();
             masterWindowController.PointDetailsAdded(pointDetail);
+            RefreshListView();
         }
     }
     public void QrCodeToFile(ActionEvent actionEvent) {
@@ -263,6 +283,18 @@ public class PointDetailsController {
             return;
         point.setOnOffDirection(directionEnabled.isSelected());
         point.setDirection((int)direction.getValueFactory().getValue());
+        int pointType = 0;
+        if(entryPointType.isSelected())
+            pointType |= (1 << 0);
+        if(stairsPointType.isSelected())
+            pointType |= (1 << 1);
+        if(elevatorPointType.isSelected())
+            pointType |= (1 << 2);
+        if(emergencyExitPointType.isSelected())
+            pointType |= (1 << 3);
+        if(noQrCodePointType.isSelected())
+            pointType |= (1 << 4);
+        point.setIdPointType(pointType);
         WebServiceConnection.GetInstance().EditPoint(point, masterWindowController.GetCurrentBuildingId(), masterWindowController.getCurrentLevel().getIdImage());
     }
 }
