@@ -51,6 +51,11 @@ public class MasterWindowController {
     Group[] groups;
     List<PointDetail>[] pointDetails;
     PointsConnection[] pointsConnections;
+    private BuildingLevel currentLevel;
+
+    public BuildingLevel getCurrentLevel() {
+        return currentLevel;
+    }
 
     @FXML
     public void initialize (){
@@ -86,6 +91,7 @@ public class MasterWindowController {
     public void BuildingLevelChanged(BuildingLevel level)
     {
         try {
+            currentLevel = level;
             ByteArrayInputStream bis = new ByteArrayInputStream(level.getPathImage());
             BufferedImage buildingImage = null;
             buildingImage = ImageIO.read(bis);

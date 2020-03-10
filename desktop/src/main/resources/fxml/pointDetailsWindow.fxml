@@ -26,5 +26,12 @@
     <ImageView fx:id="qrCodeImageView" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
     <Button GridPane.rowIndex="2" GridPane.columnIndex="1" text="Qr code to file..." onAction="#QrCodeToFile"/>
     <Button fx:id="addNewPointDetail" GridPane.rowIndex="3" GridPane.columnIndex="0" GridPane.columnSpan="2" text="Add new point detail" onAction="#AddPointDetail"/>
-    <Button fx:id="removePointButton" GridPane.rowIndex="4" GridPane.columnIndex="0" GridPane.columnSpan="2" text="Remove point" onAction="#RemovePoint"/>
+    <CheckBox text="Direction enabled" fx:id="directionEnabled" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+    <Spinner fx:id="direction" GridPane.columnIndex="1" GridPane.rowIndex="4" >
+        <valueFactory>
+            <SpinnerValueFactory.IntegerSpinnerValueFactory min="0" max="359"/>
+        </valueFactory>
+    </Spinner>
+    <Button fx:id="savePointButton" GridPane.rowIndex="5" GridPane.columnIndex="0" GridPane.columnSpan="2" text="Save point settings" onAction="#SavePoint"/>
+    <Button fx:id="removePointButton" GridPane.rowIndex="6" GridPane.columnIndex="0" GridPane.columnSpan="2" text="Remove point" onAction="#RemovePoint"/>
 </GridPane>

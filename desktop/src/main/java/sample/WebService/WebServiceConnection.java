@@ -34,7 +34,10 @@ public class WebServiceConnection {
     private final String AddBuildingsLevelUrl = "http://54.37.136.172:90/admin/AddData/BuildingImage/{0}/{1}/{2}/{3}";
     private final String RemoveBuildingsLevelUrl = "http://54.37.136.172:90/admin/DeleteData/BuildingImages/{0}";
 
-    private final String AddPointUrl = "http://54.37.136.172:90/admin/AddData/BuildingsImage/{0}/{1}/{2}/{3}/Points";
+    private final String PointsUrl = "http://54.37.136.172:90/admin/GetData/Buildings/{0}/Points";
+    private final String AddPointUrl = "http://54.37.136.172:90/admin/AddData/BuildingsImage/{0}/{1}/{2}/{3}/{4}/{5}/Points";
+    private final String EditPointUrl = "http://54.37.136.172:90/admin/EditData/Buildings/{0}/BuildingImages/{1}/Points/{2}/{3}/{4}/{5}/{6}/{7}";
+    private final String RemovePointUrl = "http://54.37.136.172:90/admin/DeleteData/Point/{0}";
 
     private final String GroupsUrl = "http://54.37.136.172:90/admin/GetData/Buildings/{0}/Groups";
     private final String AddGroupUrl = "http://54.37.136.172:90/admin/AddData/Groups/{0}/{1}";
@@ -46,8 +49,6 @@ public class WebServiceConnection {
     private final String RemovePointDetailUrl = "http://54.37.136.172:90/admin/DeleteData/PointsDetails/{0}";
     private final String EditPointDetailUrl = "http://54.37.136.172:90/admin/EditData/Points/{0}/PointsDetail/{1}/{2}/{3}";
 
-    private final String PointsUrl = "http://54.37.136.172:90/admin/GetData/Buildings/{0}/Points";
-    private final String RemovePointUrl = "http://54.37.136.172:90/admin/DeleteData/Point/{0}";
 
     private final String PointsConnectionsUrl = "http://54.37.136.172:90/admin/GetData/Buildings/{0}/PointsConnection";
     private final String AddPointsConnectionUrl = "http://54.37.136.172:90/admin/AddData/Points/{0}/{1}/PointsConnection";
@@ -288,7 +289,7 @@ public class WebServiceConnection {
                     .setMode(HttpMultipartMode.STRICT)
                     .build();
 
-            String url = MessageFormat.format(AddPointUrl, buildingLevelId, point.getX(), point.getY(), point.getIdPointType());
+            String url = MessageFormat.format(AddPointUrl, buildingLevelId, point.getX(), point.getY(), point.getIdPointType(), point.getDirection(), point.isOnOffDirection());
             HttpPost httpPost = new HttpPost(url);
             httpPost.addHeader("Authorization", "Bearer " + tokenStruct.getToken());
             String name = entity.getContentType().getName();
@@ -311,6 +312,10 @@ public class WebServiceConnection {
             return null;
         }
     }
+
+
+
+
     public static void printPost(HttpPost httppost, HttpEntity entity) {
         try {
             Header[] headers = httppost.getAllHeaders();
@@ -570,6 +575,38 @@ public class WebServiceConnection {
             httpPost.setEntity(entity);
             HttpResponse response = httpClient.execute(httpPost);
             HttpEntity result = response.getEntity();
+            return true;
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+    }
+
+    public boolean EditPoint(Point point, int idBuilding, int buildingLevelId) {
+        try{
+            CloseableHttpClient httpClient = HttpClients.createDefault();
+            HttpEntity entity = MultipartEntityBuilder
+                    .create()
+                    .setMode(HttpMultipartMode.STRICT)
+                    .build();
+
+            String url = MessageFormat.format(EditPointUrl, idBuilding, buildingLevelId, point.getIdPoint(), point.getX(), point.getY(), point.getIdPointType(), point.getDirection(), point.isOnOffDirection());
+            HttpPost httpPost = new HttpPost(url);
+            httpPost.addHeader("Authorization", "Bearer " + tokenStruct.getToken());
+            String name = entity.getContentType().getName();
+            String value = entity.getContentType().getValue();
+            httpPost.addHeader(name, value);
+            httpPost.setEntity(entity);
+            HttpResponse response = httpClient.execute(httpPost);
+            HttpEntity result = response.getEntity();
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(result.getContent()));
+            String content = br.readLine();
+            Integer id = Integer.parseInt(content);
+            if(id == null)
+                return false;
+            point.setIdPoint(id);
             return true;
         }
         catch (Exception e)

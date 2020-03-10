@@ -7,6 +7,24 @@ public class Point {
     public double Y;
     public int IdPointType;
     public byte[] ImagePoint;
+    public boolean OnOffDirection;
+    public double Direction;
+
+    public boolean isOnOffDirection() {
+        return OnOffDirection;
+    }
+
+    public void setOnOffDirection(boolean onOffDirection) {
+        OnOffDirection = onOffDirection;
+    }
+
+    public double getDirection() {
+        return Direction;
+    }
+
+    public void setDirection(double direction) {
+        Direction = direction;
+    }
 
     public int getIdPoint() {
         return IdPoint;

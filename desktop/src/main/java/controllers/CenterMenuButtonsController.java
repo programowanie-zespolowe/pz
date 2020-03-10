@@ -87,9 +87,12 @@ public class CenterMenuButtonsController {
             point.setX(t.getX());
             point.setY(t.getY());
             point.setIdImage(level.getIdImage());
+            point.setDirection(0);
+            point.setOnOffDirection(false);
 
             Point addedPoint = WebServiceConnection.GetInstance().AddPoint(point, level.getIdImage());
-            masterWindowController.PointAdded(addedPoint);
+            if(addedPoint != null)
+                masterWindowController.PointAdded(addedPoint);
         });
 
         mainPane.widthProperty().addListener((observableValue, number, t1) -> scrollPane.setMaxWidth(mainPane.getWidth()));

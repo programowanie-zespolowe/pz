@@ -45,6 +45,10 @@ public class PointDetailsController {
     private TextField imagePath;
     @FXML
     private ImageView qrCodeImageView;
+    @FXML
+    private CheckBox directionEnabled;
+    @FXML
+    private Spinner direction;
 
     @FXML
     public void initialize()
@@ -118,6 +122,8 @@ public class PointDetailsController {
     {
         this.point = point;
         SetQRCodeImage(point);
+        this.directionEnabled.setSelected(point.isOnOffDirection());
+        this.direction.getValueFactory().setValue((int)point.getDirection());
     }
 
     private void SetQRCodeImage(Point point) {
@@ -249,5 +255,14 @@ public class PointDetailsController {
         {
 
         }
+    }
+
+    public void SavePoint(ActionEvent actionEvent)
+    {
+        if(point == null)
+            return;
+        point.setOnOffDirection(directionEnabled.isSelected());
+        point.setDirection((int)direction.getValueFactory().getValue());
+        WebServiceConnection.GetInstance().EditPoint(point, masterWindowController.GetCurrentBuildingId(), masterWindowController.getCurrentLevel().getIdImage());
     }
 }
