@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -19,13 +20,13 @@ import java.text.MessageFormat;
 public class ConnectWebService {
     private static ConnectWebService instance;
     private final static String TOKEN = "http://54.37.136.172:91/api/token";
-    private final static String SELECTED_BUILDING = "http://54.37.136.172:91/GetData/Buildings/All/{0}";
+    private final static String SELECTED_BUILDING =  "http://54.37.136.172:91/GetData/Buildings/All/{0}";
     private final String Groups = "http://54.37.136.172:91/GetData/Buildings/{0}/Groups";
     private final String PointDetail = "http://54.37.136.172:91/GetData/Buildings/Points/{0}/PointsDetails";
     private final String BUILDING_POINT = "http://54.37.136.172:91/GetData/Buildings/{0}/Points";
 
     private Token token;
-    private Device device;
+    private static Device device;
 
     public void setDevice(Device device) {
         this.device = device;
@@ -40,18 +41,21 @@ public class ConnectWebService {
     }
 
     public ConnectWebService() {
+        token = new Token();
     }
 
     private JSONArray GetRequest(String url) throws IOException, JSONException {
-        if(token == null){
+        if(token.getToken() == null){
             getToken(device.getName(), device.getMacId());
+            //getToken("Test", "00:00:00:00:00:00");
         }
 
         URL address = new URL(url);
         HttpURLConnection connection = (HttpURLConnection) address.openConnection();
         connection.setRequestMethod("GET");
         connection.setRequestProperty("Authorization", "Bearer " + token.getToken());
-        connection.setDoOutput(true);
+        connection.setDoInput(true);
+        connection.connect();
 
         BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
         JSONArray content = new JSONArray(br.readLine());
@@ -60,7 +64,7 @@ public class ConnectWebService {
         return content;
     }
 
-    private String PostRequest(String url, String json) throws IOException {
+    private JSONObject PostRequest(String url, String json) throws IOException, JSONException {
         URL address = new URL(url);
         HttpURLConnection connection = (HttpURLConnection) address.openConnection();
         connection.setRequestMethod("POST");
@@ -72,7 +76,7 @@ public class ConnectWebService {
         os.flush();
 
         BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-        String content = br.readLine();
+        JSONObject content = new JSONObject( br.readLine());
         connection.disconnect();
 
         return content;
@@ -86,8 +90,8 @@ public class ConnectWebService {
             jsonObject.put("NameDevice", deviceName);
             jsonObject.put("MacId", deviceMac);
             device = new Device(deviceName, deviceMac);
-            String response = PostRequest(TOKEN, jsonObject.toString());
-            token.setToken(response);
+            JSONObject response = PostRequest(TOKEN, jsonObject.toString());
+            token.setToken(response.getString("token"));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -95,8 +99,8 @@ public class ConnectWebService {
 
     public JSONArray getSelectedBuilding(int buildingId){
         try {
-            JSONArray response = GetRequest(MessageFormat.format(SELECTED_BUILDING, buildingId));
-            return response;
+           JSONArray response = GetRequest(MessageFormat.format(SELECTED_BUILDING, buildingId));
+           return response;
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {
@@ -115,6 +119,8 @@ public class ConnectWebService {
         }
         return null;
     }
+
+
 
     public JSONArray getGroups(int buildingId){
         try {

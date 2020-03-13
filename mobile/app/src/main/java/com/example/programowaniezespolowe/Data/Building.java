@@ -1,40 +1,49 @@
 package com.example.programowaniezespolowe.Data;
 
 public class Building {
-    private int IdBuilding;
-    private int IdUser;
-    private String NameBuilding;
-    private byte[] ImageBuilding;
+    private int idBuilding;
+    private int idUser;
+//    private byte[] imageBuilding;
+    private String imageBuilding;
+    private String nameBuilding;
 
     public int getIdBuilding() {
-        return IdBuilding;
+        return idBuilding;
     }
 
     public void setIdBuilding(int idBuilding) {
-        IdBuilding = idBuilding;
+        idBuilding = idBuilding;
     }
 
     public int getIdUser() {
-        return IdUser;
+        return idUser;
     }
 
     public void setIdUser(int idUser) {
-        IdUser = idUser;
+        idUser = idUser;
     }
 
     public String getNameBuilding() {
-        return NameBuilding;
+        return nameBuilding;
     }
 
     public void setNameBuilding(String nameBuilding) {
-        NameBuilding = nameBuilding;
+        nameBuilding = nameBuilding;
     }
 
-    public byte[] getImageBuilding() {
-        return ImageBuilding;
+//    public byte[] getImageBuilding() {
+//        return imageBuilding;
+//    }
+//
+//    public void setImageBuilding(byte[] imageBuilding) {
+//        this.imageBuilding = imageBuilding;
+//    }
+
+    public String getImageBuilding() {
+        return imageBuilding;
     }
 
-    public void setImageBuilding(byte[] imageBuilding) {
-        ImageBuilding = imageBuilding;
+    public void setImageBuilding(String imageBuilding) {
+        this.imageBuilding = imageBuilding;
     }
 }

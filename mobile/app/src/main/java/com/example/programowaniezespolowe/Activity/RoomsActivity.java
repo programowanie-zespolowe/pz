@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.SearchView;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,20 +18,28 @@ public class RoomsActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private GridView gridView;
     private SearchView searchView;
+    private int idBuilding;
+    private int pointNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room);
-        int idBuilding = savedInstanceState.getByte("buildingId");
-        int pointNumber = savedInstanceState.getByte("pointNumber");
-
+        Intent intent = getIntent();
+        idBuilding = intent.getIntExtra(CategoryActivity.BUILDING_ID, 0);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         gridView = findViewById(R.id.gridRooms);
         searchView = findViewById(R.id.searchRooms);
+
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //wybór pokoju
+            }
+        });
 
     }
     @Override
@@ -38,6 +48,7 @@ public class RoomsActivity extends AppCompatActivity {
 
             case android.R.id.home:
                 Intent intent = new Intent(this, CategoryActivity.class);
+                intent.putExtra(CategoryActivity.BUILDING_ID, idBuilding);
                 startActivity(intent);
                 return true;
         }
@@ -52,9 +63,6 @@ public class RoomsActivity extends AppCompatActivity {
                 startActivity(a1_intent);
                 finish();
                 return true;
-
-
-
         }
         return false;
     }
