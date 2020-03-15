@@ -1,32 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
 
-<HBox alignment="CENTER"
-      maxHeight="-Infinity"
-      maxWidth="-Infinity"
-      minHeight="-Infinity"
-      minWidth="-Infinity"
-      spacing="10.0"
-      xmlns="http://javafx.com/javafx/10.0.2-internal"
-      xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="controllers.TopMenuButtonsController">
+<HBox alignment="CENTER" prefHeight="50.0" prefWidth="1200.0" spacing="10.0" stylesheets="@../stylesheets/scene.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.TopMenuButtonsController">
    <children>
-      <Button fx:id="buttonDodajBudynek" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#addBuilding" prefHeight="60.0" prefWidth="60.0">
+      <Button fx:id="buttonDodajBudynek" mnemonicParsing="false" onAction="#addBuilding" styleClass="buttonConfirm" stylesheets="@../stylesheets/confirm.css">
          <HBox.margin>
-            <Insets right="30.0" />
+            <Insets bottom="10.0" right="20.0" top="10.0" />
          </HBox.margin>
          <graphic>
-            <ImageView fitHeight="52.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="58.0" fitWidth="87.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../icons/addBuilding.png" />
+                  <Image url="@../icons/house.png" />
                </image>
             </ImageView>
          </graphic></Button>
-      <ComboBox fx:id="buildingComboBox" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="500.0">
+      <ComboBox fx:id="buildingComboBox" prefHeight="20.0" prefWidth="600.0" promptText="Wybierz budynek" styleClass="combo-box" stylesheets="@../stylesheets/comboBox.css">
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>
@@ -34,34 +29,28 @@
             <Insets />
          </HBox.margin>
       </ComboBox>
-      <Button fx:id="buttonZmienNazwe" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0">
+      <Label minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="58.0" stylesheets="@../stylesheets/confirm.css" text="Label" textAlignment="CENTER">
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </Label>
+      <Label fx:id="scaleLabel" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="100.0" stylesheets="@../stylesheets/confirm.css" text="%skala" textAlignment="CENTER">
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>
          <HBox.margin>
-            <Insets right="30.0" top="30.0" />
+            <Insets right="20.0" />
          </HBox.margin>
-         <graphic>
-            <ImageView fitHeight="42.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../icons/pencil.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-      <Label fx:id="scaleLabel" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="100.0" text="%skala" textAlignment="CENTER">
-         <padding>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </padding>
       </Label>
-      <Label minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="100.0" text="Label" textAlignment="CENTER">
-         <padding>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </padding>
-      </Label>
-      <Button fx:id="groupButton" onAction="#showGroups" text="Groups"/>
+      <Button fx:id="groupButton" onAction="#showGroups" prefHeight="88.0" prefWidth="118.4" styleClass="buttonConfirm" stylesheets="@../stylesheets/confirm.css" text="Groups">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <HBox.margin>
+            <Insets />
+         </HBox.margin></Button>
    </children>
    <padding>
-      <Insets bottom="10.0" left="300.0" right="10.0" top="10.0" />
+      <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
    </padding>
 </HBox>

@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 
-<GridPane
-        fx:id="gp"
-        alignment="center"
-        hgap="10"
-        vgap="10"
-        xmlns="http://javafx.com/javafx/10.0.2-internal"
-        xmlns:fx="http://javafx.com/fxml/1"
-        fx:controller="controllers.LoginWindowController">
+<GridPane fx:id="gp" alignment="CENTER" hgap="10" prefHeight="173.0" prefWidth="150.0" vgap="10" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginWindowController">
    <columnConstraints>
       <ColumnConstraints />
    </columnConstraints>
@@ -19,11 +19,19 @@
       <RowConstraints />
       <RowConstraints />
       <RowConstraints />
+      <RowConstraints />
    </rowConstraints>
    <children>
-       <Label text="Login" GridPane.rowIndex="0"/>
-      <TextField fx:id="loginTextField" promptText="Login" GridPane.rowIndex="1" text="admin2" />
-      <PasswordField fx:id="passwordField" promptText="Password" GridPane.rowIndex="2" text="F5s4+FzNDGY=" />
-      <Button fx:id="loginButton" mnemonicParsing="false" text="Login" textAlignment="RIGHT" GridPane.rowIndex="3" onAction="#handleLoginAction" />
+       <Label alignment="CENTER" stylesheets="@../stylesheets/scene.css" text="Login" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER" />
+      <TextField fx:id="loginTextField" promptText="Login" styleClass="text-field1" stylesheets="@../stylesheets/confirm.css" text="admin2" GridPane.rowIndex="1" />
+      <PasswordField fx:id="passwordField" promptText="Password" stylesheets="@../stylesheets/confirm.css" text="F5s4+FzNDGY=" GridPane.rowIndex="2" />
+      <Button fx:id="loginButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleLoginAction" styleClass="buttonConfirm" stylesheets="@../stylesheets/scene.css" text="Login" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets></Button>
    </children>
+   <stylesheets>
+      <URL value="@../stylesheets/scene.css" />
+      <URL value="@../stylesheets/confirm.css" />
+   </stylesheets>
 </GridPane>

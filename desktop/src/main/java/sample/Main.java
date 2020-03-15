@@ -17,6 +17,7 @@ public class Main extends Application {
 
         Pane borderPane = FxmlUtils.fxmlLoader(BORDER_PANE_MAIN_FXML);
         Scene scene = new Scene(borderPane);
+        scene.getStylesheets().add(getClass().getResource("/stylesheets/scene.css").toExternalForm());
         primaryStage.setScene(scene);
         primaryStage.setTitle(FxmlUtils.getResourceBundle().getString("title.application"));
         primaryStage.show();

@@ -141,6 +141,8 @@ public class LeftMenuButtonsController  {
             controller.setMasterWindowController(masterWindowController);
             Stage stage = new Stage();
             Scene scene = new Scene(p);
+            scene.getStylesheets().add(getClass().getResource("/stylesheets/confirm.css").toExternalForm());
+            scene.getStylesheets().add(getClass().getResource("/stylesheets/scene.css").toExternalForm());
             stage.setScene(scene);
             stage.showAndWait();
 

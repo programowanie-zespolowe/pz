@@ -1,0 +1,122 @@
+.buttonConfirm{
+    -fx-background-color:
+            linear-gradient(#686868 0%, #232723 25%, #373837 75%, #757575 100%),
+            linear-gradient(#020b02, #3a3a3a),
+            linear-gradient(#9d9e9d 0%, #6b6a6b 20%, #343534 80%, #242424 100%),
+            linear-gradient(#8a8a8a 0%, #6b6a6b 20%, #343534 80%, #262626 100%),
+            linear-gradient(#777777 0%, #606060 50%, #505250 51%, #2a2b2a 100%);
+    -fx-background-insets: 0,1,4,5,6;
+    -fx-background-radius: 9,8,5,4,3;
+    -fx-padding: 15 30 15 30;
+    -fx-font-family: "Helvetica";
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow( three-pass-box , rgba(255,255,255,0.2) , 1, 0.0 , 0 , 1);
+}
+.buttonIcon {
+    -fx-background-color:
+            linear-gradient(#686868 0%, #232723 25%, #373837 75%, #757575 100%),
+            linear-gradient(#020b02, #3a3a3a),
+            linear-gradient(#9d9e9d 0%, #6b6a6b 20%, #343534 80%, #242424 100%),
+            linear-gradient(#8a8a8a 0%, #6b6a6b 20%, #343534 80%, #262626 100%),
+            linear-gradient(#777777 0%, #606060 50%, #505250 51%, #2a2b2a 100%);
+    -fx-background-insets: 0,1,4,5,6;
+    -fx-background-radius: 9,8,5,4,3;
+    -fx-font-family: "Helvetica";
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow( three-pass-box , rgba(255,255,255,0.2) , 1, 0.0 , 0 , 1);
+}
+
+.button:pressed{
+    -fx-background-color: black;
+}
+
+.label{
+    -fx-effect: dropshadow( one-pass-box , black , 0, 0.0 , 0 , -1 );
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #DCDCDC;
+}
+
+.text-field1{
+    -fx-background-color: #DCDCDC;
+    -fx-font-size: 12px;
+    -fx-font-style: italic;
+}
+
+.password-field{
+    -fx-background-color: #DCDCDC;
+    -fx-font-size: 12px;
+    -fx-font-style: italic;
+}
+
+.spinner .text-field{
+    -fx-background-color: #DCDCDC;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold    ;
+}
+
+.spinner .increment-arrow-button,
+.spinner .decrement-arrow-button {
+    -fx-background-color: #808080;
+    -fx-body-color: #808080;
+    -fx-border-color: black;
+}
+
+.spinner .increment-arrow-button .increment-arrow,
+.spinner .decrement-arrow-button .decrement-arrow {
+    -fx-background-color: black;
+    -fx-body-color: black;
+    -fx-border-color: black;
+}
+
+.spinner .increment-arrow-button:pressed,
+.spinner .decrement-arrow-button:pressed {
+    -fx-background-color: black;
+    -fx-body-color: black;
+    -fx-border-color: black;
+}
+
+.list-view{
+    -fx-background-color: #808080;
+    -fx-text-fill: #DCDCDC;
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+}
+
+.list-view .list-cell{
+    -fx-background-color: #808080;
+    -fx-text-fill: #DCDCDC;
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+}
+
+.list-view .list-cell:filled{
+    -fx-background-color: #808080;
+    -fx-text-fill: #DCDCDC;
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+}
+
+.list-view .list-cell:filled:hover{
+    -fx-background-color: black;
+    -fx-text-fill: #DCDCDC;
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+}
+
+.list-view .list-cell:filled:selected{
+    -fx-background-color: black;
+    -fx-text-fill: #DCDCDC;
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+}
+
+
+
+
+
+

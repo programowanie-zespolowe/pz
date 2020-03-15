@@ -27,10 +27,13 @@ public class LoginWindowController implements Initializable {
 
     public static final String MAIN_FXML = "/fxml/masterWindow.fxml";
 
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         gp.setMaxWidth(700);
         gp.setMinSize(200, 200);
+        loginButton.getStylesheets().add(getClass().getResource("/stylesheets/scene.css").toExternalForm());
     }
 
     @FXML

@@ -1,0 +1,21 @@
+.scroll-pane{
+    -fx-background-color: #808080;
+}
+
+.scroll-pane .scroll-bar{
+    -fx-background-color: #808080;
+    -fx-border-color: black ;
+    -fx-border-radius: 10;
+}
+
+.scroll-pane .scroll-bar .thumb{
+    -fx-background-color: black;
+}
+
+.scroll-pane .scroll-bar .leftbutton{
+    -fx-background-color: black;
+}
+
+.scroll-pane .scroll-bar .rightbutton{
+    -fx-background-color: black;
+}

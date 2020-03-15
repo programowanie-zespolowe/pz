@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
-<BorderPane fx:id="masterWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MasterWindowController">
+<BorderPane fx:id="masterWindow" prefHeight="800.0" prefWidth="1200.0" stylesheets="@../stylesheets/scene.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MasterWindowController">
    <top>
       <VBox BorderPane.alignment="CENTER">
          <fx:include fx:id="menuBar" source="menuBar.fxml" />
@@ -24,7 +22,7 @@
       </HBox>
    </bottom>
    <right>
-      <VBox prefWidth="50.0" BorderPane.alignment="CENTER" />
+      <VBox prefWidth="0.0" BorderPane.alignment="CENTER" />
    </right>
    <left>
       <VBox prefWidth="200.0" BorderPane.alignment="CENTER">
