@@ -1,11 +1,16 @@
 package controllers;
 
+import javafx.concurrent.Task;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.apache.commons.lang3.ArrayUtils;
 import sample.Constants;
 import sample.Structs.*;
@@ -57,6 +62,11 @@ public class MasterWindowController {
     public BuildingLevel getCurrentLevel() {
         return currentLevel;
     }
+    private static final String LOADING_FXML = "/fxml/loadingDialog.fxml";
+    private static final String WINDOW_POINT_DETAILS = "/fxml/pointDetailsWindow.fxml";
+
+    Stage loadingStage = null;
+    int buildingId;
 
     @FXML
     public void initialize (){
@@ -66,27 +76,57 @@ public class MasterWindowController {
         centerMenuButtonsController.setMasterWindowController(this);
         bottomMenuButtonsController.setMasterWindowController(this);
 
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            Pane p = fxmlLoader.load(getClass().getResource(LOADING_FXML).openStream());
+            loadingStage = new Stage();
+            loadingStage.initStyle(StageStyle.UNDECORATED);
+            Scene scene = new Scene(p);
+            loadingStage.setScene(scene);
+        }
+        catch (Exception e1)
+        {
+
+        }
+
+
         topMenuButtonsController.buildingComboBox.getSelectionModel().selectedItemProperty().addListener( (options, oldValue, newValue) -> {
             if(image != null) {
                 centerMenuButtonsController.canvas.getGraphicsContext2D().drawImage(image,
                         0,
                         0);
             }
+            buildingId = buildings[topMenuButtonsController.buildingComboBox.getSelectionModel().getSelectedIndex()].getIdBuilding();
 
-            int buildingId = buildings[topMenuButtonsController.buildingComboBox.getSelectionModel().getSelectedIndex()].getIdBuilding();
-            levels = WebServiceConnection.GetInstance().BuildingLevelList(buildingId);
-            points = WebServiceConnection.GetInstance().Points(buildingId);
-            groups = WebServiceConnection.GetInstance().Groups(buildingId);
-            pointsConnections = WebServiceConnection.GetInstance().PointsConnections(buildingId);
+            Task task = new Task<Boolean>() {
+                @Override protected Boolean call() throws Exception {
+                    try {
+                        levels = WebServiceConnection.GetInstance().BuildingLevelList(buildingId);
+                        points = WebServiceConnection.GetInstance().Points(buildingId);
+                        groups = WebServiceConnection.GetInstance().Groups(buildingId);
+                        pointsConnections = WebServiceConnection.GetInstance().PointsConnections(buildingId);
+                        LoadPointDetails();
+                    }
+                    catch (Exception e)
+                    {
+                        return false;
+                    }
+                    return true;
+                }
+            };
 
-            leftMenuButtonsController.RefreshLevels(levels);
-            LoadPointDetails();
+            task.setOnRunning((e) -> loadingStage.show() );
+            task.setOnSucceeded((e) -> {
+                leftMenuButtonsController.RefreshLevels(levels);
+                centerMenuButtonsController.ShowPoints(points, leftMenuButtonsController.getCurrentBuildLevel());
+                loadingStage.hide();
+            });
+            new Thread(task).start();
         });
         centerScrollPane.widthProperty().addListener((observableValue, number, t1) -> centerMenuButtonsController.mainPane.setPrefWidth(centerScrollPane.getWidth()));
         centerScrollPane.heightProperty().addListener((observableValue, number, t1) -> centerMenuButtonsController.mainPane.setPrefHeight(centerScrollPane.getHeight()));
 
         LoadComponents();
-        RefreshGUI();
     }
 
     public void BuildingLevelChanged(BuildingLevel level)
@@ -133,7 +173,6 @@ public class MasterWindowController {
             Point point = points[i];
             pointDetails[i] = WebServiceConnection.GetInstance().PointDetail(point.getIdPoint());
         }
-        centerMenuButtonsController.ShowPoints(points, leftMenuButtonsController.getCurrentBuildLevel());
     }
 
     public void PointAdded(Point point)
@@ -145,7 +184,25 @@ public class MasterWindowController {
 
     private void LoadComponents()
     {
-       buildings = WebServiceConnection.GetInstance().BuildingList();
+        Task task = new Task<Boolean>() {
+        @Override protected Boolean call() throws Exception {
+            try {
+                buildings = WebServiceConnection.GetInstance().BuildingList();
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+            return true;
+        }
+        };
+
+        task.setOnRunning((e) -> loadingStage.show() );
+        task.setOnSucceeded((e) -> {
+            RefreshGUI();
+            loadingStage.hide();
+        });
+        new Thread(task).start();
     }
 
     private void RefreshGUI()
@@ -159,28 +216,25 @@ public class MasterWindowController {
             topMenuButtonsController.buildingComboBox.getItems().add(Integer.toString(i + 1) + ": " + building.getNameBuilding());
         }
         topMenuButtonsController.buildingComboBox.getSelectionModel().select(0);
-        levels = WebServiceConnection.GetInstance().BuildingLevelList(buildings[topMenuButtonsController.buildingComboBox.getSelectionModel().getSelectedIndex()].getIdBuilding());
+        Task task = new Task<Boolean>() {
+            @Override protected Boolean call() throws Exception {
+                try {
+                    levels = WebServiceConnection.GetInstance().BuildingLevelList(buildings[topMenuButtonsController.buildingComboBox.getSelectionModel().getSelectedIndex()].getIdBuilding());
+                    LoadPointDetails();
+                }
+                catch (Exception e)
+                {
+                    return false;
+                }
+                return true;
+            }
+        };
 
-        try {
-            ByteArrayInputStream bis = new ByteArrayInputStream(buildings[topMenuButtonsController.buildingComboBox.getSelectionModel().getSelectedIndex()].getImageBuilding());
-            BufferedImage buildingImage = null;
-            buildingImage = ImageIO.read(bis);
-            image = SwingFXUtils.toFXImage(buildingImage, null);
-            new java.util.Timer().schedule(
-                    new java.util.TimerTask() {
-                        @Override
-                        public void run() {
-                            if(image != null) {
-                                centerMenuButtonsController.canvas.getGraphicsContext2D().drawImage(image,
-                                        0,
-                                        0);
-                            }
-                        }
-                    },
-                    1000
-            );
-        } catch (Exception e) {
-        }
+        task.setOnRunning((e) -> loadingStage.show() );
+        task.setOnSucceeded((e) -> {
+            loadingStage.hide();
+        });
+        new Thread(task).start();
     }
 
     Image image = null;
