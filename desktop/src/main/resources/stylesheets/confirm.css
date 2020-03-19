@@ -115,6 +115,19 @@
     -fx-font-size: 15px;
 }
 
+.check-box .box{
+    -fx-background-color: #DCDCDC;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+}
+
+.check-box:selected .mark{
+    -fx-background-color: #DCDCDC;
+}
+
+.check-box:selected .box{
+    -fx-background-color: black;
+}
 
 
 

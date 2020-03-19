@@ -3,3 +3,6 @@
     -fx-text-fill: #C0C0C0;
 }
 
+.scroll-pane .viewport{
+    -fx-background-color: #808080;
+}
