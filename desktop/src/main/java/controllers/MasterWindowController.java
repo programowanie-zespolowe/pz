@@ -80,6 +80,7 @@ public class MasterWindowController {
             FXMLLoader fxmlLoader = new FXMLLoader();
             Pane p = fxmlLoader.load(getClass().getResource(LOADING_FXML).openStream());
             loadingStage = new Stage();
+            loadingStage.setAlwaysOnTop(true);
             loadingStage.initStyle(StageStyle.UNDECORATED);
             Scene scene = new Scene(p);
             loadingStage.setScene(scene);
