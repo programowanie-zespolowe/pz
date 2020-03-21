@@ -1,0 +1,157 @@
+2020-03-21T12:27:01.9536827+01:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2020-03-21T12:27:01.9829603+01:00  [INF] Hosting environment: "Development" (c3307c92)
+2020-03-21T12:27:01.9908318+01:00  [INF] Content root path: "C:\Users\bbadaczewski\Documents\pz\database\WebServiceAdmin\linuxWS Configure" (b5d60022)
+2020-03-21T12:29:02.5685679+01:00 80000004-0001-ff00-b63f-84710c7967bb [ERR] An unhandled exception has occurred while executing the request. (48a46595)
+System.IndexOutOfRangeException: Index was outside the bounds of the array.
+   at WhereToGo.Admin.Models.FindPath.Dijkstra(Int32 startPointId, Int32 endPointId, AdjacencyList list) in C:\Users\bbadaczewski\Documents\pz\database\WebServiceAdmin\linuxWS Configure\Models\FindPath.cs:line 67
+   at WhereToGo.Admin.Models.FindPath.GetNextPoint(Nullable`1 idPrevPoint, Int32 idActualPoint, Int32 idDestPoint, List`1 points, List`1 connections) in C:\Users\bbadaczewski\Documents\pz\database\WebServiceAdmin\linuxWS Configure\Models\FindPath.cs:line 15
+   at linuxWS_Configure.Controllers.GetDataController.GetRoutePoints(Int32 idBuilding, Int32 idPrevPoint, Int32 idActualPoint, Int32 idDestPoint) in C:\Users\bbadaczewski\Documents\pz\database\WebServiceAdmin\linuxWS Configure\Controllers\GetDataController.cs:line 363
+   at lambda_method(Closure , Object , Object[] )
+   at Microsoft.Extensions.Internal.ObjectMethodExecutor.Execute(Object target, Object[] parameters)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.SyncObjectResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeNextActionFilterAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2020-03-21T12:31:19.8000883+01:00 80000006-0001-ff00-b63f-84710c7967bb [ERR] An unhandled exception has occurred while executing the request. (48a46595)
+System.IndexOutOfRangeException: Index was outside the bounds of the array.
+   at WhereToGo.Admin.Models.FindPath.Dijkstra(Int32 startPointId, Int32 endPointId, AdjacencyList list) in C:\Users\bbadaczewski\Documents\pz\database\WebServiceAdmin\linuxWS Configure\Models\FindPath.cs:line 67
+   at WhereToGo.Admin.Models.FindPath.GetNextPoint(Nullable`1 idPrevPoint, Int32 idActualPoint, Int32 idDestPoint, List`1 points, List`1 connections) in C:\Users\bbadaczewski\Documents\pz\database\WebServiceAdmin\linuxWS Configure\Models\FindPath.cs:line 15
+   at linuxWS_Configure.Controllers.GetDataController.GetRoutePoints(Int32 idBuilding, Int32 idPrevPoint, Int32 idActualPoint, Int32 idDestPoint) in C:\Users\bbadaczewski\Documents\pz\database\WebServiceAdmin\linuxWS Configure\Controllers\GetDataController.cs:line 363
+   at lambda_method(Closure , Object , Object[] )
+   at Microsoft.Extensions.Internal.ObjectMethodExecutor.Execute(Object target, Object[] parameters)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.SyncObjectResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeNextActionFilterAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2020-03-21T12:32:54.0927336+01:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2020-03-21T12:32:54.1128618+01:00  [INF] Hosting environment: "Development" (c3307c92)
+2020-03-21T12:32:54.1211730+01:00  [INF] Content root path: "C:\Users\bbadaczewski\Documents\pz\database\WebServiceAdmin\linuxWS Configure" (b5d60022)
+2020-03-21T12:33:48.5535896+01:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2020-03-21T12:33:48.5685002+01:00  [INF] Hosting environment: "Development" (c3307c92)
+2020-03-21T12:33:48.5778454+01:00  [INF] Content root path: "C:\Users\bbadaczewski\Documents\pz\database\WebServiceAdmin\linuxWS Configure" (b5d60022)
+2020-03-21T12:38:03.8029997+01:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2020-03-21T12:38:03.8194871+01:00  [INF] Hosting environment: "Development" (c3307c92)
+2020-03-21T12:38:03.8287632+01:00  [INF] Content root path: "C:\Users\bbadaczewski\Documents\pz\database\WebServiceAdmin\linuxWS Configure" (b5d60022)
+2020-03-21T12:38:38.7496389+01:00 80000006-0000-ff00-b63f-84710c7967bb [ERR] An unhandled exception has occurred while executing the request. (48a46595)
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at WhereToGo.Admin.Models.FindPath.AdjacencyList..ctor(List`1 points, List`1 connections) in C:\Users\bbadaczewski\Documents\pz\database\WebServiceAdmin\linuxWS Configure\Models\FindPath.cs:line 171
+   at WhereToGo.Admin.Models.FindPath.GetNextPoint(Nullable`1 idPrevPoint, Int32 idActualPoint, Int32 idDestPoint, List`1 points, List`1 connections) in C:\Users\bbadaczewski\Documents\pz\database\WebServiceAdmin\linuxWS Configure\Models\FindPath.cs:line 15
+   at linuxWS_Configure.Controllers.GetDataController.GetRoutePoints(Int32 idBuilding, Int32 idPrevPoint, Int32 idActualPoint, Int32 idDestPoint) in C:\Users\bbadaczewski\Documents\pz\database\WebServiceAdmin\linuxWS Configure\Controllers\GetDataController.cs:line 360
+   at lambda_method(Closure , Object , Object[] )
+   at Microsoft.Extensions.Internal.ObjectMethodExecutor.Execute(Object target, Object[] parameters)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.SyncObjectResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeNextActionFilterAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2020-03-21T12:39:30.9500053+01:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2020-03-21T12:39:30.9733699+01:00  [INF] Hosting environment: "Development" (c3307c92)
+2020-03-21T12:39:30.9782518+01:00  [INF] Content root path: "C:\Users\bbadaczewski\Documents\pz\database\WebServiceAdmin\linuxWS Configure" (b5d60022)
+2020-03-21T12:39:38.6410442+01:00 8000000a-0001-ff00-b63f-84710c7967bb [ERR] An unhandled exception has occurred while executing the request. (48a46595)
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at WhereToGo.Admin.Models.FindPath.AdjacencyList..ctor(List`1 points, List`1 connections) in C:\Users\bbadaczewski\Documents\pz\database\WebServiceAdmin\linuxWS Configure\Models\FindPath.cs:line 171
+   at WhereToGo.Admin.Models.FindPath.GetNextPoint(Nullable`1 idPrevPoint, Int32 idActualPoint, Int32 idDestPoint, List`1 points, List`1 connections) in C:\Users\bbadaczewski\Documents\pz\database\WebServiceAdmin\linuxWS Configure\Models\FindPath.cs:line 15
+   at linuxWS_Configure.Controllers.GetDataController.GetRoutePoints(Int32 idBuilding, Int32 idPrevPoint, Int32 idActualPoint, Int32 idDestPoint) in C:\Users\bbadaczewski\Documents\pz\database\WebServiceAdmin\linuxWS Configure\Controllers\GetDataController.cs:line 360
+   at lambda_method(Closure , Object , Object[] )
+   at Microsoft.Extensions.Internal.ObjectMethodExecutor.Execute(Object target, Object[] parameters)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.SyncObjectResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeNextActionFilterAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2020-03-21T12:41:17.0869037+01:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2020-03-21T12:41:17.1006389+01:00  [INF] Hosting environment: "Development" (c3307c92)
+2020-03-21T12:41:17.1094257+01:00  [INF] Content root path: "C:\Users\bbadaczewski\Documents\pz\database\WebServiceAdmin\linuxWS Configure" (b5d60022)
+2020-03-21T12:41:28.1298469+01:00 80000008-0000-ff00-b63f-84710c7967bb [ERR] An unhandled exception has occurred while executing the request. (48a46595)
+System.IndexOutOfRangeException: Index was outside the bounds of the array.
+   at WhereToGo.Admin.Models.FindPath.Dijkstra(Int32 startPointId, Int32 endPointId, AdjacencyList list) in C:\Users\bbadaczewski\Documents\pz\database\WebServiceAdmin\linuxWS Configure\Models\FindPath.cs:line 76
+   at WhereToGo.Admin.Models.FindPath.GetNextPoint(Nullable`1 idPrevPoint, Int32 idActualPoint, Int32 idDestPoint, List`1 points, List`1 connections) in C:\Users\bbadaczewski\Documents\pz\database\WebServiceAdmin\linuxWS Configure\Models\FindPath.cs:line 17
+   at linuxWS_Configure.Controllers.GetDataController.GetRoutePoints(Int32 idBuilding, Int32 idPrevPoint, Int32 idActualPoint, Int32 idDestPoint) in C:\Users\bbadaczewski\Documents\pz\database\WebServiceAdmin\linuxWS Configure\Controllers\GetDataController.cs:line 360
+   at lambda_method(Closure , Object , Object[] )
+   at Microsoft.Extensions.Internal.ObjectMethodExecutor.Execute(Object target, Object[] parameters)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.SyncObjectResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeNextActionFilterAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2020-03-21T12:42:07.8691279+01:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2020-03-21T12:42:07.8886679+01:00  [INF] Hosting environment: "Development" (c3307c92)
+2020-03-21T12:42:07.8937639+01:00  [INF] Content root path: "C:\Users\bbadaczewski\Documents\pz\database\WebServiceAdmin\linuxWS Configure" (b5d60022)
+2020-03-21T12:43:59.6142435+01:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2020-03-21T12:43:59.6300226+01:00  [INF] Hosting environment: "Development" (c3307c92)
+2020-03-21T12:43:59.6367427+01:00  [INF] Content root path: "C:\Users\bbadaczewski\Documents\pz\database\WebServiceAdmin\linuxWS Configure" (b5d60022)
+2020-03-21T12:46:12.7987398+01:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2020-03-21T12:46:12.8199027+01:00  [INF] Hosting environment: "Development" (c3307c92)
+2020-03-21T12:46:12.8269097+01:00  [INF] Content root path: "C:\Users\bbadaczewski\Documents\pz\database\WebServiceAdmin\linuxWS Configure" (b5d60022)
