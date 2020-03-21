@@ -338,3 +338,8 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+
+database/WebServiceAdmin/linuxWS Configure/bin/*
+
+database/WebServiceMobile/linuxWS/bin/*
+database/WebServiceMobile/WhereToGoEntities/bin/*

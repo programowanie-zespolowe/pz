@@ -8,9 +8,15 @@ namespace WhereToGo.Admin.Models
 {
     public class FindPath
     {
+        public static int ENTRY_POINT_TYPE_MASK = (1 << 0);
+        public static int STAIRS_POINT_TYPE_MASK = (1 << 2);
+        public static int ELEVATOR_POINT_TYPE_MASK = (1 << 3);
+        public static int EMERGENCY_EXIT_POINT_TYPE_MASK = (1 << 4);
+        public static int NO_QR_CODE_POINT_TYPE_MASK = (1 << 5);
+
         //Build id 30
         //Point 166, 167, 168, 169
-        public static NextPoint GetNextPoint(int? idPrevPoint, int idActualPoint, int idDestPoint, List<MdlPoints> points, List<MdlPointsConnection> connections)
+        public static NextPoint GetNextPoint(int? idPrevPoint, int idActualPoint, int idDestPoint, List<MdlPoints> points, List<MdlPointsConnection> connections, double scale)
         {
             var adjList = new AdjacencyList(points, connections);
             var nextPoint = new NextPoint();
@@ -22,7 +28,7 @@ namespace WhereToGo.Admin.Models
             nextPoint.IdPoint = adjList.StartPoints[adjListPointId];
             nextPoint.Distance = CalculateDistanceBetweenPoints(
                 actualPoint,
-                points.Where(i => i.IdPoint == nextPoint.IdPoint).FirstOrDefault());
+                points.Where(i => i.IdPoint == nextPoint.IdPoint).FirstOrDefault()) / scale;
 
             if (idPrevPoint is null || (bool)points.Where(i => i.IdPoint == idActualPoint).FirstOrDefault().OnOffDirection)
             {
@@ -35,7 +41,57 @@ namespace WhereToGo.Admin.Models
                 nextPoint.Angle = Angle((double)actualPoint.X, (double)actualPoint.Y, (double)prevPoint.X , (double)prevPoint.Y, (double)destPoint.X, (double)destPoint.Y);
             }
 
+            nextPoint.Icon = (int)GetIcon(nextPoint.Angle, destPoint);
+
             return nextPoint;
+        }
+
+        public enum Icon
+        {
+            Straight = 0,
+            StraightLeft = 1,
+            Left = 2,
+            TurnAround = 3,
+            Right = 4,
+            StraightRight = 5,
+            Stairs = 6,
+            Elevator = 7
+        }
+
+        private static bool IsElevator(MdlPoints point)
+        {
+            if ((point.IdPointType & ELEVATOR_POINT_TYPE_MASK) != 0)
+                return true;
+            return false;
+        }
+        private static bool IsStairs(MdlPoints point)
+        {
+            if ((point.IdPointType & STAIRS_POINT_TYPE_MASK) != 0)
+                return true;
+            return false;
+        }
+
+        private static Icon GetIcon(double angle, MdlPoints point)
+        {
+            if (IsElevator(destPoint))
+                return Icon.Stairs;
+            if (IsStairs(destPoint))
+                return Icon.Elevator;
+
+            if (-30 <= angle && angle <= 30)
+                return Icon.Straight;
+
+            if (-60 <= angle && angle <= -30)
+                return Icon.StraightRight;
+            if (-120 <= angle && angle <= -60)
+                return Icon.Right;
+
+            if (30 <= angle && angle <= 60)
+                return Icon.StraightLeft;
+            if (60 <= angle && angle <= 120)
+                return Icon.Left;
+
+            return Icon.TurnAround;
         }
 
         private static MdlPoints CalculateVirtualPoint(MdlPoints point)
@@ -77,7 +133,7 @@ namespace WhereToGo.Admin.Models
                     if (distance[index] > distance[num] + n.Item2)
                     {
                         distance[index] = distance[num] + n.Item2;
-                        prev[i] = num;
+                        prev[index] = num;
                     }
                 }
             }
@@ -122,10 +178,6 @@ namespace WhereToGo.Admin.Models
             double angleRad = Math.Atan(ratio);
             double angleDeg = (angleRad * 180) / Math.PI;
 
-            if (angleDeg < 0)
-            {
-                angleDeg = 180 + angleDeg;
-            }
             return angleDeg;
         }
 
@@ -196,6 +248,9 @@ namespace WhereToGo.Admin.Models
             public int Icon { get;  set; }
             public double Angle { get; set; }
             public double Distance { get; set; }
+            public bool Eleveator { get;  set; }
+            public bool Stairs { get; set; }
+            public int Level { get;  set; }
         }
     }
 }

@@ -328,6 +328,7 @@ namespace linuxWS_Configure.Controllers
             List<MdlPoints> mdlPointsList = new List<MdlPoints>();
             List<MdlPointsConnection> mdlPointsConnectionsList = new List<MdlPointsConnection>();
             using WhereToGoContext whereToGoEntities = new WhereToGoContext();
+            
             foreach(var item in whereToGoEntities.Points.Where(i => i.IdImageNavigation.IdBuilding == idBuilding))
             {
                 MdlPoints mdlPoint = new MdlPoints();
@@ -357,7 +358,8 @@ namespace linuxWS_Configure.Controllers
 
                 mdlPointsList.Add(mdlPoint);
             }
-            return FindPath.GetNextPoint(idPrevPoint, idActualPoint, idDestPoint, mdlPointsList, mdlPointsConnectionsList);
+            double scale = (double)whereToGoEntities.BuildingImages.Where(i => i.IdBuilding == idBuilding).FirstOrDefault().Scale;
+            return FindPath.GetNextPoint(idPrevPoint, idActualPoint, idDestPoint, mdlPointsList, mdlPointsConnectionsList, scale);
         }
     }
 }
