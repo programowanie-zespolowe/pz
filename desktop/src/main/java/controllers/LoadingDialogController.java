@@ -13,7 +13,7 @@ public class LoadingDialogController {
 
     @FXML
     public void initialize () {
-        Image image = new Image("/icons/loading.gif", false);
+        Image image = new Image("/icons/loading_bez_tła.gif", false);
         imageView.setImage(image);
     }
 
