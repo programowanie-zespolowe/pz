@@ -9,7 +9,7 @@
     <VBox fx:id="flowPane" alignment="CENTER" maxWidth="100" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
 
     </VBox>
-    <Button fx:id="addButton" contentDisplay="BOTTOM" onAction="#addBuildingLevel" styleClass="buttonConfirm" stylesheets="@../stylesheets/confirm.css" text="Add new level" textAlignment="CENTER" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <Button fx:id="addButton" contentDisplay="BOTTOM" onAction="#addBuildingLevel" styleClass="buttonConfirm" stylesheets="@../stylesheets/confirm.css" text="%mw.button.levels" textAlignment="CENTER" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
       <VBox.margin>
          <Insets />
       </VBox.margin>

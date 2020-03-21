@@ -1,8 +1,12 @@
 package controllers;
 
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.apache.commons.io.IOUtils;
@@ -10,6 +14,8 @@ import sample.Structs.Building;
 import sample.Structs.BuildingLevel;
 import sample.WebService.WebServiceConnection;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -22,10 +28,31 @@ public class AddBuildingWindow {
     @FXML
     private TextField imageFilePath;
     @FXML
+    private ImageView imageBuilding;
+    @FXML
+    private Label labelNoImage;
+
+    @FXML
     public void BrowseImage(ActionEvent actionEvent) {
         File file = fileChooser.showOpenDialog(null);
         if (file != null) {
             imageFilePath.setText(file.getAbsolutePath());
+            imageFilePath.setVisible(true);
+            try {
+                BufferedImage img = ImageIO.read(new File(file.getAbsolutePath()));
+                Image image = SwingFXUtils.toFXImage(img, null);
+                imageBuilding.setImage(image);
+                imageBuilding.setFitWidth(100);
+                imageBuilding.setFitHeight(100);
+                imageBuilding.setPreserveRatio(true);
+                imageBuilding.setVisible(true);
+
+                labelNoImage.setVisible(false);
+            }
+            catch (Exception e)
+            {
+
+            }
         }
     }
 

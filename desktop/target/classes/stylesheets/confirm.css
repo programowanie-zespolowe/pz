@@ -30,6 +30,10 @@
     -fx-effect: dropshadow( three-pass-box , rgba(255,255,255,0.2) , 1, 0.0 , 0 , 1);
 }
 
+.buttonLittle {
+    -fx-background-color: #808080;
+}
+
 .button:pressed{
     -fx-background-color: black;
 }
@@ -39,6 +43,13 @@
     -fx-font-size: 14px;
     -fx-font-weight: bold;
     -fx-text-fill: #DCDCDC;
+}
+
+.labelDescription{
+    -fx-effect: dropshadow( one-pass-box , black , 0, 0.0 , 0 , -1 );
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #00B7EB;
 }
 
 .text-field1{
@@ -128,8 +139,6 @@
 .check-box:selected .box{
     -fx-background-color: black;
 }
-
-
 
 
 

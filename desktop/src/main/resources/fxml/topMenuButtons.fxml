@@ -29,12 +29,12 @@
             <Insets />
          </HBox.margin>
       </ComboBox>
-      <Label minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="58.0" stylesheets="@../stylesheets/confirm.css" text="Label" textAlignment="CENTER">
+      <Label minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="58.0" stylesheets="@../stylesheets/confirm.css" text="%mw.label.scale" textAlignment="CENTER">
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>
       </Label>
-      <Label fx:id="scaleLabel" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="100.0" stylesheets="@../stylesheets/confirm.css" text="%skala" textAlignment="CENTER">
+      <Label fx:id="scaleLabel" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="100.0" stylesheets="@../stylesheets/confirm.css" textAlignment="CENTER">
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>
@@ -42,7 +42,7 @@
             <Insets right="20.0" />
          </HBox.margin>
       </Label>
-      <Button fx:id="groupButton" onAction="#showGroups" prefHeight="88.0" prefWidth="118.4" styleClass="buttonConfirm" stylesheets="@../stylesheets/confirm.css" text="Groups">
+      <Button fx:id="groupButton" onAction="#showGroups" prefHeight="88.0" prefWidth="118.4" styleClass="buttonConfirm" stylesheets="@../stylesheets/confirm.css" text="%mw.button.groups">
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
