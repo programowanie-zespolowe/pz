@@ -35,7 +35,6 @@ public class BuildingsActivity extends AppCompatActivity {
 
     private int buildingId;
     private BuildingAdapter buildingAdapter;
-    public static final String BUILDING_ID = "buildingId";
     public static final String BUILDING_LIST = "buildingList";
 
 
@@ -44,51 +43,41 @@ public class BuildingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buildings);
         connect = ConnectWebService.GetInstance();
-        final Intent intent = getIntent();
-        buildingId = intent.getIntExtra(BUILDING_ID, 0);
-        loadData();
-        new getBuilding().execute();
+        Intent intent = getIntent();
+        buildingId = intent.getIntExtra(MainActivity.BUILDING_ID, 0);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         searchView = findViewById(R.id.searchBuildings);
         gridView = findViewById(R.id.gridBuildings);
+        loadData();
         buildingAdapter = new BuildingAdapter(this, buildingList);
-//        gridView.setAdapter(buildingAdapter);
+        gridView.setAdapter(buildingAdapter);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                buildingAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 int buildingChoose = buildingList.get(position).getIdBuilding();
                 Intent intent1 = new Intent(BuildingsActivity.this, CategoryActivity.class);
-                intent1.putExtra(CategoryActivity.BUILDING_ID, buildingChoose);
+                intent1.putExtra(MainActivity.BUILDING_ID, buildingChoose);
                 startActivity(intent1);
             }
         });
 
     }
 
-    private class getBuilding extends AsyncTask<Void, Void, JSONArray>{
-
-        @Override
-        protected JSONArray doInBackground(Void... voids) {
-            connect = ConnectWebService.GetInstance();
-            return connect.getSelectedBuilding(buildingId);
-        }
-
-        @Override
-        protected void onPostExecute(JSONArray jsonArray) {
-            Gson gson = new Gson();
-            String b = null;
-            try {
-                b = jsonArray.getString(0);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            saveData(gson.fromJson(b, Building.class));
-            gridView.setAdapter(buildingAdapter);
-        }
-    }
 
     private void loadData() {
             SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
@@ -100,29 +89,5 @@ public class BuildingsActivity extends AppCompatActivity {
             if(buildingList == null){
                 buildingList = new ArrayList<>();
             }
-    }
-    private void saveData(Building building) {
-        if (!isOnList(building.getIdBuilding())) {
-            buildingList.add(building);
-            SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            Gson gson = new Gson();
-            String json = gson.toJson(buildingList);
-            editor.putString(BUILDING_LIST, json);
-            editor.apply();
-        }
-    }
-
-    private boolean isOnList(int buildingId) {
-        if (buildingList == null) {
-            buildingList = new ArrayList<>();
-            return false;
-        }
-        for (int i = 0; i < buildingList.size(); i++) {
-            if (buildingList.get(i).getIdBuilding() == buildingId) {
-                return true;
-            }
-        }
-        return false;
     }
 }

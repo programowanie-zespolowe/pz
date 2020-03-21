@@ -26,7 +26,7 @@ import java.util.ArrayList;
 
 public class CategoryActivity extends AppCompatActivity {
 
-    public static final String BUILDING_ID = "buildingId";
+    public static final String GROUP_ID = "groupId";
     private Toolbar toolbar;
     private GridView gridView;
     private SearchView searchView;
@@ -46,20 +46,30 @@ public class CategoryActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        new getGroups().execute();
         gridView = findViewById(R.id.gridCategory);
+        searchView = findViewById(R.id.searchCategory);
         adapterGroup = new AdapterGroup(this, groupList);
+        new getGroups().execute();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapterGroup.getFilter().filter(newText);
+                return false;
+            }
+        });
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String name = groupList.get(position).getNameGroup();
-                Intent intent1 = null;
-                switch (name){
-                    case "Pokoje":
-                        intent1 = new Intent(CategoryActivity.this, RoomsActivity.class);
-                        intent1.putExtra(BUILDING_ID, buildingId);
-                        break;
-                }
+                int idGroup = groupList.get(position).getIdGroup();
+                Intent intent1;
+                intent1 = new Intent(CategoryActivity.this, PointDetailActivity.class);
+                intent1.putExtra(GROUP_ID, idGroup);
+                intent1.putExtra(MainActivity.BUILDING_ID, buildingId);
                 startActivity(intent1);
             }
         });
@@ -86,9 +96,6 @@ public class CategoryActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
-                for(Group e: groupList){
-                    System.out.println(e);
-                }
            gridView.setAdapter(adapterGroup);
         }
     }
@@ -99,7 +106,7 @@ public class CategoryActivity extends AppCompatActivity {
 
             case android.R.id.home:
                 Intent intent = new Intent(this, BuildingsActivity.class);
-                intent.putExtra(BuildingsActivity.BUILDING_ID, buildingId);
+                //intent.putExtra(BuildingsActivity.BUILDING_ID, buildingId);
                 startActivity(intent);
                 return true;
         }
@@ -111,6 +118,7 @@ public class CategoryActivity extends AppCompatActivity {
         switch(keyCode) {
             case(KeyEvent.KEYCODE_BACK):
                 Intent a1_intent = new Intent(this, BuildingsActivity.class);
+                a1_intent.putExtra(MainActivity.BUILDING_ID, buildingId);
                 startActivity(a1_intent);
                 finish();
                 return true;

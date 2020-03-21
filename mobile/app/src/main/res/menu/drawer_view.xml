@@ -11,7 +11,7 @@
         android:id="@+id/pokoje"
         android:title="Pokoje" />
     <item
-        android:id="@+id/nav_third_fragment"
+        android:id="@+id/nowy_kod"
         android:title="Skanuj nowy kod" />
 </group>
     <group android:id="@+id/nav_footer">

@@ -20,10 +20,10 @@ import java.text.MessageFormat;
 public class ConnectWebService {
     private static ConnectWebService instance;
     private final static String TOKEN = "http://54.37.136.172:91/api/token";
-    private final static String SELECTED_BUILDING =  "http://54.37.136.172:91/GetData/Buildings/All/{0}";
+    private final static String SELECTED_BUILDING =  "http://54.37.136.172:91/GetData/Buildings/Selected/{0}";
     private final String Groups = "http://54.37.136.172:91/GetData/Buildings/{0}/Groups";
-    private final String PointDetail = "http://54.37.136.172:91/GetData/Buildings/Points/{0}/PointsDetails";
-    private final String BUILDING_POINT = "http://54.37.136.172:91/GetData/Buildings/{0}/Points";
+    private final String PointDetail = "http://54.37.136.172:91/GetData/Buildings/Groups/{0}/PointsDetails";
+    private final String BUILDING_POINT = "http//54.37.136.172:91/GetData/Buildings/{0}/Points";
 
     private Token token;
     private static Device device;

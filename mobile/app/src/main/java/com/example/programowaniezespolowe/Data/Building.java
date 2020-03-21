@@ -3,9 +3,14 @@ package com.example.programowaniezespolowe.Data;
 public class Building {
     private int idBuilding;
     private int idUser;
-//    private byte[] imageBuilding;
     private String imageBuilding;
     private String nameBuilding;
+
+
+    public Building(String imageBuilding, String nameBuilding) {
+        this.imageBuilding = imageBuilding;
+        this.nameBuilding = nameBuilding;
+    }
 
     public int getIdBuilding() {
         return idBuilding;

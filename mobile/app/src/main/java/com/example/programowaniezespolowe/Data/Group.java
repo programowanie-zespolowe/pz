@@ -3,9 +3,13 @@ package com.example.programowaniezespolowe.Data;
 public class Group {
     private int idBuilding;
     private int idGroup;
-//    private byte[] imageGroup;
     private String imageGroup;
     private String nameGroup;
+
+    public Group(String imageGroup, String nameGroup) {
+        this.imageGroup = imageGroup;
+        this.nameGroup = nameGroup;
+    }
 
     public int getIdBuilding() {
         return idBuilding;
@@ -31,13 +35,6 @@ public class Group {
         this.nameGroup = nameGroup;
     }
 
-//    public byte[] getImageGroup() {
-//        return imageGroup;
-//    }
-//
-//    public void setImageGroup(byte[] imageGroup) {
-//        this.imageGroup = imageGroup;
-//    }
 
     public String getImageGroup() {
         return imageGroup;
