@@ -6,10 +6,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="masterWindow" prefHeight="800.0" prefWidth="1200.0" stylesheets="@../stylesheets/scene.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MasterWindowController">
+<BorderPane fx:id="masterWindow" stylesheets="@../stylesheets/scene.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MasterWindowController">
    <top>
       <VBox BorderPane.alignment="CENTER">
-         <fx:include fx:id="menuBar" source="menuBar.fxml" />
          <fx:include fx:id="topMenuButtons" source="topMenuButtons.fxml" />
          <BorderPane.margin>
             <Insets />
@@ -18,21 +17,25 @@
    </top>
    <bottom>
       <HBox BorderPane.alignment="CENTER">
-         <fx:include fx:id="bottomMenuButtons" source="bottomMenuButtons.fxml" />
       </HBox>
    </bottom>
    <right>
-      <VBox prefWidth="0.0" BorderPane.alignment="CENTER" />
+      <VBox BorderPane.alignment="CENTER" />
    </right>
    <left>
-      <VBox prefWidth="200.0" BorderPane.alignment="CENTER">
-         <fx:include fx:id="leftMenuButtons" source="leftMenuButtons.fxml">
-         </fx:include>
+      <VBox alignment="BASELINE_CENTER" BorderPane.alignment="CENTER">
+         <fx:include fx:id="leftMenuButtons" source="leftMenuButtons.fxml" />
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
       </VBox>
    </left>
    <center>
       <Pane fx:id="centerScrollPane" BorderPane.alignment="CENTER">
          <fx:include fx:id="centerMenuButtons" source="centerMenuButtons.fxml" />
+         <BorderPane.margin>
+            <Insets bottom="10.0" right="10.0" />
+         </BorderPane.margin>
       </Pane>
    </center>
 </BorderPane>

@@ -6,8 +6,11 @@
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
 <GridPane alignment="CENTER" prefHeight="200.0" prefWidth="400.0" stylesheets="@../stylesheets/scene.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AddBuildingLevelWindowController">
@@ -23,20 +26,32 @@
        <RowConstraints />
    </rowConstraints>
    <children>
-      <Label stylesheets="@../stylesheets/confirm.css" text="Image:" GridPane.columnSpan="2" GridPane.rowIndex="1">
+      <Label stylesheets="@../stylesheets/confirm.css" text="Obraz:" GridPane.columnSpan="2" GridPane.rowIndex="1">
          <GridPane.margin>
-            <Insets />
+            <Insets left="10.0" />
          </GridPane.margin></Label>
-      <TextField fx:id="imageFilePath" disable="true" promptText="..." styleClass="text-field1" stylesheets="@../stylesheets/confirm.css" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <HBox alignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+         <children>
+            <TextField fx:id="imageFilePath" disable="true" promptText="..." styleClass="text-field1" stylesheets="@../stylesheets/confirm.css" />
+            <Button mnemonicParsing="false" onAction="#BrowseImage" styleClass="buttonLittle" stylesheets="@../stylesheets/confirm.css">
+               <graphic>
+                  <ImageView fitHeight="26.0" fitWidth="77.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="/icons/add_green.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
          <GridPane.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </GridPane.margin></TextField>
-      <Button mnemonicParsing="false" onAction="#BrowseImage" styleClass="buttonIcon" stylesheets="@../stylesheets/confirm.css" text="Browse..." GridPane.columnIndex="2" GridPane.rowIndex="1" />
-      <Label stylesheets="@../stylesheets/confirm.css" text="Building level:" GridPane.rowIndex="2">
+         </GridPane.margin>
+      </HBox>
+      <Label stylesheets="@../stylesheets/confirm.css" text="Poziom budynku:" GridPane.rowIndex="2">
          <GridPane.margin>
-            <Insets right="10.0" />
+            <Insets left="10.0" right="10.0" />
          </GridPane.margin></Label>
-      <Spinner fx:id="buildingLevelSpinner" stylesheets="@../stylesheets/confirm.css" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2">
+      <Spinner fx:id="buildingLevelSpinner" prefHeight="26.0" prefWidth="180.0" stylesheets="@../stylesheets/confirm.css" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2">
           <valueFactory>
               <SpinnerValueFactory.IntegerSpinnerValueFactory max="100" min="-100" />
           </valueFactory>
@@ -44,7 +59,7 @@
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </GridPane.margin>
       </Spinner>
-      <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#AddBuildingLevel" styleClass="buttonConfirm" stylesheets="@../stylesheets/confirm.css" text="Add level" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+      <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#AddBuildingLevel" prefHeight="50.0" prefWidth="132.0" styleClass="buttonConfirm" stylesheets="@../stylesheets/confirm.css" text="Dodaj" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
          <GridPane.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </GridPane.margin></Button>

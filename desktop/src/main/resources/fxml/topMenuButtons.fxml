@@ -8,7 +8,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 
-<HBox alignment="CENTER" prefHeight="50.0" prefWidth="1200.0" spacing="10.0" stylesheets="@../stylesheets/scene.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.TopMenuButtonsController">
+<HBox alignment="CENTER" spacing="20.0" stylesheets="@../stylesheets/scene.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.TopMenuButtonsController">
    <children>
       <Button fx:id="buttonDodajBudynek" mnemonicParsing="false" onAction="#addBuilding" styleClass="buttonConfirm" stylesheets="@../stylesheets/confirm.css">
          <HBox.margin>
@@ -21,7 +21,7 @@
                </image>
             </ImageView>
          </graphic></Button>
-      <ComboBox fx:id="buildingComboBox" prefHeight="20.0" prefWidth="600.0" promptText="Wybierz budynek" styleClass="combo-box" stylesheets="@../stylesheets/comboBox.css">
+      <ComboBox fx:id="buildingComboBox" prefHeight="54.0" prefWidth="767.0" promptText="Wybierz budynek" styleClass="combo-box" stylesheets="@../stylesheets/comboBox.css">
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>
@@ -29,7 +29,7 @@
             <Insets />
          </HBox.margin>
       </ComboBox>
-      <Label minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="58.0" stylesheets="@../stylesheets/confirm.css" text="%mw.label.scale" textAlignment="CENTER">
+      <Label minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="130.0" stylesheets="@../stylesheets/confirm.css" text="%mw.label.scale" textAlignment="CENTER">
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>
@@ -42,7 +42,7 @@
             <Insets right="20.0" />
          </HBox.margin>
       </Label>
-      <Button fx:id="groupButton" onAction="#showGroups" prefHeight="88.0" prefWidth="118.4" styleClass="buttonConfirm" stylesheets="@../stylesheets/confirm.css" text="%mw.button.groups">
+      <Button fx:id="groupButton" onAction="#showGroups" prefHeight="88.0" prefWidth="223.0" styleClass="buttonConfirm" stylesheets="@../stylesheets/confirm.css" text="%mw.button.groups" wrapText="true">
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
@@ -51,6 +51,6 @@
          </HBox.margin></Button>
    </children>
    <padding>
-      <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+      <Insets bottom="10.0" left="10.0" right="10.0" />
    </padding>
 </HBox>

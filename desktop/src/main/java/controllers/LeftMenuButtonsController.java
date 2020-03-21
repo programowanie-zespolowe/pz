@@ -144,6 +144,7 @@ public class LeftMenuButtonsController  {
             scene.getStylesheets().add(getClass().getResource("/stylesheets/confirm.css").toExternalForm());
             scene.getStylesheets().add(getClass().getResource("/stylesheets/scene.css").toExternalForm());
             stage.setScene(scene);
+            stage.setTitle(FxmlUtils.getResourceBundle().getString("title.window.level"));
             stage.showAndWait();
 
         }

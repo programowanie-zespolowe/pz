@@ -40,12 +40,6 @@ public class MasterWindowController {
     private CenterMenuButtonsController centerMenuButtonsController;
 
     @FXML
-    private  MenuBarController menuBarController;
-
-    @FXML
-    private BottomMenuButtonsController bottomMenuButtonsController;
-
-    @FXML
     private AnchorPane centerAnchorPane;
 
     @FXML
@@ -70,11 +64,9 @@ public class MasterWindowController {
 
     @FXML
     public void initialize (){
-        menuBarController.setMasterWindowController(this);
         topMenuButtonsController.setMasterWindowController(this);
         leftMenuButtonsController.setMasterWindowController(this);
         centerMenuButtonsController.setMasterWindowController(this);
-        bottomMenuButtonsController.setMasterWindowController(this);
 
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
@@ -84,6 +76,8 @@ public class MasterWindowController {
             loadingStage.initStyle(StageStyle.UNDECORATED);
             Scene scene = new Scene(p);
             loadingStage.setScene(scene);
+            scene.getStylesheets().add(getClass().getResource("/stylesheets/confirm.css").toExternalForm());
+            scene.getStylesheets().add(getClass().getResource("/stylesheets/scene.css").toExternalForm());
         }
         catch (Exception e1)
         {
