@@ -148,7 +148,6 @@ namespace WhereToGoEntities.WhereToGo.Models
                 entity.Property(e => e.IdImage).HasColumnName("idImage");
 
                 entity.Property(e => e.IdPointType).HasColumnName("idPointType");
-                entity.Property(e => e.IdPointType).HasColumnName("idPointType");
 
                 entity.Property(e => e.ImagePoint)
                     .HasColumnName("imagePoint")
@@ -162,11 +161,6 @@ namespace WhereToGoEntities.WhereToGo.Models
                     .WithMany(p => p.Points)
                     .HasForeignKey(d => d.IdImage)
                     .HasConstraintName("FK_Points_BuildingImages").OnDelete(DeleteBehavior.Cascade);
-
-                entity.HasOne(d => d.IdPointTypeNavigation)
-                    .WithMany(p => p.Points)
-                    .HasForeignKey(d => d.IdPointType)
-                    .HasConstraintName("FK_Points_PointType").OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<PointsConnection>(entity =>

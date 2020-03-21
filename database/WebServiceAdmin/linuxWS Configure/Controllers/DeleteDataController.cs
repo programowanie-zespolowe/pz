@@ -178,11 +178,7 @@ namespace WhereToGo.Admin.Controllers
         public IActionResult DeletePointType(int idPointType)
         {
             using WhereToGoContext whereToGo = new WhereToGoContext();
-            var mdlPointType = whereToGo.PointType.Where(i => i.IdPointType == idPointType)
-                                                                                            .Include(x => x.Points).ThenInclude(c => c.PointsDetail)
-                                                                                            .Include(x => x.Points).ThenInclude(c => c.PointsConnectionIdPointStartNavigation)
-                                                                                            .Include(x => x.Points).ThenInclude(c => c.PointsConnectionIdPointEndNavigation)
-                                                                                            .FirstOrDefault();
+            var mdlPointType = whereToGo.PointType.Where(i => i.IdPointType == idPointType).FirstOrDefault();
             if (mdlPointType == null)
                 return NotFound();
             try

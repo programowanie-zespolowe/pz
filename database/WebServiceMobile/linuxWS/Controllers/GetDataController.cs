@@ -229,13 +229,13 @@ namespace linuxWS.Controllers
             }
         }
         [HttpGet]
-        [Route("Buildings/PointsDetails")]
-        public IEnumerable<MdlPointDetails> GetPointsDetails()
+        [Route("Buildings/{idBuilding}/PointsDetails")]
+        public IEnumerable<MdlPointDetails> GetPointsDetails(int idBuilding)
         {
             List<MdlPointDetails> listPointsDetails = new List<MdlPointDetails>();
             using (WhereToGoContext whereToGoEntities = new WhereToGoContext())
             {
-                foreach (var element in whereToGoEntities.PointsDetail)
+                foreach (var element in whereToGoEntities.PointsDetail.Where(i => i.IdPointNavigation.IdImageNavigation.IdBuilding == idBuilding))
                 {
                     MdlPointDetails mdlPointsDetails = new MdlPointDetails();
                     mdlPointsDetails.IdPointDetails = element.IdPointDetails;
@@ -262,6 +262,7 @@ namespace linuxWS.Controllers
                     mdlPointsDetails.IdPoint = element.IdPoint;
                     mdlPointsDetails.NamePoint = element.NamePoint;
                     mdlPointsDetails.IdGroup = element.IdGroup;
+                    mdlPointsDetails.ImagePoint = element.ImagePoint;
 
                     listPointsDetails.Add(mdlPointsDetails);
                 }
@@ -282,6 +283,7 @@ namespace linuxWS.Controllers
                     mdlPointsDetails.IdPoint = element.IdPoint;
                     mdlPointsDetails.NamePoint = element.NamePoint;
                     mdlPointsDetails.IdGroup = element.IdGroup;
+                    mdlPointsDetails.ImagePoint = element.ImagePoint;
 
                     listPointsDetails.Add(mdlPointsDetails);
                 }
@@ -302,6 +304,7 @@ namespace linuxWS.Controllers
                     mdlPointsDetails.IdPoint = element.IdPoint;
                     mdlPointsDetails.NamePoint = element.NamePoint;
                     mdlPointsDetails.IdGroup = element.IdGroup;
+                    mdlPointsDetails.ImagePoint = element.ImagePoint;
 
                     listPointsDetails.Add(mdlPointsDetails);
                 }

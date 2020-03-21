@@ -11,5 +11,6 @@ namespace LinuxWS.Models
         public int IdPoint { get; set; }
         public string NamePoint { get; set; }
         public int? IdGroup { get; set; }
+        public byte[] ImagePoint { get; set; }
     }
 }

@@ -5075,7 +5075,7 @@
   "packageFolders": {
     "C:\\Users\\bbadaczewski\\.nuget\\packages\\": {},
     "C:\\Microsoft\\Xamarin\\NuGet\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\PROGRAM FILES\\DOTNET\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
@@ -5088,7 +5088,7 @@
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\",
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        "C:\\PROGRAM FILES\\DOTNET\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
         "C:\\Users\\bbadaczewski\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -5168,7 +5168,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\PROGRAM FILES\\DOTNET\\sdk\\3.1.100\\RuntimeIdentifierGraph.json"
       }
     }
   }

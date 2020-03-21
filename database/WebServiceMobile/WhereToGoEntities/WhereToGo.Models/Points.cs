@@ -22,7 +22,6 @@ namespace WhereToGoEntities.WhereToGo.Models
         public bool? OnOffDirection { get; set; }
 
         public virtual BuildingImages IdImageNavigation { get; set; }
-        public virtual PointType IdPointTypeNavigation { get; set; }
         public virtual ICollection<PointsConnection> PointsConnectionIdPointEndNavigation { get; set; }
         public virtual ICollection<PointsConnection> PointsConnectionIdPointStartNavigation { get; set; }
         public virtual ICollection<PointsDetail> PointsDetail { get; set; }
