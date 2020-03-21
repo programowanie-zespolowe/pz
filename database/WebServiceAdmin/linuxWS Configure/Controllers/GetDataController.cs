@@ -358,8 +358,18 @@ namespace linuxWS_Configure.Controllers
 
                 mdlPointsList.Add(mdlPoint);
             }
-            double scale = (double)whereToGoEntities.BuildingImages.Where(i => i.IdBuilding == idBuilding).FirstOrDefault().Scale;
-            return FindPath.GetNextPoint(idPrevPoint, idActualPoint, idDestPoint, mdlPointsList, mdlPointsConnectionsList, scale);
+
+            var idLevel = (int) whereToGoEntities.Points.FirstOrDefault(i => i.IdPoint == idDestPoint).IdImage;
+            var scale = (double)whereToGoEntities.BuildingImages.FirstOrDefault(i => i.IdBuilding == idBuilding).Scale;
+            var destPointLevel = (int)whereToGoEntities.BuildingImages.FirstOrDefault(i => i.IdImage == idLevel).BuildingLevel;
+
+            return FindPath.GetNextPoint(idPrevPoint == -1 ? null : (int?)idPrevPoint, 
+                idActualPoint, 
+                idDestPoint,
+                mdlPointsList, 
+                mdlPointsConnectionsList, 
+                scale, 
+                destPointLevel);
         }
     }
 }
