@@ -305,5 +305,8 @@ public class PointDetailsController {
             masterWindowController.RemoveElevator(point);
         point.setIdPointType(pointType);
         WebServiceConnection.GetInstance().EditPoint(point, masterWindowController.GetCurrentBuildingId(), masterWindowController.getCurrentLevel().getIdImage());
+
+        Stage stage = (Stage) nameTextField.getScene().getWindow();
+        stage.close();
     }
 }

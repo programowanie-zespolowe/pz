@@ -48,8 +48,8 @@ public class CenterMenuButtonsController {
         {
             if(point.getIdImage() != level.getIdImage())
                 continue;
-            if(point.getX() - 5 <= x && x <= point.getX() + 5 &&
-                point.getY() - 5 <= y && y <= point.getY() + 5)
+            if(point.getX() - 10 <= x && x <= point.getX() + 10 &&
+                point.getY() - 10 <= y && y <= point.getY() + 10)
                 return point;
         }
         return null;
@@ -61,26 +61,32 @@ public class CenterMenuButtonsController {
         canvas = new Canvas();
         scrollPane.setContent(canvas);
 
-        canvas.onMouseClickedProperty().set((EventHandler<MouseEvent>) (MouseEvent t) -> {
-            if(t.getButton() != MouseButton.PRIMARY) {
-                if(selectedPoint_1 == null) {
-                    selectedPoint_1 = FindPoint(t.getX(), t.getY());
-                }
-                else if(selectedPoint_2 == null) {
-                    selectedPoint_2 = FindPoint(t.getX(), t.getY());
 
-                    if(selectedPoint_2 == selectedPoint_1) {
-                        ShowPointDetails(selectedPoint_1);
+        canvas.onMouseClickedProperty().set((EventHandler<MouseEvent>) (MouseEvent t) -> {
+            if(t.getButton() != MouseButton.PRIMARY)
+                return;
+            if(FindPoint(t.getX(), t.getY()) != null)
+            {
+                if(t.getButton().equals(MouseButton.PRIMARY)){
+                    if(t.getClickCount() == 2){
+                        ShowPointDetails(FindPoint(t.getX(), t.getY()));
                         selectedPoint_1 = null;
                         selectedPoint_2 = null;
-                        return;
                     }
-
-                    PointsConnection connection = WebServiceConnection.GetInstance().AddPointConnection(selectedPoint_1, selectedPoint_2);
-                    if(connection != null)
-                        masterWindowController.ConnectionAdded(connection);
-                    selectedPoint_1 = null;
-                    selectedPoint_2 = null;
+                    else
+                    {
+                        if(selectedPoint_1 == null) {
+                            selectedPoint_1 = FindPoint(t.getX(), t.getY());
+                        }
+                        else if(selectedPoint_2 == null) {
+                            selectedPoint_2 = FindPoint(t.getX(), t.getY());
+                            PointsConnection connection = WebServiceConnection.GetInstance().AddPointConnection(selectedPoint_1, selectedPoint_2);
+                            if(connection != null)
+                                masterWindowController.ConnectionAdded(connection);
+                            selectedPoint_1 = null;
+                            selectedPoint_2 = null;
+                        }
+                    }
                 }
                 return;
             }
