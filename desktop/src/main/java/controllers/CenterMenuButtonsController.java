@@ -86,9 +86,9 @@ public class CenterMenuButtonsController {
             {
                 if(t.getButton().equals(MouseButton.PRIMARY)){
                     if(t.getClickCount() == 2){
-                        ShowPointDetails(FindPoint(t.getX(), t.getY()));
                         selectedPoint_1 = null;
                         selectedPoint_2 = null;
+                        ShowPointDetails(FindPoint(t.getX(), t.getY()));
                     }
                     else
                     {
