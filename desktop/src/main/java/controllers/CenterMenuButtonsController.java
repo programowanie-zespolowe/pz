@@ -95,7 +95,6 @@ public class CenterMenuButtonsController {
                         if(selectedPoint_1 == null) {
                             selectedPoint_1 = FindPoint(t.getX(), t.getY());
                             SnapshotParameters params = new SnapshotParameters();
-                            params.setFill(Color.TRANSPARENT);
                             copyImage = canvas.snapshot(params, null);
                         }
                         else if(selectedPoint_2 == null) {
