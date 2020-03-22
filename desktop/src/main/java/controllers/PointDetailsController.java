@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.apache.commons.io.IOUtils;
@@ -60,6 +61,12 @@ public class PointDetailsController {
     private CheckBox emergencyExitPointType;
     @FXML
     private CheckBox noQrCodePointType;
+    @FXML
+    private HBox floorsCreateHBox;
+    @FXML
+    private Spinner floorsDownSpinner;
+    @FXML
+    private Spinner floorsUpSpinner;
 
     @FXML
     public void initialize()
@@ -68,6 +75,26 @@ public class PointDetailsController {
         {
             RefreshParameters(listView.getSelectionModel().selectedIndexProperty().get());
         });
+
+        stairsPointType.selectedProperty().addListener((observableValue, aBoolean, t1) ->
+        {
+            if(t1 == true)
+                elevatorPointType.setSelected(false);
+            if(t1 == true && (point.getIdPointType() & Constants.STAIRS_POINT_TYPE_MASK) == 0)
+                floorsCreateHBox.setVisible(true);
+            else
+                floorsCreateHBox.setVisible(false);
+        });
+        elevatorPointType.selectedProperty().addListener((observableValue, aBoolean, t1) ->
+        {
+            if(t1 == true)
+                stairsPointType.setSelected(false);
+            if(t1 == true && (point.getIdPointType() & Constants.ELEVATOR_POINT_TYPE_MASK) == 0)
+                floorsCreateHBox.setVisible(true);
+            else
+                floorsCreateHBox.setVisible(false);
+        });
+
     }
 
     private void RefreshParameters(int num)
@@ -188,6 +215,10 @@ public class PointDetailsController {
     }
 
     public void RemovePoint(ActionEvent actionEvent) {
+        if((point.getIdPointType() & Constants.ELEVATOR_POINT_TYPE_MASK) != 0)
+            masterWindowController.RemoveElevatorStairs(point, Constants.ELEVATOR_POINT_TYPE_MASK);
+        if((point.getIdPointType() & Constants.STAIRS_POINT_TYPE_MASK) != 0)
+            masterWindowController.RemoveElevatorStairs(point, Constants.STAIRS_POINT_TYPE_MASK);
         if(WebServiceConnection.GetInstance().RemovePoint(point))
         {
             masterWindowController.PointRemoved(point);
@@ -296,15 +327,16 @@ public class PointDetailsController {
         if(noQrCodePointType.isSelected())
             pointType |= Constants.NO_QR_CODE_POINT_TYPE_MASK;
         if(stairsPointType.isSelected() && (point.getIdPointType() & Constants.STAIRS_POINT_TYPE_MASK) == 0)
-            masterWindowController.AddStairs(point);
+            masterWindowController.AddElevatorStairs(point, (int)floorsDownSpinner.getValue(), (int)floorsUpSpinner.getValue(), point.getDirection(), point.isOnOffDirection(), Constants.STAIRS_POINT_TYPE_MASK);
         if(!stairsPointType.isSelected() && (point.getIdPointType() & Constants.STAIRS_POINT_TYPE_MASK) != 0)
-            masterWindowController.RemoveStairs(point);
+            masterWindowController.RemoveElevatorStairs(point, Constants.STAIRS_POINT_TYPE_MASK);
         if(elevatorPointType.isSelected() && (point.getIdPointType() & Constants.ELEVATOR_POINT_TYPE_MASK) == 0)
-            masterWindowController.AddElevator(point);
+            masterWindowController.AddElevatorStairs(point, (int)floorsDownSpinner.getValue(), (int)floorsUpSpinner.getValue(), point.getDirection(), point.isOnOffDirection(), Constants.ELEVATOR_POINT_TYPE_MASK);
         if(!elevatorPointType.isSelected() && (point.getIdPointType() & Constants.ELEVATOR_POINT_TYPE_MASK) != 0)
-            masterWindowController.RemoveElevator(point);
+            masterWindowController.RemoveElevatorStairs(point, Constants.ELEVATOR_POINT_TYPE_MASK);
         point.setIdPointType(pointType);
         WebServiceConnection.GetInstance().EditPoint(point, masterWindowController.GetCurrentBuildingId(), masterWindowController.getCurrentLevel().getIdImage());
+        masterWindowController.BuildingLevelChanged(masterWindowController.getCurrentLevel());
 
         Stage stage = (Stage) nameTextField.getScene().getWindow();
         stage.close();

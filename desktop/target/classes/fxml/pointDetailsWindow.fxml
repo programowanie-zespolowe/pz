@@ -78,7 +78,7 @@
       <GridPane.margin>
          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
       </GridPane.margin></Button>
-   <HBox style="-fx-border-color: black;" GridPane.columnSpan="3" GridPane.rowIndex="3">
+   <HBox style="-fx-border-color: black;" GridPane.columnSpan="3" GridPane.rowIndex="3" prefHeight="350">
       <children>
          <VBox>
             <children>
@@ -98,6 +98,20 @@
                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </VBox.margin>
                </HBox>
+                <HBox fx:id="floorsCreateHBox" spacing="35.0" visible="false">
+                    <Label text="Down:"/>
+                    <Spinner fx:id="floorsDownSpinner" stylesheets="@../stylesheets/confirm.css">
+                        <valueFactory>
+                            <SpinnerValueFactory.IntegerSpinnerValueFactory max="100" min="0" />
+                        </valueFactory>
+                    </Spinner>
+                    <Label text="Up:"/>
+                    <Spinner fx:id="floorsUpSpinner" stylesheets="@../stylesheets/confirm.css">
+                        <valueFactory>
+                            <SpinnerValueFactory.IntegerSpinnerValueFactory max="100" min="0" />
+                        </valueFactory>
+                    </Spinner>
+                </HBox>
                <HBox spacing="35.0">
                   <children>
                       <CheckBox fx:id="directionEnabled" stylesheets="@../stylesheets/confirm.css" text="Direction enabled" />

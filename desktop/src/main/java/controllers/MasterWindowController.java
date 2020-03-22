@@ -86,11 +86,7 @@ public class MasterWindowController {
 
 
         topMenuButtonsController.buildingComboBox.getSelectionModel().selectedItemProperty().addListener( (options, oldValue, newValue) -> {
-            if(image != null) {
-                centerMenuButtonsController.canvas.getGraphicsContext2D().drawImage(image,
-                        0,
-                        0);
-            }
+            centerMenuButtonsController.canvas.getGraphicsContext2D().clearRect(0, 0, centerMenuButtonsController.canvas.getWidth(), centerMenuButtonsController.canvas.getHeight());
             buildingId = buildings[topMenuButtonsController.buildingComboBox.getSelectionModel().getSelectedIndex()].getIdBuilding();
 
             Task task = new Task<Boolean>() {
@@ -364,72 +360,62 @@ public class MasterWindowController {
         }
     }
 
-    public boolean AddElevator(Point point)
+    private Point AddPoint(double x, double y, int pointType, double direction, boolean direcitonOn, int levelNum)
     {
-        int upperLevelId = -1;
+        int levelId = -1;
         for(BuildingLevel level : levels)
         {
-            if(getCurrentLevel().getBuildingLevel() + 1 == level.getBuildingLevel())
+            if(levelNum == level.getBuildingLevel())
             {
-                upperLevelId = level.getIdImage();
+                levelId = level.getIdImage();
                 break;
             }
         }
-        if(upperLevelId == -1)
-            return false;
+        if(levelId == -1)
+            return null;
 
         Point otherPoint = new Point();
-        otherPoint.setIdPointType(Constants.ELEVATOR_POINT_TYPE_MASK);
-        otherPoint.setX(point.getX());
-        otherPoint.setY(point.getY());
-        otherPoint.setDirection(0);
-        otherPoint.setOnOffDirection(false);
-        otherPoint.setIdImage(upperLevelId);
+        otherPoint.setIdPointType(pointType);
+        otherPoint.setX(x);
+        otherPoint.setY(y);
+        otherPoint.setDirection(direction);
+        otherPoint.setOnOffDirection(direcitonOn);
+        otherPoint.setIdImage(levelId);
+        otherPoint = WebServiceConnection.GetInstance().AddPoint(otherPoint, levelId);
 
-        otherPoint = WebServiceConnection.GetInstance().AddPoint(otherPoint, upperLevelId);
-        if(otherPoint == null)
-            return false;
-
-        PointAdded(otherPoint);
-        PointsConnection connection = WebServiceConnection.GetInstance().AddPointConnection(otherPoint, point);
-        if(connection == null)
-            return false;
-        ConnectionAdded(connection);
-        BuildingLevelChanged(leftMenuButtonsController.getCurrentBuildLevel());
-        return true;
+        if(otherPoint != null)
+            PointAdded(otherPoint);
+        return otherPoint;
     }
 
-    public boolean AddStairs(Point point) {
-        int upperLevelId = -1;
-        for(BuildingLevel level : levels)
+    public boolean AddElevatorStairs(Point point, int floorsDown, int floorsUp, double direction, boolean directionOn, int pointType)
+    {
+        List<Point> points = new ArrayList<>();
+        points.add(point);
+        for(int i = 1; i <= floorsDown; i++)
         {
-            if(getCurrentLevel().getBuildingLevel() + 1 == level.getBuildingLevel())
+            Point addedPoint = AddPoint(point.getX(), point.getY(), pointType, direction, directionOn, getCurrentLevel().getBuildingLevel() - i);
+            if(addedPoint != null)
+                points.add(addedPoint);
+        }
+        for(int i = 1; i <= floorsUp; i++)
+        {
+            Point addedPoint = AddPoint(point.getX(), point.getY(), pointType, direction, directionOn, getCurrentLevel().getBuildingLevel() + i);
+            if(addedPoint != null)
+                points.add(addedPoint);
+        }
+        for(int i = 0; i < points.size(); i++)
+        {
+            for(int j = i + 1; j < points.size(); j++)
             {
-                upperLevelId = level.getIdImage();
-                break;
+                if(i == j)
+                    continue;
+                PointsConnection connection = WebServiceConnection.GetInstance().AddPointConnection(points.get(i), points.get(j));
+                if(connection == null)
+                    return false;
+                ConnectionAdded(connection);
             }
         }
-        if(upperLevelId == -1)
-            return false;
-
-        Point otherPoint = new Point();
-        otherPoint.setIdPointType(Constants.STAIRS_POINT_TYPE_MASK);
-        otherPoint.setX(point.getX());
-        otherPoint.setY(point.getY());
-        otherPoint.setDirection(0);
-        otherPoint.setOnOffDirection(false);
-        otherPoint.setIdImage(upperLevelId);
-
-        otherPoint = WebServiceConnection.GetInstance().AddPoint(otherPoint, upperLevelId);
-        if(otherPoint == null)
-            return false;
-
-        PointAdded(otherPoint);
-        PointsConnection connection = WebServiceConnection.GetInstance().AddPointConnection(otherPoint, point);
-        if(connection == null)
-            return false;
-        ConnectionAdded(connection);
-        BuildingLevelChanged(leftMenuButtonsController.getCurrentBuildLevel());
         return true;
     }
 
@@ -445,13 +431,13 @@ public class MasterWindowController {
         return false;
     }
 
-    public void RemoveStairs(Point point)
+    public void RemoveElevatorStairs(Point point, int pointType)
     {
         for(Point p : points)
         {
             if(p == point)
                 continue;
-            if((p.getIdPoint() & Constants.STAIRS_POINT_TYPE_MASK) == 0)
+            if((p.getIdPointType() & pointType) == 0)
                 continue;
             if(p.getX() != point.getX())
                 continue;
@@ -463,29 +449,7 @@ public class MasterWindowController {
             {
                 PointRemoved(p);
             }
-            return;
         }
-    }
-
-    public void RemoveElevator(Point point)
-    {
-        for(Point p : points)
-        {
-            if(p == point)
-                continue;
-            if((p.getIdPoint() & Constants.ELEVATOR_POINT_TYPE_MASK) == 0)
-                continue;
-            if(p.getX() != point.getX())
-                continue;
-            if(p.getY() != point.getY())
-                continue;
-            if(!ArePointsConnected(p, point))
-                continue;
-            if(WebServiceConnection.GetInstance().RemovePoint(p))
-            {
-                PointRemoved(p);
-            }
-            return;
-        }
+        BuildingLevelChanged(getCurrentLevel());
     }
 }
