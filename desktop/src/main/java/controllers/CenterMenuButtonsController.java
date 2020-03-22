@@ -5,10 +5,12 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -41,6 +43,7 @@ public class CenterMenuButtonsController {
     Point points[];
     Point selectedPoint_1 = null;
     Point selectedPoint_2 = null;
+    WritableImage copyImage = null;
 
     public Point FindPoint(double x, double y)
     {
@@ -61,10 +64,24 @@ public class CenterMenuButtonsController {
         canvas = new Canvas();
         scrollPane.setContent(canvas);
 
+        canvas.onMouseMovedProperty().set((EventHandler<MouseEvent>) (MouseEvent t) -> {
+            if(selectedPoint_1 == null || copyImage == null)
+                return;
+            canvas.getGraphicsContext2D().drawImage(copyImage, 0, 0);
+            canvas.getGraphicsContext2D().setStroke(Color.rgb(255,0,0,1.0));
+            canvas.getGraphicsContext2D().strokeLine(selectedPoint_1.getX(), selectedPoint_1.getY(), t.getX(), t.getY());
+            canvas.getGraphicsContext2D().stroke();
+        });
 
         canvas.onMouseClickedProperty().set((EventHandler<MouseEvent>) (MouseEvent t) -> {
-            if(t.getButton() != MouseButton.PRIMARY)
+            if(t.getButton() != MouseButton.PRIMARY) {
+                if(selectedPoint_1 != null)
+                {
+                    selectedPoint_1 = null;
+                    canvas.getGraphicsContext2D().drawImage(copyImage, 0, 0);
+                }
                 return;
+            }
             if(FindPoint(t.getX(), t.getY()) != null)
             {
                 if(t.getButton().equals(MouseButton.PRIMARY)){
@@ -77,6 +94,9 @@ public class CenterMenuButtonsController {
                     {
                         if(selectedPoint_1 == null) {
                             selectedPoint_1 = FindPoint(t.getX(), t.getY());
+                            SnapshotParameters params = new SnapshotParameters();
+                            params.setFill(Color.TRANSPARENT);
+                            copyImage = canvas.snapshot(params, null);
                         }
                         else if(selectedPoint_2 == null) {
                             selectedPoint_2 = FindPoint(t.getX(), t.getY());
