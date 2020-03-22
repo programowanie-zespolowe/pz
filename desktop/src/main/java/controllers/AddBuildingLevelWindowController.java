@@ -2,6 +2,7 @@ package controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
@@ -18,6 +19,8 @@ public class AddBuildingLevelWindowController {
     final FileChooser fileChooser = new FileChooser();
 
     @FXML
+    private Button addButton;
+    @FXML
     private TextField imageFilePath;
     @FXML
     private Spinner buildingLevelSpinner;
@@ -32,6 +35,7 @@ public class AddBuildingLevelWindowController {
     public void initialize()
     {
         buildingLevelSpinner.getValueFactory().setValue(0);
+        init();
     }
 
     @FXML
@@ -70,6 +74,11 @@ public class AddBuildingLevelWindowController {
             }
         }
 
+    }
+
+    //wygaszenie przycisku
+    public void init(){
+        addButton.disableProperty().bind(imageFilePath.textProperty().isEmpty());
     }
 
     private  MasterWindowController masterWindowController;

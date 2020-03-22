@@ -76,6 +76,7 @@ public class PointDetailsController {
             RefreshParameters(listView.getSelectionModel().selectedIndexProperty().get());
         });
 
+
         stairsPointType.selectedProperty().addListener((observableValue, aBoolean, t1) ->
         {
             if(t1 == true)
@@ -94,6 +95,7 @@ public class PointDetailsController {
             else
                 floorsCreateHBox.setVisible(false);
         });
+
 
     }
 
@@ -341,4 +343,5 @@ public class PointDetailsController {
         Stage stage = (Stage) nameTextField.getScene().getWindow();
         stage.close();
     }
+
 }

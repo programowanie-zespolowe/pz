@@ -3,6 +3,7 @@ package controllers;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -31,6 +32,17 @@ public class AddBuildingWindow {
     private ImageView imageBuilding;
     @FXML
     private Label labelNoImage;
+    @FXML
+    private Button addBuildingButton;
+    @FXML
+    private Button browseButton;
+    @FXML
+    private TextField scaleLabel;
+
+    @FXML
+    public  void initialize(){
+        init();
+    }
 
     @FXML
     public void BrowseImage(ActionEvent actionEvent) {
@@ -84,6 +96,12 @@ public class AddBuildingWindow {
 
             }
         }
+    }
+//wygaszenie przycisku
+    private void init(){
+        scaleLabel.disableProperty().bind(BuildingNameTextField.textProperty().isEmpty());
+        browseButton.disableProperty().bind(scaleLabel.textProperty().isEmpty());
+        addBuildingButton.disableProperty().bind(imageFilePath.textProperty().isEmpty());
     }
 
     private MasterWindowController masterWindowController;
