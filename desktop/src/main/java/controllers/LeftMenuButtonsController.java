@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class LeftMenuButtonsController  {
+    private static final String WINDOW_EDIT_LEVEL = "/fxml/editBuildingLevelWindow.fxml";
     @FXML
     public VBox flowPane;
     private MasterWindowController masterWindowController;
@@ -57,6 +58,7 @@ public class LeftMenuButtonsController  {
             LeftMenuObject menuObject = new LeftMenuObject();
             menuObject.level = level;
             MenuItem removeMenuItem = new MenuItem("Remove");
+            MenuItem editMenuItem = new MenuItem("Edit");
             removeMenuItem.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
@@ -66,7 +68,14 @@ public class LeftMenuButtonsController  {
                     }
                 }
             });
+            editMenuItem.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    ShowEditLevel(level);
+                }
+            });
             ContextMenu contextMenu = new ContextMenu();
+            contextMenu.getItems().add(editMenuItem);
             contextMenu.getItems().add(removeMenuItem);
 
             try {
@@ -115,6 +124,27 @@ public class LeftMenuButtonsController  {
         }
         if(leftMenuObjects.size() > 0)
             SetSelectedColor(leftMenuObjects.get(0).level);
+    }
+
+    private void ShowEditLevel(BuildingLevel level) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            Pane p = fxmlLoader.load(getClass().getResource(WINDOW_EDIT_LEVEL).openStream());
+            EditBuildingLevelController controller = (EditBuildingLevelController) fxmlLoader.getController();
+            controller.setMasterWindowController(masterWindowController);
+            controller.setLevel(level);
+            Stage stage = new Stage();
+            Scene scene = new Scene(p);
+            scene.getStylesheets().add(getClass().getResource("/stylesheets/confirm.css").toExternalForm());
+            scene.getStylesheets().add(getClass().getResource("/stylesheets/scene.css").toExternalForm());
+            stage.setScene(scene);
+            stage.setTitle(FxmlUtils.getResourceBundle().getString("title.window.group"));
+            stage.showAndWait();
+        }
+        catch (Exception e)
+        {
+
+        }
     }
 
     void SetSelectedColor(BuildingLevel level)

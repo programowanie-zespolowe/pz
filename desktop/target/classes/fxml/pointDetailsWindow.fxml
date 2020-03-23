@@ -19,7 +19,7 @@
 
 <GridPane prefHeight="800.0" prefWidth="601.0" stylesheets="@../stylesheets/scene.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PointDetailsController">
     <VBox spacing="10.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1">
-        <ComboBox fx:id="groupComboBox" prefHeight="34.0" prefWidth="118.0" stylesheets="@../stylesheets/comboBox.css" />
+        <ComboBox fx:id="groupComboBox" prefHeight="34.0" prefWidth="118.0" stylesheets="@../stylesheets/comboBox.css" disable="true"/>
         <Label fx:id="noImageLabel" stylesheets="@../stylesheets/confirm.css" text="Parametr nie ma dodanego obrazka" />
       <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
          <children>
@@ -28,7 +28,7 @@
                     <ImageView fx:id="imageView" />
                </content>
             </ScrollPane>
-              <Button fx:id="browseImage" onAction="#Browse" styleClass="buttonIcon" stylesheets="@../stylesheets/confirm.css" text="Browse...">
+              <Button fx:id="browseImage" onAction="#Browse" styleClass="buttonIcon" stylesheets="@../stylesheets/confirm.css" text="Browse..." disable="true">
                <HBox.margin>
                   <Insets />
                </HBox.margin>
@@ -157,7 +157,7 @@
       <GridPane.margin>
          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
       </GridPane.margin></Button>
-     <TextField fx:id="nameTextField" promptText="Name:" styleClass="text-field1" stylesheets="@../stylesheets/confirm.css" GridPane.columnSpan="2">
+     <TextField fx:id="nameTextField" promptText="Name:" styleClass="text-field1" stylesheets="@../stylesheets/confirm.css" GridPane.columnSpan="2" disable="true">
       <GridPane.margin>
          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
       </GridPane.margin>

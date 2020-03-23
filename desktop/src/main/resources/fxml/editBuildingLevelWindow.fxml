@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controllers.EditBuildingLevelController"
+            prefHeight="400.0" prefWidth="600.0">
+    <Label text="Poziom budynku:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+    <Spinner fx:id="levelSpinner" GridPane.columnIndex="1" GridPane.rowIndex="0">
+        <valueFactory>
+            <SpinnerValueFactory.IntegerSpinnerValueFactory max="100" min="-100" />
+        </valueFactory>
+    </Spinner>
+
+    <Button text="Zamknij" onAction="#Close" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+    <Button text="Zapisz" onAction="#Save" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+
+</GridPane>

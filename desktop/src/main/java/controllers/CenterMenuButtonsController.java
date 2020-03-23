@@ -74,6 +74,8 @@ public class CenterMenuButtonsController {
         });
 
         canvas.onMouseClickedProperty().set((EventHandler<MouseEvent>) (MouseEvent t) -> {
+            if(level == null)
+                return;
             if(t.getButton() != MouseButton.PRIMARY) {
                 if(selectedPoint_1 != null)
                 {
@@ -99,9 +101,21 @@ public class CenterMenuButtonsController {
                         }
                         else if(selectedPoint_2 == null) {
                             selectedPoint_2 = FindPoint(t.getX(), t.getY());
-                            PointsConnection connection = WebServiceConnection.GetInstance().AddPointConnection(selectedPoint_1, selectedPoint_2);
-                            if(connection != null)
-                                masterWindowController.ConnectionAdded(connection);
+                            if(selectedPoint_2 == selectedPoint_1)
+                            {
+                                selectedPoint_2 = null;
+                                selectedPoint_1 = null;
+                                return;
+                            }
+                            PointsConnection connection = masterWindowController.GetPointsConnection(selectedPoint_1, selectedPoint_2);
+                            if(connection != null) {
+                                WebServiceConnection.GetInstance().RemovePointConnection(connection);
+                                masterWindowController.ConnectionRemoved(connection);
+                            } else {
+                                PointsConnection newConnection = WebServiceConnection.GetInstance().AddPointConnection(selectedPoint_1, selectedPoint_2);
+                                if (newConnection != null)
+                                    masterWindowController.ConnectionAdded(newConnection);
+                            }
                             selectedPoint_1 = null;
                             selectedPoint_2 = null;
                         }

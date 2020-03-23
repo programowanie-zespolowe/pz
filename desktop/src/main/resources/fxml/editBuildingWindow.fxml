@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.image.ImageView?>
+<GridPane xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml"
+          fx:controller="controllers.EditBuildingController"
+          prefHeight="400.0" prefWidth="600.0">
+    <Label text="Nazwa:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+    <TextField fx:id="nameTextField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+    <Label text="Skala:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+    <Spinner fx:id="spinnerScale" GridPane.rowIndex="1" GridPane.columnIndex="1">
+        <valueFactory>
+            <SpinnerValueFactory.DoubleSpinnerValueFactory max="359" min="0" />
+        </valueFactory>
+    </Spinner>
+    <TextField editable="false" fx:id="imagePath" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+    <Button onAction="#Browse" text="Browse..." GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+    <ImageView fx:id="imageView" GridPane.rowIndex="3" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
+
+    <Button text="Zamknij" onAction="#Close" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+    <Button text="Zapisz" onAction="#SaveAndClose" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+    <Button text="Usuń budynek" onAction="#DeleteAndClose" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+
+</GridPane>

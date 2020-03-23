@@ -5,7 +5,6 @@ public class BuildingLevel {
     int IdBuilding;
     byte[] PathImage;
     int BuildingLevel;
-    double Scale;
     double NorthPointAngle;
 
     public int getIdImage() {
@@ -38,14 +37,6 @@ public class BuildingLevel {
 
     public void setBuildingLevel(int buildingLevel) {
         BuildingLevel = buildingLevel;
-    }
-
-    public double getScale() {
-        return Scale;
-    }
-
-    public void setScale(double scale) {
-        Scale = scale;
     }
 
     public double getNorthPointAngle() {

@@ -3,6 +3,7 @@ package controllers;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -31,6 +32,8 @@ public class GroupsWindowController {
     private ImageView imageView;
     @FXML
     private TextField imagePath;
+    @FXML
+    private Button browseButton;
 
 
     private Group[] groups;
@@ -61,6 +64,8 @@ public class GroupsWindowController {
     public void initialize () {
         listView.getSelectionModel().selectedIndexProperty().addListener((observableValue, o, t1) ->
         {
+            nameTextField.setDisable(false);
+            browseButton.setDisable(false);
             RefreshParameters(listView.getSelectionModel().selectedIndexProperty().get());
         });
     }
@@ -111,7 +116,10 @@ public class GroupsWindowController {
     }
 
     final FileChooser fileChooser = new FileChooser();
+
     public void Browse(ActionEvent actionEvent) {
+        if(listView.getSelectionModel().getSelectedIndex() < 0)
+            return;
         File file = fileChooser.showOpenDialog(null);
         if (file != null) {
             imagePath.setText(file.getAbsolutePath());

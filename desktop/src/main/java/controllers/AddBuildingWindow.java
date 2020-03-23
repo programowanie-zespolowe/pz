@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -37,7 +38,8 @@ public class AddBuildingWindow {
     @FXML
     private Button browseButton;
     @FXML
-    private TextField scaleLabel;
+    private Spinner spinnerScale;
+
 
     @FXML
     public  void initialize(){
@@ -75,7 +77,7 @@ public class AddBuildingWindow {
         if(BuildingNameTextField.getText() == null || BuildingNameTextField.getText().length() == 0)
             return;
 
-        Integer id = WebServiceConnection.GetInstance().AddBuilding(BuildingNameTextField.getText(), imageFilePath.getText());
+        Integer id = WebServiceConnection.GetInstance().AddBuilding(BuildingNameTextField.getText(), (double)spinnerScale.getValueFactory().getValue(), imageFilePath.getText());
         if(id != null)
         {
             try {
@@ -99,8 +101,7 @@ public class AddBuildingWindow {
     }
 //wygaszenie przycisku
     private void init(){
-        scaleLabel.disableProperty().bind(BuildingNameTextField.textProperty().isEmpty());
-        browseButton.disableProperty().bind(scaleLabel.textProperty().isEmpty());
+        spinnerScale.disableProperty().bind(BuildingNameTextField.textProperty().isEmpty());
         addBuildingButton.disableProperty().bind(imageFilePath.textProperty().isEmpty());
     }
 

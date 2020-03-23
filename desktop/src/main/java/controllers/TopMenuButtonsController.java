@@ -17,6 +17,7 @@ public class TopMenuButtonsController {
     private MasterWindowController masterWindowController;
     public static final String WINDOW_ADD_BUILDING_FXML = "/fxml/AddBuildingWindow.fxml";
     public static final String WINDOW_SHOW_GROUPS = "/fxml/groupsWindow.fxml";
+    public static final String WINDOW_EDIT_BUILDING = "/fxml/editBuildingWindow.fxml";
 
     public TopMenuButtonsController()
     {
@@ -83,4 +84,27 @@ public class TopMenuButtonsController {
         }
     }
 
+    @FXML
+    public void editBuilding()
+    {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            Pane p = fxmlLoader.load(getClass().getResource(WINDOW_EDIT_BUILDING).openStream());
+            EditBuildingController controller = (EditBuildingController) fxmlLoader.getController();
+            controller.setMasterWindowController(masterWindowController);
+            controller.setBuilding(masterWindowController.GetCurrentBuilding());
+            Stage stage = new Stage();
+            Scene scene = new Scene(p);
+            scene.getStylesheets().add(getClass().getResource("/stylesheets/confirm.css").toExternalForm());
+            scene.getStylesheets().add(getClass().getResource("/stylesheets/scene.css").toExternalForm());
+            stage.setScene(scene);
+            stage.setTitle(FxmlUtils.getResourceBundle().getString("title.window.group"));
+            stage.showAndWait();
+
+        }
+        catch (IOException e)
+        {
+
+        }
+    }
 }

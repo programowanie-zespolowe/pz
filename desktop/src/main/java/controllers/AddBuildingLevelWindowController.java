@@ -54,7 +54,6 @@ public class AddBuildingLevelWindowController {
         buildingLevel.setBuildingLevel((int)buildingLevelSpinner.getValue());
         buildingLevel.setIdBuilding(buildingId);
         buildingLevel.setNorthPointAngle(0);
-        buildingLevel.setScale(1);
 
         Integer buildingLevelId = WebServiceConnection.GetInstance().AddBuildingLevel(buildingLevel, buildingId, imageFilePath.getText());
         if(buildingLevelId != null)

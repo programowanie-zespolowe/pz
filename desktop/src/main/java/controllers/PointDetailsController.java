@@ -67,12 +67,23 @@ public class PointDetailsController {
     private Spinner floorsDownSpinner;
     @FXML
     private Spinner floorsUpSpinner;
+    @FXML
+    private Button browseImage;
 
     @FXML
     public void initialize()
     {
         listView.getSelectionModel().selectedIndexProperty().addListener((observableValue, o, t1) ->
         {
+            if(listView.getSelectionModel().getSelectedIndex() >= 0) {
+                nameTextField.setDisable(false);
+                groupComboBox.setDisable(false);
+                browseImage.setDisable(false);
+            } else {
+                nameTextField.setDisable(true);
+                groupComboBox.setDisable(true);
+                browseImage.setDisable(true);
+            }
             RefreshParameters(listView.getSelectionModel().selectedIndexProperty().get());
         });
 
@@ -136,6 +147,8 @@ public class PointDetailsController {
 
     final FileChooser fileChooser = new FileChooser();
     public void Browse(ActionEvent actionEvent) {
+        if(listView.getSelectionModel().getSelectedIndex() < 0)
+            return;
         File file = fileChooser.showOpenDialog(null);
         if (file != null) {
             imagePath.setText(file.getAbsolutePath());

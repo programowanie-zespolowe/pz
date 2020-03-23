@@ -27,12 +27,16 @@ public class WebServiceConnection {
     private static WebServiceConnection instance;
 
     private final String LoginUrl = "http://54.37.136.172:90/admin/login";
+
     private final String BuildingsUrl = "http://54.37.136.172:90/admin/GetData/Buildings";
-    private final String AddBuilding = "http://54.37.136.172:90/admin/AddData/Buildings/{0}";
+    private final String AddBuilding = "http://54.37.136.172:90/admin/AddData/Buildings/{0}/{1}";
+    private final String EditBuildingUrl = "http://54.37.136.172:90/admin/EditData/Buildings/{0}/{1}/{2}";
+    private final String RemoveBuildingUrl = "http://54.37.136.172:90/admin/DeleteData/Buildings/{0}";
 
     private final String BuildingsLevelUrl = "http://54.37.136.172:90/admin/GetData/Buildings/{0}";
-    private final String AddBuildingsLevelUrl = "http://54.37.136.172:90/admin/AddData/BuildingImage/{0}/{1}/{2}/{3}";
+    private final String AddBuildingsLevelUrl = "http://54.37.136.172:90/admin/AddData/BuildingImage/{0}/{1}/{2}";
     private final String RemoveBuildingsLevelUrl = "http://54.37.136.172:90/admin/DeleteData/BuildingImages/{0}";
+    private final String EditLevelUrl = "http://54.37.136.172:90/admin/EditData/Buildings/{0}/BuildingImages/{1}/{2}/{3}";
 
     private final String PointsUrl = "http://54.37.136.172:90/admin/GetData/Buildings/{0}/Points";
     private final String AddPointUrl = "http://54.37.136.172:90/admin/AddData/BuildingsImage/{0}/{1}/{2}/{3}/{4}/{5}/Points";
@@ -52,6 +56,8 @@ public class WebServiceConnection {
 
     private final String PointsConnectionsUrl = "http://54.37.136.172:90/admin/GetData/Buildings/{0}/PointsConnection";
     private final String AddPointsConnectionUrl = "http://54.37.136.172:90/admin/AddData/Points/{0}/{1}/PointsConnection";
+    private final String RemovePointConnectionUrl = "http://54.37.136.172:90/admin/DeleteData/PointsConnection/{0}";
+
     private final String AddPointType = "http://54.37.136.172:90/Admin/AddData/PointType";
 
     private TokenStruct tokenStruct;
@@ -200,7 +206,7 @@ public class WebServiceConnection {
                     .setMode(HttpMultipartMode.STRICT)
                     .build();
 
-            String url = MessageFormat.format(AddBuildingsLevelUrl, buildingId, buildingLevel.getBuildingLevel(), buildingLevel.getScale(), buildingLevel.getNorthPointAngle());
+            String url = MessageFormat.format(AddBuildingsLevelUrl, buildingId, buildingLevel.getBuildingLevel(), buildingLevel.getNorthPointAngle());
             HttpPost httpPost = new HttpPost(url);
             httpPost.addHeader("Authorization", "Bearer " + tokenStruct.getToken());
             String name = entity.getContentType().getName();
@@ -220,7 +226,7 @@ public class WebServiceConnection {
         }
     }
 
-    public Integer AddBuilding(String buildingName, String filePath)
+    public Integer AddBuilding(String buildingName, double scale, String filePath)
     {
         try{
             File file = new File(filePath);
@@ -231,7 +237,7 @@ public class WebServiceConnection {
                     .setMode(HttpMultipartMode.STRICT)
                     .build();
 
-            String url = MessageFormat.format(AddBuilding, buildingName.replace(" ", "_"));
+            String url = MessageFormat.format(AddBuilding, buildingName.replace(" ", "_"), scale);
             HttpPost httpPost = new HttpPost(url);
             httpPost.addHeader("Authorization", "Bearer " + tokenStruct.getToken());
             String name = entity.getContentType().getName();
@@ -613,5 +619,93 @@ public class WebServiceConnection {
         {
             return false;
         }
+    }
+
+    public boolean RemovePointConnection(PointsConnection connection) {
+        try{
+            DeleteRequest(MessageFormat.format(RemovePointConnectionUrl, connection.getIdPointConnection()));
+            return true;
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+    }
+
+    public boolean EditBuilding(Building building, String filePath) {
+        try{
+            File file = new File(filePath);
+            CloseableHttpClient httpClient = HttpClients.createDefault();
+            MultipartEntityBuilder builder = MultipartEntityBuilder
+                    .create();
+            HttpEntity entity = null;
+            if(filePath.length() > 2)
+                entity = builder
+                        .addBinaryBody("ImageRead", file, ContentType.create("application/octet-stream"), "filename")
+                        .setMode(HttpMultipartMode.STRICT)
+                        .build();
+            else
+                entity = builder
+                        .setMode(HttpMultipartMode.STRICT)
+                        .build();
+
+            String url = MessageFormat.format(EditBuildingUrl, building.getIdBuilding(),
+                    building.getNameBuilding().replace(" ", "_"),
+                    building.getScale());
+            HttpPost httpPost = new HttpPost(url);
+            httpPost.addHeader("Authorization", "Bearer " + tokenStruct.getToken());
+            String name = entity.getContentType().getName();
+            String value = entity.getContentType().getValue();
+            httpPost.addHeader(name, value);
+            httpPost.setEntity(entity);
+            HttpResponse response = httpClient.execute(httpPost);
+            HttpEntity result = response.getEntity();
+            return true;
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+    }
+
+    public boolean DeleteBuilding(int idBuilding) {
+        try{
+            DeleteRequest(MessageFormat.format(RemoveBuildingUrl, idBuilding));
+            return true;
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+    }
+
+    public boolean EditLevel(BuildingLevel level) {
+        try{
+            CloseableHttpClient httpClient = HttpClients.createDefault();
+            MultipartEntityBuilder builder = MultipartEntityBuilder
+                    .create();
+            HttpEntity entity = builder
+                        .setMode(HttpMultipartMode.STRICT)
+                        .build();
+
+            String url = MessageFormat.format(EditLevelUrl, level.getIdBuilding(),
+                    level.getIdImage(),
+                    level.getBuildingLevel(),
+                    level.getNorthPointAngle());
+            HttpPost httpPost = new HttpPost(url);
+            httpPost.addHeader("Authorization", "Bearer " + tokenStruct.getToken());
+            String name = entity.getContentType().getName();
+            String value = entity.getContentType().getValue();
+            httpPost.addHeader(name, value);
+            httpPost.setEntity(entity);
+            HttpResponse response = httpClient.execute(httpPost);
+            HttpEntity result = response.getEntity();
+            return true;
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+
     }
 }

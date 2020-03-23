@@ -88,6 +88,7 @@ public class MasterWindowController {
         topMenuButtonsController.buildingComboBox.getSelectionModel().selectedItemProperty().addListener( (options, oldValue, newValue) -> {
             centerMenuButtonsController.canvas.getGraphicsContext2D().clearRect(0, 0, centerMenuButtonsController.canvas.getWidth(), centerMenuButtonsController.canvas.getHeight());
             buildingId = buildings[topMenuButtonsController.buildingComboBox.getSelectionModel().getSelectedIndex()].getIdBuilding();
+            topMenuButtonsController.SetScale(buildings[topMenuButtonsController.buildingComboBox.getSelectionModel().getSelectedIndex()].getScale());
 
             Task task = new Task<Boolean>() {
                 @Override protected Boolean call() throws Exception {
@@ -147,12 +148,14 @@ public class MasterWindowController {
                     1000);
 
         }
-        topMenuButtonsController.SetScale(level.getScale());
     }
 
     public int GetCurrentBuildingId()
     {
         return buildings[topMenuButtonsController.buildingComboBox.getSelectionModel().getSelectedIndex()].getIdBuilding();
+    }
+    public Building GetCurrentBuilding() {
+        return buildings[topMenuButtonsController.buildingComboBox.getSelectionModel().getSelectedIndex()];
     }
 
     private void LoadPointDetails() {
@@ -430,6 +433,17 @@ public class MasterWindowController {
         }
         return false;
     }
+    public PointsConnection GetPointsConnection(Point point1, Point point2)
+    {
+        for(PointsConnection connection : pointsConnections)
+        {
+            if(connection.getIdPointStart() == point1.getIdPoint() && connection.getIdPointEnd() == point2.getIdPoint())
+                return connection;
+            if(connection.getIdPointStart() == point2.getIdPoint() && connection.getIdPointEnd() == point1.getIdPoint())
+                return connection;
+        }
+        return null;
+    }
 
     public void RemoveElevatorStairs(Point point, int pointType)
     {
@@ -451,5 +465,62 @@ public class MasterWindowController {
             }
         }
         BuildingLevelChanged(getCurrentLevel());
+    }
+
+    public void ConnectionRemoved(PointsConnection connection) {
+        for(int i = 0; i < pointsConnections.length; i++)
+        {
+            if(pointsConnections[i] == connection)
+            {
+                pointsConnections = ArrayUtils.remove(pointsConnections, i);
+                break;
+            }
+        }
+        BuildingLevelChanged(getCurrentLevel());
+    }
+
+    public void BuildingEdited(Building building) {
+        int num = 0;
+        for(int i = 0; i < buildings.length; i++)
+        {
+            if(buildings[i].getIdBuilding() == building.getIdBuilding())
+            {
+                num = i;
+                buildings[i].setScale(building.getScale());
+                buildings[i].setNameBuilding(building.getNameBuilding());
+                if(building.getImageBuilding() != null)
+                    buildings[i].setImageBuilding(building.getImageBuilding());
+                break;
+            }
+        }
+        topMenuButtonsController.SetScale(building.getScale());
+        int currentIndex = topMenuButtonsController.buildingComboBox.getSelectionModel().getSelectedIndex();
+        topMenuButtonsController.buildingComboBox.getItems().set(num, Integer.toString(num + 1) + ": " + building.getNameBuilding());
+    }
+
+    public void BuildingDeleted(int idBuilding) {
+        for(int i = 0; i < buildings.length; i++)
+        {
+            if(buildings[i].getIdBuilding() == idBuilding)
+            {
+                buildings = ArrayUtils.remove(buildings, i);
+                break;
+            }
+        }
+        RefreshGUI();
+    }
+
+    public void levelEddited(BuildingLevel level) {
+        for(int i = 0; i < levels.length; i++)
+        {
+            if(levels[i].getIdImage() == level.getIdImage())
+            {
+                levels[i].setBuildingLevel(level.getBuildingLevel());
+                break;
+            }
+        }
+        BuildingLevel currentLevel = getCurrentLevel();
+        leftMenuButtonsController.RefreshLevels(levels);
+        leftMenuButtonsController.SetSelectedColor(currentLevel);
     }
 }

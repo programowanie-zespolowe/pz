@@ -33,7 +33,7 @@
    </Button>
 
     <VBox fx:id="options" alignment="TOP_RIGHT" prefHeight="500" prefWidth="200" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
-        <TextField fx:id="nameTextField" prefHeight="35.0" prefWidth="195.0" promptText="Nazwa:" styleClass="text-field1" stylesheets="@../stylesheets/confirm.css">
+        <TextField fx:id="nameTextField" prefHeight="35.0" prefWidth="195.0" promptText="Nazwa:" disable="true" styleClass="text-field1" stylesheets="@../stylesheets/confirm.css">
          <VBox.margin>
             <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
          </VBox.margin>
@@ -75,7 +75,7 @@
          <Insets />
       </GridPane.margin>
     </VBox>
-     <Button fx:id="deleteButton" alignment="CENTER" onAction="#Delete" prefHeight="50.0" prefWidth="105.0" styleClass="buttonConfirm" stylesheets="@../stylesheets/confirm.css" text="Usuń" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.rowSpan="2">
+     <Button fx:id="deleteButton" disable="true" alignment="CENTER" onAction="#Delete" prefHeight="50.0" prefWidth="105.0" styleClass="buttonConfirm" stylesheets="@../stylesheets/confirm.css" text="Usuń" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.rowSpan="2">
       <GridPane.margin>
          <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
       </GridPane.margin>

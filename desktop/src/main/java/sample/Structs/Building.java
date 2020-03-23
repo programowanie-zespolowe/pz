@@ -5,6 +5,15 @@ public class Building {
     private int IdUser;
     private String NameBuilding;
     private byte[] ImageBuilding;
+    private double Scale;
+
+    public double getScale() {
+        return Scale;
+    }
+
+    public void setScale(double scale) {
+        Scale = scale;
+    }
 
     public int getIdBuilding() {
         return IdBuilding;
