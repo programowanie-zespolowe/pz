@@ -22,9 +22,9 @@ namespace WhereToGo.Admin.Controllers
         {
             _log = log;
         }
-        [Route("Buildings/{NameBuilding}")]
+        [Route("Buildings/{NameBuilding}/{scale}")]
         [HttpPost]
-        public IActionResult PostBuildings(string NameBuilding, [FromForm] IFormFile ImageRead)
+        public IActionResult PostBuildings(string NameBuilding, double scale, [FromForm] IFormFile ImageRead)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -34,6 +34,7 @@ namespace WhereToGo.Admin.Controllers
                 Buildings mdlBuildings = new Buildings();
                 mdlBuildings.IdUser = UserSettings.IdAdmin;
                 mdlBuildings.NameBuilding = NameBuilding;
+                mdlBuildings.Scale = scale;
                 if (ImageRead != null)
                 {
                     ImageRead.CopyTo(ms);
@@ -56,9 +57,9 @@ namespace WhereToGo.Admin.Controllers
 
 
         }
-        [Route("BuildingImage/{idBuilding}/{BuildingLevel}/{Scale}/{NorthPointAngle}")]
+        [Route("BuildingImage/{idBuilding}/{BuildingLevel}/{NorthPointAngle}")]
         [HttpPost]
-        public IActionResult PostBuildingImages(int idBuilding, int BuildingLevel, double Scale, double NorthPointAngle, [FromForm] IFormFile ImageRead)
+        public IActionResult PostBuildingImages(int idBuilding, int BuildingLevel, double NorthPointAngle, [FromForm] IFormFile ImageRead)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -75,7 +76,6 @@ namespace WhereToGo.Admin.Controllers
                 }
                 else
                     mdlBuildings.PathImage = null;
-                mdlBuildings.Scale = Scale;
                 mdlBuildings.NorthPointAngle = NorthPointAngle;
                 whereToGo.BuildingImages.Add(mdlBuildings);
                 try
@@ -240,40 +240,6 @@ namespace WhereToGo.Admin.Controllers
 
             }
 
-        }
-        [Route("TestowyImage/{idBuilding}")]
-        [HttpPost]
-        public IActionResult PostTestImages(int idBuilding, [FromForm] BuildingImages buildingImages, [FromForm] IFormFile ImageRead)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-            using (var ms = new MemoryStream())
-            {
-                using WhereToGoContext whereToGo = new WhereToGoContext();
-                BuildingImages mdlBuildings = new BuildingImages();
-                mdlBuildings.IdBuilding = idBuilding;
-                mdlBuildings.BuildingLevel = buildingImages.BuildingLevel;
-                if (ImageRead != null)
-                {
-                    ImageRead.CopyTo(ms);
-                    mdlBuildings.PathImage = ms.GetBuffer();
-                }
-                else
-                    mdlBuildings.PathImage = null;
-                mdlBuildings.Scale = buildingImages.Scale;
-                mdlBuildings.NorthPointAngle = buildingImages.NorthPointAngle;
-                whereToGo.BuildingImages.Add(mdlBuildings);
-                try
-                {
-                    whereToGo.SaveChanges();
-                }
-                catch (Exception)
-                {
-                    return BadRequest(999);
-                }
-
-                return Ok(mdlBuildings);
-            }
         }
     }
 }

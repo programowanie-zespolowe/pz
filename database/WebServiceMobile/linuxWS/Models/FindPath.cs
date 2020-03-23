@@ -1,10 +1,10 @@
-﻿using System;
+﻿using linuxWS.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using linuxWS_Configure.Models;
 
-namespace WhereToGo.Admin.Models
+namespace LinuxWS.Models
 {
     public class FindPath
     {
@@ -14,34 +14,14 @@ namespace WhereToGo.Admin.Models
         public static int EMERGENCY_EXIT_POINT_TYPE_MASK = (1 << 4);
         public static int NO_QR_CODE_POINT_TYPE_MASK = (1 << 5);
 
-        //Build id 30
-        //Point 166, 167, 168, 169
-        public static NextPoint GetNextPoint(int? idPrevPoint, int idActualPoint, int idDestPoint, List<MdlPoints> points, List<MdlPointsConnection> connections, double scale)
+        public static NextPoint GetNextPoint(int? idPrevPoint, int idActualPoint, int idDestPoint, List<MdlPoints> points, List<MdlPointsConnection> connections, double scale, int destinationPointLevel)
         {
             var adjList = new AdjacencyList(points, connections);
             var nextPoint = new NextPoint();
-            var adjListPointId = (int)Dijkstra(adjList.StartPoints.IndexOf(idActualPoint), adjList.StartPoints.IndexOf(idDestPoint), adjList);
+            Dijkstra(idPrevPoint, adjList.StartPoints.IndexOf(idActualPoint), adjList.StartPoints.IndexOf(idDestPoint), adjList, nextPoint, points, destinationPointLevel);
 
-            var actualPoint = points.Where(i => i.IdPoint == idActualPoint).FirstOrDefault();
-            var destPoint = points.Where(i => i.IdPoint == idDestPoint).FirstOrDefault();
-
-            nextPoint.IdPoint = adjList.StartPoints[adjListPointId];
-            nextPoint.Distance = CalculateDistanceBetweenPoints(
-                actualPoint,
-                points.Where(i => i.IdPoint == nextPoint.IdPoint).FirstOrDefault()) / scale;
-
-            if (idPrevPoint is null || (bool)points.Where(i => i.IdPoint == idActualPoint).FirstOrDefault().OnOffDirection)
-            {
-                var prevPoint = CalculateVirtualPoint(actualPoint);
-                nextPoint.Angle = Angle((double)actualPoint.X, (double)actualPoint.Y, (double)prevPoint.X, (double)prevPoint.Y, (double)destPoint.X, (double)destPoint.Y);
-            }
-            else
-            {
-                var prevPoint = points.Where(i => i.IdPoint == idPrevPoint).FirstOrDefault();
-                nextPoint.Angle = Angle((double)actualPoint.X, (double)actualPoint.Y, (double)prevPoint.X , (double)prevPoint.Y, (double)destPoint.X, (double)destPoint.Y);
-            }
-
-            nextPoint.Icon = (int)GetIcon(nextPoint.Angle, destPoint);
+            nextPoint.Distance /= scale;
+            nextPoint.DistanceOnAnotherLevel /= scale;
 
             return nextPoint;
         }
@@ -53,9 +33,7 @@ namespace WhereToGo.Admin.Models
             Left = 2,
             TurnAround = 3,
             Right = 4,
-            StraightRight = 5,
-            Stairs = 6,
-            Elevator = 7
+            StraightRight = 5
         }
 
         private static bool IsElevator(MdlPoints point)
@@ -71,13 +49,8 @@ namespace WhereToGo.Admin.Models
             return false;
         }
 
-        private static Icon GetIcon(double angle, MdlPoints point)
+        private static Icon GetIcon(double angle)
         {
-            if (IsElevator(destPoint))
-                return Icon.Stairs;
-            if (IsStairs(destPoint))
-                return Icon.Elevator;
-
             if (-30 <= angle && angle <= 30)
                 return Icon.Straight;
 
@@ -96,7 +69,7 @@ namespace WhereToGo.Admin.Models
 
         private static MdlPoints CalculateVirtualPoint(MdlPoints point)
         {
-            double direction = Math.PI * (!(point.Direction is null) ? (double)point.Direction : 0) / 180.0;
+            double direction = Math.PI * (!(point.Direction is null) ? (double)point.Direction + 180 : 0) / 180.0;
 
             var returnPoint = new MdlPoints();
             const double DISTANCE = 10.0;
@@ -109,7 +82,7 @@ namespace WhereToGo.Admin.Models
             return returnPoint;
         }
 
-        private static int? Dijkstra(int startPointId, int endPointId, AdjacencyList list)
+        private static void Dijkstra(int? prevPointId, int startPointId, int endPointId, AdjacencyList list, NextPoint nextPoint, List<MdlPoints> points, int destinationPointLevel)
         {
             var size = list.StartPoints.Count;
 
@@ -138,7 +111,40 @@ namespace WhereToGo.Admin.Models
                 }
             }
 
-            return DijkstraNextPoint(startPointId, endPointId, distance, prev);
+            nextPoint.IdPoint = list.StartPoints[(int)DijkstraNextPoint(startPointId, endPointId, distance, prev)];
+            if (IsStairs(points.FirstOrDefault(i => i.IdPoint == nextPoint.IdPoint)))
+                nextPoint.Stairs = true;
+            if (IsElevator(points.FirstOrDefault(i => i.IdPoint == nextPoint.IdPoint)))
+                nextPoint.Elevator = true;
+
+            var actualPoint = points.FirstOrDefault(i => i.IdPoint == list.StartPoints[startPointId]);
+            var destPoint = points.FirstOrDefault(i => i.IdPoint == list.StartPoints[endPointId]);
+            var next = points.FirstOrDefault(i => i.IdPoint == nextPoint.IdPoint);
+
+            nextPoint.Distance = CalculateDistanceBetweenPoints(
+                                     actualPoint,
+                                     next);
+
+            nextPoint.Angle = CalculateAngle(prevPointId, actualPoint, next, points);
+            nextPoint.Icon = (int)GetIcon(nextPoint.Angle);
+
+            if (nextPoint.Stairs || nextPoint.Elevator)
+            {
+                nextPoint.IdPoint = list.StartPoints[(int)DijkstraNextPoint(list.StartPoints.IndexOf(nextPoint.IdPoint), endPointId, distance, prev)];
+                actualPoint = points.FirstOrDefault(i => i.IdPoint == nextPoint.IdPoint);
+                nextPoint.IdPoint = list.StartPoints[(int)DijkstraNextPoint(list.StartPoints.IndexOf(nextPoint.IdPoint), endPointId, distance, prev)];
+                destPoint = points.FirstOrDefault(i => i.IdPoint == list.StartPoints[endPointId]);
+                next = points.FirstOrDefault(i => i.IdPoint == nextPoint.IdPoint);
+
+                nextPoint.DistanceOnAnotherLevel = CalculateDistanceBetweenPoints(
+                    actualPoint,
+                    next);
+
+                nextPoint.AngleOnAnotherLevel = CalculateAngle(prevPointId, actualPoint, next, points);
+                nextPoint.IconOnAnotherLevel = (int)GetIcon(nextPoint.AngleOnAnotherLevel);
+
+                nextPoint.Level = destinationPointLevel;
+            }
         }
 
         private static int? DijkstraNextPoint(int startPointId, int endPointId, double[] distance, int[] prev)
@@ -170,15 +176,35 @@ namespace WhereToGo.Admin.Models
             return min_index;
         }
 
+        private static double CalculateAngle(int? prevPointId, MdlPoints actualPoint, MdlPoints destPoint, List<MdlPoints> points)
+        {
+            if (prevPointId is null || (bool)actualPoint.OnOffDirection)
+            {
+                var prevPoint = CalculateVirtualPoint(actualPoint);
+                return Angle((double)actualPoint.X, (double)actualPoint.Y, (double)prevPoint.X, (double)prevPoint.Y, (double)destPoint.X, (double)destPoint.Y);
+            }
+            else
+            {
+                var prevPoint = points.FirstOrDefault(i => i.IdPoint == prevPointId);
+                return Angle((double)actualPoint.X, (double)actualPoint.Y, (double)prevPoint.X, (double)prevPoint.Y, (double)destPoint.X, (double)destPoint.Y);
+            }
+        }
+
         private static double Angle(double x1, double y1, double x2, double y2, double x3, double y3)
         {
-            double numerator = y2 * (x1 - x3) + y1 * (x3 - x2) + y3 * (x2 - x1);
-            double denominator = (x2 - x1) * (x1 - x3) + (y2 - y1) * (y1 - y3);
-            double ratio = numerator / denominator;
-            double angleRad = Math.Atan(ratio);
-            double angleDeg = (angleRad * 180) / Math.PI;
+            double v1Angle = Math.Atan(-(y1 - y2) / (x1 - x2)) * 180 / Math.PI;
+            if ((y2 - y1) > 0)
+                v1Angle = 180 + v1Angle;
+            double v2Angle = Math.Atan(-(y3 - y1) / (x3 - x1)) * 180 / Math.PI;
+            if ((y3 - y2) > 0)
+                v2Angle = 180 + v2Angle;
 
-            return angleDeg;
+            var angle = v2Angle - v1Angle;
+            if (angle <= -180)
+                angle += 360;
+            if (angle > 180)
+                angle -= 360;
+            return angle;
         }
 
         public class AdjacencyList
@@ -200,28 +226,28 @@ namespace WhereToGo.Admin.Models
                         continue;
 
                     var distance = CalculateDistanceBetweenPoints(
-                        points.Where(i => i.IdPoint == conn.IdPointStart).FirstOrDefault(),
-                        points.Where(i => i.IdPoint == conn.IdPointEnd).FirstOrDefault());
+                        points.FirstOrDefault(i => i.IdPoint == conn.IdPointStart),
+                        points.FirstOrDefault(i => i.IdPoint == conn.IdPointEnd));
 
-                    int startIndex = StartPoints.IndexOf((int) conn.IdPointStart);
+                    int startIndex = StartPoints.IndexOf((int)conn.IdPointStart);
                     if (startIndex == -1)
                     {
                         startIndex = StartPoints.Count;
-                        StartPoints.Add((int) conn.IdPointStart);
+                        StartPoints.Add((int)conn.IdPointStart);
                         EndPoints[startIndex] = new List<Tuple<int, double>>();
                     }
 
-                    EndPoints[startIndex].Add(new Tuple<int, double>((int) conn.IdPointEnd, distance));
+                    EndPoints[startIndex].Add(new Tuple<int, double>((int)conn.IdPointEnd, distance));
 
-                    int endIndex = StartPoints.IndexOf((int) conn.IdPointEnd);
+                    int endIndex = StartPoints.IndexOf((int)conn.IdPointEnd);
                     if (endIndex == -1)
                     {
                         endIndex = StartPoints.Count;
-                        StartPoints.Add((int) conn.IdPointEnd);
+                        StartPoints.Add((int)conn.IdPointEnd);
                         EndPoints[endIndex] = new List<Tuple<int, double>>();
                     }
 
-                    EndPoints[endIndex].Add(new Tuple<int, double>((int) conn.IdPointStart, distance));
+                    EndPoints[endIndex].Add(new Tuple<int, double>((int)conn.IdPointStart, distance));
                 }
             }
         }
@@ -244,13 +270,16 @@ namespace WhereToGo.Admin.Models
 
         public class NextPoint
         {
-            public int IdPoint { get;  set; }
-            public int Icon { get;  set; }
+            public int IdPoint { get; set; }
+            public int Icon { get; set; }
             public double Angle { get; set; }
             public double Distance { get; set; }
-            public bool Eleveator { get;  set; }
+            public bool Elevator { get; set; }
             public bool Stairs { get; set; }
-            public int Level { get;  set; }
+            public int Level { get; set; }
+            public int IconOnAnotherLevel { get; set; }
+            public double AngleOnAnotherLevel { get; set; }
+            public double DistanceOnAnotherLevel { get; set; }
         }
     }
 }

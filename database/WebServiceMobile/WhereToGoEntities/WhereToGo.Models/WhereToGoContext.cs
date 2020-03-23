@@ -71,7 +71,6 @@ namespace WhereToGoEntities.WhereToGo.Models
                     .HasColumnName("pathImage")
                     .HasColumnType("image");
 
-                entity.Property(e => e.Scale).HasColumnName("scale");
 
                 entity.HasOne(d => d.IdBuildingNavigation)
                     .WithMany(p => p.BuildingImages)
@@ -86,6 +85,7 @@ namespace WhereToGoEntities.WhereToGo.Models
                 entity.Property(e => e.IdBuilding).HasColumnName("idBuilding");
 
                 entity.Property(e => e.IdUser).HasColumnName("idUser");
+                entity.Property(e => e.Scale).HasColumnName("scale");
 
                 entity.Property(e => e.ImageBuilding)
                     .HasColumnName("imageBuilding")

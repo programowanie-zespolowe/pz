@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using WhereToGoEntities.WhereToGo.Models;
+using static LinuxWS.Models.FindPath;
 
 namespace linuxWS.Controllers
 {
@@ -30,6 +31,7 @@ namespace linuxWS.Controllers
                     mdlBuildings.IdUser = element.IdUser;
                     mdlBuildings.NameBuilding = element.NameBuilding;
                     mdlBuildings.ImageBuilding = element.ImageBuilding;
+                    mdlBuildings.Scale = element.Scale;
                     buildingImages.Add(mdlBuildings);
                 }
             }
@@ -49,6 +51,7 @@ namespace linuxWS.Controllers
                     mdlBuildings.IdUser = element.IdUser;
                     mdlBuildings.NameBuilding = element.NameBuilding;
                     mdlBuildings.ImageBuilding = element.ImageBuilding;
+                    mdlBuildings.Scale = element.Scale;
                     buildingImages.Add(mdlBuildings);
                 }
             }
@@ -68,37 +71,12 @@ namespace linuxWS.Controllers
                     mdlBuildingImages.IdImage = element.IdImage;
                     mdlBuildingImages.PathImage = element.PathImage;
                     mdlBuildingImages.BuildingLevel = element.BuildingLevel;
-                    mdlBuildingImages.Scale = element.Scale;
                     mdlBuildingImages.NorthPointAngle = element.NorthPointAngle;
                     buildingImages.Add(mdlBuildingImages);
                 }
                 return buildingImages.ToList();
             }
         }
-        //[HttpGet]
-        //[Route("Buildings/Points")]
-        //public IEnumerable<MdlPoints> GetPoints()
-        //{
-        //    List<MdlPoints> buildingPoints = new List<MdlPoints>();
-        //    using (WhereToGoContext whereToGoEntities = new WhereToGoContext())
-        //    {
-        //        MdlPoints mdlPoints = new MdlPoints();
-        //        foreach (var element in whereToGoEntities.Points)
-        //        {
-        //            mdlPoints.IdPoint = element.IdPoint;
-        //            mdlPoints.IdImage = element.IdImage;
-        //            mdlPoints.NamePoint = element.NamePoint;
-        //            mdlPoints.X = element.X;
-        //            mdlPoints.Y = element.Y;
-        //            mdlPoints.IdPointType = element.IdPointType;
-        //            mdlPoints.IdGroup = element.IdGroup;
-        //            mdlPoints.ImagePoint = element.ImagePoint;
-
-        //            buildingPoints.Add(mdlPoints);
-        //        }
-        //        return buildingPoints.ToList();
-        //    }
-        //}
         [HttpGet]
         [Route("Buildings/{idBuilding}/Points")]
         public IEnumerable<MdlPoints> GetPointByBuilding(int idBuilding)
@@ -328,6 +306,56 @@ namespace linuxWS.Controllers
                 }
                 return listPointsConnection.ToList();
             }
+        }
+        [HttpGet]
+        [Route("Buildings/{idBuilding}/{idPrevPoint}/{idActualPoint}/{idDestPoint}")]
+        public NextPoint GetRoutePoints(int idBuilding, int idPrevPoint, int idActualPoint, int idDestPoint)
+        {
+            List<MdlPoints> mdlPointsList = new List<MdlPoints>();
+            List<MdlPointsConnection> mdlPointsConnectionsList = new List<MdlPointsConnection>();
+            using WhereToGoContext whereToGoEntities = new WhereToGoContext();
+
+            foreach (var item in whereToGoEntities.Points.Where(i => i.IdImageNavigation.IdBuilding == idBuilding))
+            {
+                MdlPoints mdlPoint = new MdlPoints();
+                mdlPoint.IdPoint = item.IdPoint;
+                mdlPoint.IdImage = item.IdImage;
+                mdlPoint.X = item.X;
+                mdlPoint.Y = item.Y;
+                mdlPoint.IdPointType = item.IdPointType;
+                mdlPoint.ImagePoint = item.ImagePoint;
+                mdlPoint.Direction = item.Direction;
+                mdlPoint.OnOffDirection = item.OnOffDirection;
+
+                foreach (var element in whereToGoEntities.PointsConnection.Where(i => i.IdPointStart == item.IdPoint || i.IdPointEnd == item.IdPoint))
+                {
+                    MdlPointsConnection mdlPointsConnection = new MdlPointsConnection();
+                    mdlPointsConnection.IdPointConnection = element.IdPointConnection;
+                    mdlPointsConnection.IdPointStart = element.IdPointStart;
+                    mdlPointsConnection.IdPointEnd = element.IdPointEnd;
+
+                    var connections =
+                        mdlPointsConnectionsList.Where(i => i.IdPointConnection == element.IdPointConnection);
+                    if (!connections.Any())
+                    {
+                        mdlPointsConnectionsList.Add(mdlPointsConnection);
+                    }
+                }
+
+                mdlPointsList.Add(mdlPoint);
+            }
+
+            var idLevel = (int)whereToGoEntities.Points.FirstOrDefault(i => i.IdPoint == idDestPoint).IdImage;
+            var scale = (double)whereToGoEntities.Buildings.FirstOrDefault(i => i.IdBuilding == idBuilding).Scale;
+            var destPointLevel = (int)whereToGoEntities.BuildingImages.FirstOrDefault(i => i.IdImage == idLevel).BuildingLevel;
+
+            return FindPath.GetNextPoint(idPrevPoint == -1 ? null : (int?)idPrevPoint,
+                idActualPoint,
+                idDestPoint,
+                mdlPointsList,
+                mdlPointsConnectionsList,
+                scale,
+                destPointLevel);
         }
     }
 }

@@ -18,8 +18,8 @@ namespace WhereToGo.Admin.Controllers
     public class EditDataController : Controller
     {
         [HttpPost]
-        [Route("Buildings/{idBuilding}/{NameBuilding}")]
-        public IActionResult PostBuildings(int  idBuilding, string NameBuilding, [FromForm] IFormFile ImageRead)
+        [Route("Buildings/{idBuilding}/{NameBuilding}/{scale}")]
+        public IActionResult PostBuildings(int  idBuilding, string NameBuilding, double scale, [FromForm] IFormFile ImageRead)
         {
             using (var ms = new MemoryStream())
             {
@@ -29,6 +29,7 @@ namespace WhereToGo.Admin.Controllers
 
                 mdlBuildings.IdUser = UserSettings.IdAdmin;
                 mdlBuildings.NameBuilding = NameBuilding;
+                mdlBuildings.Scale = scale;
                 if (ImageRead != null)
                 {
                     ImageRead.CopyTo(ms);
@@ -52,8 +53,8 @@ namespace WhereToGo.Admin.Controllers
             }
         }
         [HttpPost]
-        [Route("Buildings/{idBuilding}/BuildingImages/{idImage}/{BuildingLevel}/{Scale}/{NorthPointAngle}")]
-        public IActionResult PostBuildingImage(int idBuilding, int idImage, int BuildingLevel, double Scale, double NorthPointAngle, [FromForm] IFormFile ImageRead)
+        [Route("Buildings/{idBuilding}/BuildingImages/{idImage}/{BuildingLevel}/{NorthPointAngle}")]
+        public IActionResult PostBuildingImage(int idBuilding, int idImage, int BuildingLevel, double NorthPointAngle, [FromForm] IFormFile ImageRead)
         {
             using (var ms = new MemoryStream())
             {
@@ -70,7 +71,6 @@ namespace WhereToGo.Admin.Controllers
                 }
                 else
                     mdlBuildings.PathImage = mdlBuildings.PathImage;
-                mdlBuildings.Scale = Scale;
                 mdlBuildings.NorthPointAngle = NorthPointAngle;
                 whereToGo.BuildingImages.Update(mdlBuildings);
 

@@ -13,5 +13,7 @@ namespace linuxWS.Models
         public double? Y { get; set; }
         public int? IdPointType { get; set; }
         public byte[] ImagePoint { get; set; }
+        public double? Direction { get; set; }
+        public bool? OnOffDirection { get; set; }
     }
 }
