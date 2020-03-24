@@ -126,6 +126,26 @@
     -fx-font-size: 15px;
 }
 
+.list-view .scroll-bar {
+    -fx-background-color: #808080;
+    -fx-border-color: black ;
+    -fx-border-radius: 10;
+}
+
+.list-view .scroll-bar .thumb{
+    -fx-background-color: black;
+}
+
+.list-view .scroll-bar .increment-button,
+.list-view .scroll-bar .decrement-button{
+    -fx-background-color: transparent;
+}
+
+.list-view .scroll-bar .increment-button .increment-arrow:pressed,
+.list-view .scroll-bar .decrement-button .decrement-arrow:pressed{
+    -fx-background-color: black;
+}
+
 .check-box .box{
     -fx-background-color: #DCDCDC;
     -fx-background-radius: 5px;

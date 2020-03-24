@@ -6,3 +6,23 @@
 .scroll-pane .viewport{
     -fx-background-color: #808080;
 }
+
+.context-menu{
+    -fx-background-color: #808080;
+    -fx-border-color: black;
+}
+
+.context-menu .label{
+    -fx-effect: dropshadow( one-pass-box , black , 0, 0.0 , 0 , -1 );
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #DCDCDC;
+}
+
+.context-menu .menu-item{
+    -fx-background-color: #808080;
+}
+
+.context-menu .menu-item:hover{
+    -fx-background-color: black;
+}

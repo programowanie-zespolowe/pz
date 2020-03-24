@@ -45,3 +45,13 @@
 .combo-box .scroll-bar .rightbutton{
     -fx-background-color: black;
 }
+
+.combo-box .scroll-bar .increment-button,
+.combo-box .scroll-bar .decrement-button{
+    -fx-background-color: transparent;
+}
+
+.combo-box .scroll-bar .increment-button .increment-arrow:pressed,
+.combo-box .scroll-bar .decrement-button .decrement-arrow:pressed{
+    -fx-background-color: black;
+}

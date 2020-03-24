@@ -19,3 +19,21 @@
 .scroll-pane .scroll-bar .rightbutton{
     -fx-background-color: black;
 }
+
+.scroll-pane .scroll-bar:vertical .increment-button,
+.scroll-pane .scroll-bar:vertical .decrement-button,
+.scroll-pane .scroll-bar:horizontal .increment-button,
+.scroll-pane .scroll-bar:horizontal .decrement-button{
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .scroll-bar:vertical .increment-button .increment-arrow:pressed,
+.scroll-pane .scroll-bar:vertical .decrement-button .decrement-arrow:pressed,
+.scroll-pane .scroll-bar:horizontal .increment-button .increment-arrow:pressed,
+.scroll-pane .scroll-bar:horizontal .decrement-button .decrement-arrow:pressed{
+    -fx-background-color: black;
+}
+
+.scroll-pane .corner{
+    -fx-background-color: #808080;
+}

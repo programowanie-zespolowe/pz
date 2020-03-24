@@ -98,7 +98,7 @@ public class TopMenuButtonsController {
             scene.getStylesheets().add(getClass().getResource("/stylesheets/confirm.css").toExternalForm());
             scene.getStylesheets().add(getClass().getResource("/stylesheets/scene.css").toExternalForm());
             stage.setScene(scene);
-            stage.setTitle(FxmlUtils.getResourceBundle().getString("title.window.group"));
+            stage.setTitle(FxmlUtils.getResourceBundle().getString("title.window.edit.building"));
             stage.showAndWait();
 
         }

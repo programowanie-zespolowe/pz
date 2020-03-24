@@ -102,6 +102,7 @@ public class AddBuildingWindow {
 //wygaszenie przycisku
     private void init(){
         spinnerScale.disableProperty().bind(BuildingNameTextField.textProperty().isEmpty());
+        browseButton.disableProperty().bind(BuildingNameTextField.textProperty().isEmpty());
         addBuildingButton.disableProperty().bind(imageFilePath.textProperty().isEmpty());
     }
 

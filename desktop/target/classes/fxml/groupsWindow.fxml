@@ -43,7 +43,7 @@
             <Insets left="10.0" right="10.0" />
          </VBox.margin>
          <children>
-              <Label fx:id="noImageLabel" alignment="CENTER" prefHeight="35.0" prefWidth="195.0" styleClass="labelDescription" stylesheets="@../stylesheets/confirm.css" text="Kategoria nie ma dodanego obrazu" visible="false" wrapText="true" />
+              <Label fx:id="noImageLabel" alignment="CENTER" prefHeight="35.0" prefWidth="195.0" styleClass="labelDescription" stylesheets="@../stylesheets/confirm.css" text="Brak obrazu" visible="false" wrapText="true" />
               <Button fx:id="browseButton" alignment="CENTER" contentDisplay="CENTER" onAction="#Browse" prefHeight="17.0" prefWidth="17.0" styleClass="buttonLittle" stylesheets="@../stylesheets/confirm.css">
                <padding>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -75,7 +75,7 @@
          <Insets />
       </GridPane.margin>
     </VBox>
-     <Button fx:id="deleteButton" disable="true" alignment="CENTER" onAction="#Delete" prefHeight="50.0" prefWidth="105.0" styleClass="buttonConfirm" stylesheets="@../stylesheets/confirm.css" text="Usuń" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.rowSpan="2">
+     <Button fx:id="deleteButton" disable="false" alignment="CENTER" onAction="#Delete" prefHeight="50.0" prefWidth="105.0" styleClass="buttonConfirm" stylesheets="@../stylesheets/confirm.css" text="Usuń" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.rowSpan="2">
       <GridPane.margin>
          <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
       </GridPane.margin>

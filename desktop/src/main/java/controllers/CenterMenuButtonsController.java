@@ -22,6 +22,7 @@ import sample.Structs.BuildingLevel;
 import sample.Structs.Point;
 import sample.Structs.PointsConnection;
 import sample.WebService.WebServiceConnection;
+import utils.FxmlUtils;
 
 import java.io.IOException;
 
@@ -157,6 +158,7 @@ public class CenterMenuButtonsController {
             scene.getStylesheets().add(getClass().getResource("/stylesheets/comboBox.css").toExternalForm());
             scene.getStylesheets().add(getClass().getResource("/stylesheets/scrollPane.css").toExternalForm());
             stage.setScene(scene);
+            stage.setTitle(FxmlUtils.getResourceBundle().getString("title.window.point.detail"));
             stage.showAndWait();
 
         }

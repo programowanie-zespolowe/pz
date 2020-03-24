@@ -34,6 +34,8 @@ public class GroupsWindowController {
     private TextField imagePath;
     @FXML
     private Button browseButton;
+    @FXML
+    private Button deleteButton;
 
 
     private Group[] groups;
@@ -68,6 +70,7 @@ public class GroupsWindowController {
             browseButton.setDisable(false);
             RefreshParameters(listView.getSelectionModel().selectedIndexProperty().get());
         });
+        init();
     }
 
     private void RefreshParameters(int num) {
@@ -180,5 +183,9 @@ public class GroupsWindowController {
             groups = ArrayUtils.remove(groups, num);
             RefreshList();
         }
+    }
+//bindowanie
+    void init(){
+        deleteButton.disableProperty().bind(listView.getSelectionModel().selectedItemProperty().isNull());
     }
 }

@@ -57,8 +57,8 @@ public class LeftMenuButtonsController  {
                 levels) {
             LeftMenuObject menuObject = new LeftMenuObject();
             menuObject.level = level;
-            MenuItem removeMenuItem = new MenuItem("Remove");
-            MenuItem editMenuItem = new MenuItem("Edit");
+            MenuItem removeMenuItem = new MenuItem("Usuń");
+            MenuItem editMenuItem = new MenuItem("Edytuj");
             removeMenuItem.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
@@ -138,7 +138,7 @@ public class LeftMenuButtonsController  {
             scene.getStylesheets().add(getClass().getResource("/stylesheets/confirm.css").toExternalForm());
             scene.getStylesheets().add(getClass().getResource("/stylesheets/scene.css").toExternalForm());
             stage.setScene(scene);
-            stage.setTitle(FxmlUtils.getResourceBundle().getString("title.window.group"));
+            stage.setTitle(FxmlUtils.getResourceBundle().getString("title.window.edit.level"));
             stage.showAndWait();
         }
         catch (Exception e)
@@ -153,7 +153,7 @@ public class LeftMenuButtonsController  {
         for (LeftMenuObject menuObject : leftMenuObjects)
         {
             if(menuObject.level == level)
-                menuObject.label.setTextFill(Color.RED);
+                menuObject.label.setTextFill(Color.BLUE);
             else
                 menuObject.label.setTextFill(Color.BLACK);
         }

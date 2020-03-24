@@ -29,27 +29,41 @@
             <Insets />
          </HBox.margin>
       </ComboBox>
-      <Button fx:id="editBuilding" text="Edycja budynku" onAction="#editBuilding"/>
       <Label minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="130.0" stylesheets="@../stylesheets/confirm.css" text="%mw.label.scale" textAlignment="CENTER">
          <padding>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            <Insets bottom="10.0" left="10.0" top="10.0" />
          </padding>
       </Label>
       <Label fx:id="scaleLabel" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="100.0" stylesheets="@../stylesheets/confirm.css" textAlignment="CENTER">
          <padding>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            <Insets bottom="10.0" top="10.0" />
          </padding>
          <HBox.margin>
             <Insets right="20.0" />
          </HBox.margin>
       </Label>
-      <Button fx:id="groupButton" onAction="#showGroups" prefHeight="88.0" prefWidth="223.0" styleClass="buttonConfirm" stylesheets="@../stylesheets/confirm.css" text="%mw.button.groups" wrapText="true">
+      <Button fx:id="editBuilding" onAction="#editBuilding" styleClass="buttonConfirm" stylesheets="@../stylesheets/confirm.css">
+         <graphic>
+            <ImageView fitHeight="58.0" fitWidth="62.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icons/blueprint.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <Button fx:id="groupButton" contentDisplay="RIGHT" onAction="#showGroups" prefHeight="88.0" prefWidth="260.0" styleClass="buttonConfirm" stylesheets="@../stylesheets/confirm.css" text="%mw.button.groups" wrapText="true">
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
          <HBox.margin>
             <Insets />
-         </HBox.margin></Button>
+         </HBox.margin>
+         <graphic>
+            <ImageView fitHeight="55.0" fitWidth="113.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icons/framework.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
    </children>
    <padding>
       <Insets bottom="10.0" left="10.0" right="10.0" />

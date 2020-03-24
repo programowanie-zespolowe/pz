@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.SpinnerValueFactory.DoubleSpinnerValueFactory?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
 
-<?import javafx.scene.control.Spinner?>
 <BorderPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" stylesheets="@../stylesheets/scene.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AddBuildingWindow">
    <center>
       <VBox alignment="CENTER" style="-fx-border-color: black;" BorderPane.alignment="CENTER">
@@ -16,7 +21,7 @@
             <HBox alignment="CENTER" spacing="40.0">
                <children>
                   <Label stylesheets="@../stylesheets/confirm.css" text="Podaj skalę budynku" />
-                  <Spinner fx:id="spinnerScale" prefHeight="25.0" prefWidth="191.0" >
+                  <Spinner fx:id="spinnerScale" prefHeight="25.0" prefWidth="191.0">
                      <valueFactory>
                         <SpinnerValueFactory.DoubleSpinnerValueFactory max="1000" min="1" />
                      </valueFactory>
@@ -28,7 +33,7 @@
             </HBox>
             <HBox alignment="CENTER" spacing="50.0">
                <children>
-                  <Label fx:id="labelNoImage" styleClass="labelDescription" stylesheets="@../stylesheets/confirm.css" text="Budynek nie ma dodanego obrazu" />
+                  <Label fx:id="labelNoImage" styleClass="labelDescription" stylesheets="@../stylesheets/confirm.css" text="Brak obrazu" />
                   <Button fx:id="browseButton" mnemonicParsing="false" onAction="#BrowseImage" styleClass="buttonLittle" stylesheets="@../stylesheets/confirm.css">
                      <graphic>
                         <ImageView fitHeight="24.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true">
@@ -67,7 +72,7 @@
          </font></TextField>
    </top>
    <bottom>
-      <HBox alignment="CENTER" prefHeight="71.0" prefWidth="165.0">
+      <HBox alignment="CENTER_RIGHT" prefHeight="71.0" prefWidth="165.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="addBuildingButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#AddBuilding" styleClass="buttonConfirm" stylesheets="@../stylesheets/confirm.css" text="Zapisz ">
                <padding>
