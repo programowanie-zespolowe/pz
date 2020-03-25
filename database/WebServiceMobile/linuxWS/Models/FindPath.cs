@@ -14,14 +14,24 @@ namespace LinuxWS.Models
         public static int EMERGENCY_EXIT_POINT_TYPE_MASK = (1 << 4);
         public static int NO_QR_CODE_POINT_TYPE_MASK = (1 << 5);
 
-        public static NextPoint GetNextPoint(int? idPrevPoint, int idActualPoint, int idDestPoint, List<MdlPoints> points, List<MdlPointsConnection> connections, double scale, int destinationPointLevel)
+        public static NextPoint GetNextPoint(int? idPrevPoint, 
+            int idActualPoint, 
+            int idDestPoint, 
+            List<MdlPoints> points, 
+            List<MdlPointsConnection> connections, 
+            double scale, 
+            int destinationPointLevel,
+            int actualPointLevel)
         {
             var adjList = new AdjacencyList(points, connections);
             var nextPoint = new NextPoint();
-            Dijkstra(idPrevPoint, adjList.StartPoints.IndexOf(idActualPoint), adjList.StartPoints.IndexOf(idDestPoint), adjList, nextPoint, points, destinationPointLevel);
+            Dijkstra(idPrevPoint, adjList.StartPoints.IndexOf(idActualPoint), adjList.StartPoints.IndexOf(idDestPoint), adjList, nextPoint, points);
 
             nextPoint.Distance /= scale;
             nextPoint.DistanceOnAnotherLevel /= scale;
+
+            nextPoint.Level = destinationPointLevel;
+            nextPoint.CurrentLevel = actualPointLevel;
 
             return nextPoint;
         }
@@ -82,7 +92,7 @@ namespace LinuxWS.Models
             return returnPoint;
         }
 
-        private static void Dijkstra(int? prevPointId, int startPointId, int endPointId, AdjacencyList list, NextPoint nextPoint, List<MdlPoints> points, int destinationPointLevel)
+        private static void Dijkstra(int? prevPointId, int startPointId, int endPointId, AdjacencyList list, NextPoint nextPoint, List<MdlPoints> points)
         {
             var size = list.StartPoints.Count;
 
@@ -142,8 +152,6 @@ namespace LinuxWS.Models
 
                 nextPoint.AngleOnAnotherLevel = CalculateAngle(prevPointId, actualPoint, next, points);
                 nextPoint.IconOnAnotherLevel = (int)GetIcon(nextPoint.AngleOnAnotherLevel);
-
-                nextPoint.Level = destinationPointLevel;
             }
         }
 
@@ -277,6 +285,7 @@ namespace LinuxWS.Models
             public bool Elevator { get; set; }
             public bool Stairs { get; set; }
             public int Level { get; set; }
+            public int CurrentLevel { get; set; }
             public int IconOnAnotherLevel { get; set; }
             public double AngleOnAnotherLevel { get; set; }
             public double DistanceOnAnotherLevel { get; set; }

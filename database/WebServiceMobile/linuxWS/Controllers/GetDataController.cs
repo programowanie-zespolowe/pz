@@ -349,13 +349,17 @@ namespace linuxWS.Controllers
             var scale = (double)whereToGoEntities.Buildings.FirstOrDefault(i => i.IdBuilding == idBuilding).Scale;
             var destPointLevel = (int)whereToGoEntities.BuildingImages.FirstOrDefault(i => i.IdImage == idLevel).BuildingLevel;
 
+            var idCurrentLevel = (int)whereToGoEntities.Points.FirstOrDefault(i => i.IdPoint == idActualPoint).IdImage;
+            var currentLevel = (int)whereToGoEntities.BuildingImages.FirstOrDefault(i => i.IdImage == idCurrentLevel).BuildingLevel;
+
             return FindPath.GetNextPoint(idPrevPoint == -1 ? null : (int?)idPrevPoint,
                 idActualPoint,
                 idDestPoint,
                 mdlPointsList,
                 mdlPointsConnectionsList,
                 scale,
-                destPointLevel);
+                destPointLevel,
+                currentLevel);
         }
     }
 }
