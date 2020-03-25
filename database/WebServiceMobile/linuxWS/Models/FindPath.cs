@@ -194,10 +194,10 @@ namespace LinuxWS.Models
         {
             double v1Angle = Math.Atan(-(y1 - y2) / (x1 - x2)) * 180 / Math.PI;
             if ((y2 - y1) > 0)
-                v1Angle = 180 + v1Angle;
+                v1Angle = 360 + v1Angle;
             double v2Angle = Math.Atan(-(y3 - y1) / (x3 - x1)) * 180 / Math.PI;
             if ((y3 - y2) > 0)
-                v2Angle = 180 + v2Angle;
+                v2Angle = 360 + v2Angle;
 
             var angle = v2Angle - v1Angle;
             if (angle <= -180)

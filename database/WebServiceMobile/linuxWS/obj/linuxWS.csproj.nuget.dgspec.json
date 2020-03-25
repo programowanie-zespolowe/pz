@@ -1,26 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\bbadaczewski\\Documents\\pz\\database\\WebServiceMobile\\linuxWS\\LinuxWS.csproj": {}
+    "F:\\pz\\database\\WebServiceMobile\\linuxWS\\LinuxWS.csproj": {}
   },
   "projects": {
-    "C:\\Users\\bbadaczewski\\Documents\\pz\\database\\WebServiceMobile\\linuxWS\\LinuxWS.csproj": {
+    "F:\\pz\\database\\WebServiceMobile\\linuxWS\\LinuxWS.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\bbadaczewski\\Documents\\pz\\database\\WebServiceMobile\\linuxWS\\LinuxWS.csproj",
+        "projectUniqueName": "F:\\pz\\database\\WebServiceMobile\\linuxWS\\LinuxWS.csproj",
         "projectName": "LinuxWS",
-        "projectPath": "C:\\Users\\bbadaczewski\\Documents\\pz\\database\\WebServiceMobile\\linuxWS\\LinuxWS.csproj",
-        "packagesPath": "C:\\Users\\bbadaczewski\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\bbadaczewski\\Documents\\pz\\database\\WebServiceMobile\\linuxWS\\obj\\",
+        "projectPath": "F:\\pz\\database\\WebServiceMobile\\linuxWS\\LinuxWS.csproj",
+        "packagesPath": "F:\\Nuget",
+        "outputPath": "F:\\pz\\database\\WebServiceMobile\\linuxWS\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\",
-          "C:\\PROGRAM FILES\\DOTNET\\sdk\\NuGetFallbackFolder"
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\bbadaczewski\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 19.1.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 19.2.config",
+          "C:\\Users\\aleks\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
@@ -28,16 +26,15 @@
           "netcoreapp3.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\DevExpress 19.1\\Components\\System\\Components\\Packages": {},
-          "C:\\Program Files (x86)\\DevExpress 19.2\\Components\\System\\Components\\Packages": {},
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {},
+          "https://ci.appveyor.com/nuget/rg-plugins-popup-p6l5elugev99": {}
         },
         "frameworks": {
           "netcoreapp3.0": {
             "projectReferences": {
-              "C:\\Users\\bbadaczewski\\Documents\\pz\\database\\WebServiceMobile\\WhereToGoEntities\\WhereToGoEntities.csproj": {
-                "projectPath": "C:\\Users\\bbadaczewski\\Documents\\pz\\database\\WebServiceMobile\\WhereToGoEntities\\WhereToGoEntities.csproj"
+              "F:\\pz\\database\\WebServiceMobile\\WhereToGoEntities\\WhereToGoEntities.csproj": {
+                "projectPath": "F:\\pz\\database\\WebServiceMobile\\WhereToGoEntities\\WhereToGoEntities.csproj"
               }
             }
           }
@@ -89,7 +86,7 @@
             },
             {
               "name": "Microsoft.NETCore.App.Host.win-x64",
-              "version": "[3.0.1, 3.0.1]"
+              "version": "[3.0.3, 3.0.3]"
             },
             {
               "name": "Microsoft.NETCore.App.Ref",
@@ -108,27 +105,25 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\PROGRAM FILES\\DOTNET\\sdk\\3.1.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.200\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\bbadaczewski\\Documents\\pz\\database\\WebServiceMobile\\WhereToGoEntities\\WhereToGoEntities.csproj": {
+    "F:\\pz\\database\\WebServiceMobile\\WhereToGoEntities\\WhereToGoEntities.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\bbadaczewski\\Documents\\pz\\database\\WebServiceMobile\\WhereToGoEntities\\WhereToGoEntities.csproj",
+        "projectUniqueName": "F:\\pz\\database\\WebServiceMobile\\WhereToGoEntities\\WhereToGoEntities.csproj",
         "projectName": "WhereToGoEntities",
-        "projectPath": "C:\\Users\\bbadaczewski\\Documents\\pz\\database\\WebServiceMobile\\WhereToGoEntities\\WhereToGoEntities.csproj",
-        "packagesPath": "C:\\Users\\bbadaczewski\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\bbadaczewski\\Documents\\pz\\database\\WebServiceMobile\\WhereToGoEntities\\obj\\",
+        "projectPath": "F:\\pz\\database\\WebServiceMobile\\WhereToGoEntities\\WhereToGoEntities.csproj",
+        "packagesPath": "F:\\Nuget",
+        "outputPath": "F:\\pz\\database\\WebServiceMobile\\WhereToGoEntities\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\",
-          "C:\\PROGRAM FILES\\DOTNET\\sdk\\NuGetFallbackFolder"
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\bbadaczewski\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 19.1.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 19.2.config",
+          "C:\\Users\\aleks\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
@@ -136,10 +131,9 @@
           "netcoreapp3.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\DevExpress 19.1\\Components\\System\\Components\\Packages": {},
-          "C:\\Program Files (x86)\\DevExpress 19.2\\Components\\System\\Components\\Packages": {},
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {},
+          "https://ci.appveyor.com/nuget/rg-plugins-popup-p6l5elugev99": {}
         },
         "frameworks": {
           "netcoreapp3.0": {
@@ -203,7 +197,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\PROGRAM FILES\\DOTNET\\sdk\\3.1.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.200\\RuntimeIdentifierGraph.json"
         }
       }
     }
