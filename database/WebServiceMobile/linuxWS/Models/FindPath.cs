@@ -200,8 +200,12 @@ namespace LinuxWS.Models
 
         private static double Angle(double x1, double y1, double x2, double y2, double x3, double y3)
         {
-            double v1Angle = Math.Asin(-(y1 - y2) / Math.Sqrt((y1 - y2) * (y1 - y2) + (x1 - x2) * (x1 - x2))) * 180 / Math.PI;
-            double v2Angle = Math.Asin(-(y3 - y1) / Math.Sqrt((y3 - y1) * (y3 - y1) + (x3 - x1) * (x3 - x1))) * 180 / Math.PI;
+            const double SIZE = 5;
+            double v1Angle = 0;
+            double v2Angle = 0;
+
+            v1Angle = Math.Atan2(-(y1 - y2), (x1 - x2)) * 180 / Math.PI;
+            v2Angle = Math.Atan2(-(y3 - y1), (x3 - x1)) * 180 / Math.PI;
 
             var angle = v2Angle - v1Angle;
             if (angle <= -180)
