@@ -1,47 +1,51 @@
 package com.example.programowaniezespolowe.Activity;
 
-import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
+import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.FragmentTransaction;
 
+import com.example.programowaniezespolowe.Connection.ConnectWebService;
+import com.example.programowaniezespolowe.Data.NextPoint;
 import com.example.programowaniezespolowe.Data.PointPath;
 import com.example.programowaniezespolowe.MyCanavas;
 import com.example.programowaniezespolowe.R;
 import com.google.android.material.navigation.NavigationView;
-import com.google.zxing.Result;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
-public class Navigation_activity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
+
+public class Navigation_activity extends AppCompatActivity{
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
     private NavigationView nvDrawer;
     private int idGroup;
     private int idBuilding;
-    private ZXingScannerView scannerView;
+    private ConnectWebService connectWebService;
+    private NextPoint nextPoint;
+    private TextView textView;
+    private Button iAmHere;
+    private PointPath pointPath;
+    private ImageView image;
 
     private ActionBarDrawerToggle drawerToggle;
 
@@ -52,6 +56,7 @@ public class Navigation_activity extends AppCompatActivity implements ZXingScann
         Intent intent = getIntent();
         idGroup = intent.getIntExtra(CategoryActivity.GROUP_ID, 0);
         idBuilding = intent.getIntExtra(MainActivity.BUILDING_ID, 0);
+        pointPath = PointPath.getInstance();
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -71,42 +76,29 @@ public class Navigation_activity extends AppCompatActivity implements ZXingScann
                 switch(menuItem.getItemId()){
                     case R.id.budynki:
                         intent = new Intent(Navigation_activity.this, BuildingsActivity.class);
+                        intent.putExtra(MainActivity.BUILDING_ID, idBuilding);
                         startActivity(intent);
                         break;
                     case R.id.pokoje:
                         intent = new Intent(Navigation_activity.this, PointDetailActivity.class);
+                        intent.putExtra(MainActivity.BUILDING_ID, idBuilding);
+                        intent.putExtra(CategoryActivity.GROUP_ID, idGroup);
                         startActivity(intent);
                         break;
                     case R.id.nowy_kod:
                         intent = new Intent(Navigation_activity.this, MainActivity.class);
+                        pointPath.setPreviousPoint(-1);
                         startActivity(intent);
                         break;
                 }
                 return true;
             }
         });
-        View v = new MyCanavas(getApplicationContext());
-        Bitmap bitmap = Bitmap.createBitmap(500/*width*/, 500/*height*/, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        v.draw(canvas);
-        ImageView imageView = findViewById(R.id.testImage);
-        imageView.setImageBitmap(bitmap);
-//        imageView.setVisibility(View.INVISIBLE);
-//
-
-
-
-//        ViewGroup contentFrame = findViewById(R.id.frame);
-//        scannerView = new ZXingScannerView(this);
-//        contentFrame.addView(scannerView);
-////        getSupportFragmentManager().beginTransaction().add(R.id.test_fragment,qrScanner);
-//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-//            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 1);
-//        }
-//        scannerView.setVisibility(View.GONE);
-//        imageView.setVisibility(View.VISIBLE);
-
+        textView = findViewById(R.id.instruction);
+        //image = findViewById(R.id.testImage);
+        new getNextPoint().execute();
     }
+
 
 
     @Override
@@ -138,24 +130,71 @@ public class Navigation_activity extends AppCompatActivity implements ZXingScann
         return new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.drawer_open,  R.string.drawer_close);
     }
 
-    @Override
-    public void handleResult(Result rawResult) {
-        if(rawResult != null)
-            scannerView.stopCamera();
-        String result = rawResult.toString();
-        String[] list = result.split(":");
-        idBuilding = Integer.parseInt(list[1]);
-        int pointNumber = Integer.parseInt(list[2]);
-        PointPath pointPath = PointPath.getInstance();
-        pointPath.setCurrentPoint(pointNumber);
-
-    }
-
-    private class sendPoint extends AsyncTask<Void, Void, JSONArray>{
-
-        @Override
-        protected JSONArray doInBackground(Void... voids) {
-            return null;
+    public void acceptHere(View view) {
+        pointPath.setPreviousPoint(pointPath.getCurrentPoint());
+        pointPath.setCurrentPoint(pointPath.getNextPoint());
+        if(pointPath.getTargetPoint() == pointPath.getCurrentPoint()){
+            textView.setText("Jestes na miejscu");
+        }else{
+            new getNextPoint().execute();
         }
     }
+
+    private void dissplayNestPoint(){
+        View v = new MyCanavas(getApplicationContext(), nextPoint);
+        Bitmap bitmap = Bitmap.createBitmap(700/*width*/, 700/*height*/, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        v.draw(canvas);
+        ImageView imageView = findViewById(R.id.testImage);
+        imageView.setImageBitmap(bitmap);
+        textView.setText("");
+        String napis;
+        if(pointPath.getNextPoint() == pointPath.getTargetPoint()){
+            //textView.setText("Juz prawie jesteś!");
+            napis ="Juz prawie jesteś!\n" +
+             "idPoint: " + nextPoint.getIdPoint() + "\n" +
+                    "Icon: " + nextPoint.getIcon() + "\n" +
+                    "Angle: " + nextPoint.getAngle() + "\n" +
+                    "Distance: " + nextPoint.getDistance() + "\n" +
+                    "Elevator: " + nextPoint.isEleveator() + "\n" +
+                    "Stairs: " + nextPoint.isStairs() + "\n" +
+                    "Level: " + nextPoint.getLevel() + "\n" +
+                    "IconOnAnotherLevel: " + nextPoint.getIconOnAnotherLevel() + "\n" +
+                    "AngleOnAnotherLevel: " + nextPoint.getAngleOnAnotherLevel() + "\n" +
+                    "DistanceOnAnotherLevel: " + nextPoint.getDistanceOnAnotherLevel() + "\n";
+        }else {
+
+            napis = "idPoint: " + nextPoint.getIdPoint() + "\n" +
+                    "Icon: " + nextPoint.getIcon() + "\n" +
+                    "Angle: " + nextPoint.getAngle() + "\n" +
+                    "Distance: " + nextPoint.getDistance() + "\n" +
+                    "Elevator: " + nextPoint.isEleveator() + "\n" +
+                    "Stairs: " + nextPoint.isStairs() + "\n" +
+                    "Level: " + nextPoint.getLevel() + "\n" +
+                    "IconOnAnotherLevel: " + nextPoint.getIconOnAnotherLevel() + "\n" +
+                    "AngleOnAnotherLevel: " + nextPoint.getAngleOnAnotherLevel() + "\n" +
+                    "DistanceOnAnotherLevel: " + nextPoint.getDistanceOnAnotherLevel() + "\n";
+        }
+        textView.setText(napis);
+    }
+
+    private class getNextPoint extends AsyncTask<Void, Void, JSONObject>{
+
+        @Override
+        protected JSONObject doInBackground(Void... voids) {
+            connectWebService = ConnectWebService.GetInstance();
+            return connectWebService.getNextPoint(idBuilding);
+        }
+
+        @Override
+        protected void onPostExecute(JSONObject jsonObject) {
+            Gson gson = new Gson();
+            String next = null;
+            next = jsonObject.toString();
+            nextPoint = gson.fromJson(next, NextPoint.class);
+            pointPath.setNextPoint(nextPoint.getIdPoint());
+            dissplayNestPoint();
+        }
+    }
+
 }

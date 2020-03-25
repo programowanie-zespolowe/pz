@@ -9,30 +9,28 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="252cb66b-14f3-498c-ab09-71884e5d831d" name="Default Changelist" comment="Change:All Activity, All Adapter, Building, Group, PointDetail&#10;Add: PointDetailAdapter, PointPath, MyCanavas">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/programowaniezespolowe/Adapter/PointDetailAdapter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/programowaniezespolowe/Data/PointPath.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/programowaniezespolowe/MyCanavas.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/layout/point_detail_raw.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
+    <list default="true" id="252cb66b-14f3-498c-ab09-71884e5d831d" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/programowaniezespolowe/Data/NextPoint.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/do_przodu.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/lewo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/lewo_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/menu.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/prawo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/prawo_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/schody.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/winda.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/zawroc.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/programowaniezespolowe/Activity/BuildingsActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/programowaniezespolowe/Activity/BuildingsActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/programowaniezespolowe/Activity/CategoryActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/programowaniezespolowe/Activity/CategoryActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/programowaniezespolowe/Activity/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/programowaniezespolowe/Activity/MainActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/programowaniezespolowe/Activity/Navigation_activity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/programowaniezespolowe/Activity/Navigation_activity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/programowaniezespolowe/Activity/RoomsActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/programowaniezespolowe/Activity/PointDetailActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/programowaniezespolowe/Adapter/AdapterGroup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/programowaniezespolowe/Adapter/AdapterGroup.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/programowaniezespolowe/Adapter/BuildingAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/programowaniezespolowe/Adapter/BuildingAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/programowaniezespolowe/Activity/PointDetailActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/programowaniezespolowe/Activity/PointDetailActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/programowaniezespolowe/Connection/ConnectWebService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/programowaniezespolowe/Connection/ConnectWebService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/programowaniezespolowe/Data/Building.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/programowaniezespolowe/Data/Building.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/programowaniezespolowe/Data/Group.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/programowaniezespolowe/Data/Group.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/programowaniezespolowe/Data/PointDetail.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/programowaniezespolowe/Data/PointDetail.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/layout/activity_room.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/activity_point_detail.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/layout/category_image.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/category_raw.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/programowaniezespolowe/Data/PointPath.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/programowaniezespolowe/Data/PointPath.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/programowaniezespolowe/MyCanavas.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/programowaniezespolowe/MyCanavas.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/res/layout/main_toolbar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/main_toolbar.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/res/layout/navigation_activity.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/navigation_activity.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/menu/drawer_view.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/menu/drawer_view.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/res/layout/toolbar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/toolbar.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/values/strings.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -269,7 +267,14 @@
       <option name="project" value="LOCAL" />
       <updated>1584114906249</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Change:All Activity, All Adapter, Building, Group, PointDetail&#10;Add: PointDetailAdapter, PointPath, MyCanavas">
+      <created>1584784772706</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1584784772706</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -291,37 +296,5 @@
     <MESSAGE value="Change: ConnectWebService, BuildingActivity, CategoryActivity, MainActivity, RoomsActivity, Building, Group&#10;Add: AdapterGroup, BuildingAdapter" />
     <MESSAGE value="Change:All Activity, All Adapter, Building, Group, PointDetail&#10;Add: PointDetailAdapter, PointPath, MyCanavas" />
     <option name="LAST_COMMIT_MESSAGE" value="Change:All Activity, All Adapter, Building, Group, PointDetail&#10;Add: PointDetailAdapter, PointPath, MyCanavas" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/example/programowaniezespolowe/Connection/ConnectWebService.java</url>
-          <line>138</line>
-          <option name="timeStamp" value="28" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/example/programowaniezespolowe/Activity/MainActivity.java</url>
-          <line>203</line>
-          <option name="timeStamp" value="33" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/main/java/com/example/programowaniezespolowe/Connection/ConnectWebService.java</url>
-          <line>99</line>
-          <properties class="com.example.programowaniezespolowe.Connection.ConnectWebService" method="getSelectedBuilding">
-            <option name="EMULATED" value="true" />
-          </properties>
-          <option name="timeStamp" value="31" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/main/java/com/example/programowaniezespolowe/Connection/ConnectWebService.java</url>
-          <line>46</line>
-          <properties class="com.example.programowaniezespolowe.Connection.ConnectWebService" method="GetRequest">
-            <option name="EMULATED" value="true" />
-          </properties>
-          <option name="timeStamp" value="32" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

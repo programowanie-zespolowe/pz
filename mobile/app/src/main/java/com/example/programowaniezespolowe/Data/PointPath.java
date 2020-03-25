@@ -5,6 +5,7 @@ public class PointPath {
     private int previousPoint;
     private int currentPoint;
     private int nextPoint;
+    private int targetPoint;
 
     public static PointPath getInstance(){
         if(instance == null){
@@ -14,31 +15,39 @@ public class PointPath {
     }
 
     public int getPreviousPoint() {
-        return previousPoint;
+        return instance.previousPoint;
     }
 
     public void setPreviousPoint(int previousPoint) {
-        this.previousPoint = previousPoint;
+        instance.previousPoint = previousPoint;
     }
 
     public int getCurrentPoint() {
-        return currentPoint;
+        return instance.currentPoint;
     }
 
     public void setCurrentPoint(int currentPoint) {
-        if(previousPoint == 0){
-            this.previousPoint = currentPoint;
+        if(instance.previousPoint == 0){
+            instance.previousPoint = -1;
         }else{
-            this.previousPoint = this.currentPoint;
+            instance.previousPoint = this.currentPoint;
         }
-        this.currentPoint = currentPoint;
+        instance.currentPoint = currentPoint;
     }
 
     public int getNextPoint() {
-        return nextPoint;
+        return instance.nextPoint;
     }
 
     public void setNextPoint(int nextPoint) {
-        this.nextPoint = nextPoint;
+        instance.nextPoint = nextPoint;
+    }
+
+    public int getTargetPoint() {
+        return instance.targetPoint;
+    }
+
+    public void setTargetPoint(int targetPoint) {
+        instance.targetPoint = targetPoint;
     }
 }

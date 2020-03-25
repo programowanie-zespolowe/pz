@@ -1,8 +1,8 @@
 package com.example.programowaniezespolowe.Data;
 
 public class PointDetail {
-    public int IdPointDetails;
-    public int IdPoint;
+    public int idPointDetails;
+    public int idPoint;
     public String namePoint;
     public int idGroup;
     public String imagePoint;
@@ -29,19 +29,19 @@ public class PointDetail {
     }
 
     public int getIdPointDetails() {
-        return IdPointDetails;
+        return idPointDetails;
     }
 
     public void setIdPointDetails(int idPointDetails) {
-        IdPointDetails = idPointDetails;
+        idPointDetails = idPointDetails;
     }
 
     public int getIdPoint() {
-        return IdPoint;
+        return idPoint;
     }
 
     public void setIdPoint(int idPoint) {
-        IdPoint = idPoint;
+        idPoint = idPoint;
     }
 
     public String getImagePoint() {

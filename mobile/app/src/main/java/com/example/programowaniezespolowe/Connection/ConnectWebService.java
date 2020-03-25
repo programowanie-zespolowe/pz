@@ -1,6 +1,8 @@
 package com.example.programowaniezespolowe.Connection;
 
 import com.example.programowaniezespolowe.Data.Device;
+import com.example.programowaniezespolowe.Data.Point;
+import com.example.programowaniezespolowe.Data.PointPath;
 import com.example.programowaniezespolowe.Data.Token;
 
 import org.json.JSONArray;
@@ -23,7 +25,9 @@ public class ConnectWebService {
     private final static String SELECTED_BUILDING =  "http://54.37.136.172:91/GetData/Buildings/Selected/{0}";
     private final String Groups = "http://54.37.136.172:91/GetData/Buildings/{0}/Groups";
     private final String PointDetail = "http://54.37.136.172:91/GetData/Buildings/Groups/{0}/PointsDetails";
-    private final String BUILDING_POINT = "http//54.37.136.172:91/GetData/Buildings/{0}/Points";
+    private final String BUILDING_POINT = "http://54.37.136.172:91/GetData/Buildings/{0}/Points";
+//    Admin/GetData/Buildings/{idBuilding}/{idPrevPoint}/{idActualPoint}/{idDestPoint}
+    private final String GET_NEXT_POINT = "http://54.37.136.172:91/GetData/Buildings/{0}/{1}/{2}/{3}";
 
     private Token token;
     private static Device device;
@@ -59,6 +63,25 @@ public class ConnectWebService {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
         JSONArray content = new JSONArray(br.readLine());
+        connection.disconnect();
+
+        return content;
+    }
+    private JSONObject GetRequest2(String url) throws IOException, JSONException {
+        if(token.getToken() == null){
+            getToken(device.getName(), device.getMacId());
+            //getToken("Test", "00:00:00:00:00:00");
+        }
+
+        URL address = new URL(url);
+        HttpURLConnection connection = (HttpURLConnection) address.openConnection();
+        connection.setRequestMethod("GET");
+        connection.setRequestProperty("Authorization", "Bearer " + token.getToken());
+        connection.setDoInput(true);
+        connection.connect();
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+        JSONObject content = new JSONObject(br.readLine());
         connection.disconnect();
 
         return content;
@@ -137,6 +160,24 @@ public class ConnectWebService {
     public JSONArray getPointDetail(int buildingId){
         try {
             JSONArray response = GetRequest(MessageFormat.format( PointDetail, buildingId));
+            return response;
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    //    Admin/GetData/Buildings/{idBuilding}/{idPrevPoint}/{idActualPoint}/{idDestPoint}
+    public JSONObject getNextPoint(int idBuilding){
+        PointPath p = PointPath.getInstance();
+//        int prev = 364;
+//        int cur = p.getCurrentPoint();
+//        int tar = p.getTargetPoint();
+//        String n = MessageFormat.format(GET_NEXT_POINT, idBuilding, prev, cur, tar);
+
+        try {
+            JSONObject response = GetRequest2(MessageFormat.format(GET_NEXT_POINT, idBuilding, p.getPreviousPoint(), p.getCurrentPoint(), p.getTargetPoint()));
             return response;
         } catch (IOException e) {
             e.printStackTrace();

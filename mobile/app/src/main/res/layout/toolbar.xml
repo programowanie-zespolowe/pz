@@ -8,7 +8,7 @@
     android:fitsSystemWindows="true"
     android:minHeight="?attr/actionBarSize"
     app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-    android:background="@color/toolBarBackground">
+    android:background="@drawable/menu">
     <!--<Button
         android:id="@+id/backToCategory"
         android:layout_width="24dp"

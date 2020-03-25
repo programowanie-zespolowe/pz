@@ -14,7 +14,6 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.example.programowaniezespolowe.Adapter.PointDetailAdapter;
 import com.example.programowaniezespolowe.Connection.ConnectWebService;
-import com.example.programowaniezespolowe.Data.Group;
 import com.example.programowaniezespolowe.Data.PointDetail;
 import com.example.programowaniezespolowe.Data.PointPath;
 import com.example.programowaniezespolowe.R;
@@ -72,7 +71,7 @@ public class PointDetailActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 int target = pointDetailList.get(position).getIdPoint();
                 PointPath pointPath = PointPath.getInstance();
-                pointPath.setNextPoint(target);
+                pointPath.setTargetPoint(target);
                 Intent intent1 = new Intent(PointDetailActivity.this, Navigation_activity.class);
                 intent1.putExtra(MainActivity.BUILDING_ID, idBuilding);
                 intent1.putExtra(CategoryActivity.GROUP_ID, idGroup);
@@ -111,7 +110,8 @@ public class PointDetailActivity extends AppCompatActivity {
             for(int i = 0; i < jsonArray.length(); i++){
                 try {
                     pointDetail = jsonArray.getString(i);
-                    pointDetailList.add(gson.fromJson(pointDetail, PointDetail.class));
+                    PointDetail point = gson.fromJson(pointDetail, PointDetail.class);
+                    pointDetailList.add(point);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
