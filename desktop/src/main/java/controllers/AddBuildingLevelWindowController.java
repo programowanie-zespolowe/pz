@@ -59,7 +59,7 @@ public class AddBuildingLevelWindowController {
         if(buildingLevelId != null)
         {
             try {
-                buildingLevel.setIdBuilding(buildingLevelId);
+                buildingLevel.setIdImage(buildingLevelId);
                 InputStream inputStream = new FileInputStream(imageFilePath.getText());
                 buildingLevel.setPathImage(IOUtils.readFully(inputStream, inputStream.available()));
                 masterWindowController.LevelAdded(buildingLevel);
