@@ -23,7 +23,7 @@
       <VBox BorderPane.alignment="CENTER" />
    </right>
    <left>
-      <VBox alignment="BASELINE_CENTER" BorderPane.alignment="CENTER">
+      <VBox alignment="TOP_CENTER" BorderPane.alignment="CENTER">
          <fx:include fx:id="leftMenuButtons" source="leftMenuButtons.fxml" />
          <BorderPane.margin>
             <Insets />
