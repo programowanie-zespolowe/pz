@@ -125,8 +125,8 @@ public class CenterMenuButtonsController {
                 return;
             }
             Point point = new Point();
-            point.setX(t.getX());
-            point.setY(t.getY());
+            point.setX((int)t.getX());
+            point.setY((int)t.getY());
             point.setIdImage(level.getIdImage());
             point.setDirection(0);
             point.setOnOffDirection(false);
