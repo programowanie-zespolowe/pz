@@ -34,7 +34,7 @@
       <Pane fx:id="centerScrollPane" BorderPane.alignment="CENTER">
          <fx:include fx:id="centerMenuButtons" source="centerMenuButtons.fxml" />
          <BorderPane.margin>
-            <Insets bottom="10.0" right="10.0" />
+            <Insets bottom="10.0" right="10.0" top="10.0" />
          </BorderPane.margin>
       </Pane>
    </center>

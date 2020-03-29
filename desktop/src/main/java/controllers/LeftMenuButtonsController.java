@@ -153,9 +153,9 @@ public class LeftMenuButtonsController  {
         for (LeftMenuObject menuObject : leftMenuObjects)
         {
             if(menuObject.level == level)
-                menuObject.label.setTextFill(Color.BLUE);
+                menuObject.label.setTextFill(Color.web("#00af80"));
             else
-                menuObject.label.setTextFill(Color.BLACK);
+                menuObject.label.setTextFill(Color.web("#666968"));
         }
         masterWindowController.BuildingLevelChanged(level);
     }

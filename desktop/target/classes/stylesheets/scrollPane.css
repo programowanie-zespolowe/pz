@@ -1,5 +1,5 @@
 .scroll-pane{
-    -fx-background-color: #808080;
+    -fx-background-color: #c3c4c4;
 }
 
 .scroll-pane .scroll-bar{
@@ -35,5 +35,5 @@
 }
 
 .scroll-pane .corner{
-    -fx-background-color: #808080;
+    -fx-background-color: #c3c4c4;
 }

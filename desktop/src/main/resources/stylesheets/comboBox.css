@@ -1,31 +1,66 @@
 .combo-box{
-    -fx-background-color: #808080;
-    -fx-border-color: black;
-    -fx-border-radius: 10;
-    -fx-prompt-text-fill: #DCDCDC;
-    -fx-text-fill: #DCDCDC;
-    -fx-font-weight: bold;
-    -fx-font-size: 15px;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+
+}
+
+.combo-box .list-cell{
+    -fx-text-fill: #00af80 ;
+    -fx-font-weight: bolder;
+    -fx-font-size: 40px;
+    -fx-font-family: fantasy;
+    -fx-alignment: center;
+    -fx-border-style: hidden hidden solid hidden;
+    -fx-border-color: #00af80;
+}
+
+.combo-box .arrow-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.combo-box .arrow-button:pressed{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.combo-box .arrow-button:hover{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.combo-box .arrow-button .arrow{
+    -fx-background-color: transparent;
 }
 
 .combo-box .list-view{
-    -fx-background-color: #808080;
-    -fx-text-fill: #DCDCDC;
-    -fx-font-weight: bold;
-    -fx-font-size: 15px;
-}
-.combo-box .list-view .list-cell:filled{
-    -fx-background-color: #808080;
-    -fx-text-fill: #DCDCDC;
+    -fx-background-color: #c3c4c4;
+    -fx-border-color: #c3c4c4;
+    -fx-text-fill: #666968;
     -fx-font-weight: bold;
     -fx-font-size: 15px;
 }
 
-.combo-box .list-view .list-cell:filled:hover{
-    -fx-background-color: black;
-    -fx-text-fill: #DCDCDC;
+.combo-box .list-view .list-cell{
+    -fx-background-color: #c3c4c4;
+    -fx-border-color: #c3c4c4;
+}
+
+.combo-box .list-view .list-cell:filled{
+    -fx-background-color: #c3c4c4;
+    -fx-border-color: #c3c4c4;
+    -fx-text-fill: #666968;
     -fx-font-weight: bold;
     -fx-font-size: 15px;
+    -fx-alignment: left;
+}
+
+.combo-box .list-view .list-cell:filled:hover{
+    -fx-background-color: #666968;
+    -fx-text-fill: #c3c4c4;
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+    -fx-border-color: #c3c4c4;
 }
 
 .combo-box .scroll-bar{

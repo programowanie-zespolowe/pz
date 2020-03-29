@@ -16,7 +16,7 @@
          <URL value="@../stylesheets/comboBox.css" />
          <URL value="@../stylesheets/confirm.css" />
       </stylesheets></VBox>
-    <Button fx:id="addButton" contentDisplay="TOP" onAction="#addBuildingLevel" styleClass="buttonIcon" stylesheets="@../stylesheets/confirm.css" text="%mw.button.levels" textAlignment="CENTER" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <Button fx:id="addButton" contentDisplay="TOP" onAction="#addBuildingLevel" styleClass="buttonConfirm" stylesheets="@../stylesheets/confirm.css" text="%mw.button.levels" textAlignment="CENTER" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
       <VBox.margin>
          <Insets />
       </VBox.margin>

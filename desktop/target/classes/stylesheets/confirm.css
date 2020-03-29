@@ -1,18 +1,14 @@
 .buttonConfirm{
     -fx-background-color:
-            linear-gradient(#686868 0%, #232723 25%, #373837 75%, #757575 100%),
-            linear-gradient(#020b02, #3a3a3a),
-            linear-gradient(#9d9e9d 0%, #6b6a6b 20%, #343534 80%, #242424 100%),
-            linear-gradient(#8a8a8a 0%, #6b6a6b 20%, #343534 80%, #262626 100%),
-            linear-gradient(#777777 0%, #606060 50%, #505250 51%, #2a2b2a 100%);
-    -fx-background-insets: 0,1,4,5,6;
-    -fx-background-radius: 9,8,5,4,3;
-    -fx-padding: 15 30 15 30;
-    -fx-font-family: "Helvetica";
+            #c3c4c4,
+            linear-gradient(#00af80 10%, white 100%),
+            radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);
+    -fx-background-radius: 30;
+    -fx-background-insets: 0,1,1;
+    -fx-text-fill: black;
     -fx-font-size: 14px;
     -fx-font-weight: bold;
-    -fx-text-fill: white;
-    -fx-effect: dropshadow( three-pass-box , rgba(255,255,255,0.2) , 1, 0.0 , 0 , 1);
+    -fx-effect: dropshadow( three-pass-box , black , 3, 0.0 , 0 , 1 );
 }
 .buttonIcon {
     -fx-background-color:
@@ -31,18 +27,48 @@
 }
 
 .buttonLittle {
-    -fx-background-color: #808080;
+    -fx-background-color: #c3c4c4;
+    -fx-text-fill: black;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
 }
 
 .button:pressed{
-    -fx-background-color: black;
-}
-
-.label{
-    -fx-effect: dropshadow( one-pass-box , black , 0, 0.0 , 0 , -1 );
+    -fx-background-color:
+            #00af80,
+            linear-gradient(#E6FFF1 50%, white 100%),
+            radial-gradient(center 50% -40%, radius 200%, #E6FFF1 45%, rgba(230,230,230,0) 50%);
+    -fx-background-radius: 30;
+    -fx-background-insets: 0,1,1;
+    -fx-text-fill: #666968;
     -fx-font-size: 14px;
     -fx-font-weight: bold;
-    -fx-text-fill: #DCDCDC;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
+}
+.button:hover{
+    -fx-background-color:
+            #00af80,
+            linear-gradient(#E6FFF1 50%, white 100%),
+            radial-gradient(center 50% -40%, radius 200%, #E6FFF1 45%, rgba(230,230,230,0) 50%);
+    -fx-background-radius: 30;
+    -fx-background-insets: 0,1,1;
+    -fx-text-fill: #666968;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
+}
+
+
+.label{
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #666968;
+}
+
+.label1{
+    -fx-font-size: 10px;
+    -fx-text-fill: #666968;
+    -fx-font-weight: lighter;
 }
 
 .labelDescription{

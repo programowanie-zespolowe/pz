@@ -1,10 +1,21 @@
 .root{
-    -fx-background-color: #808080;
+    -fx-background-color: #c3c4c4 ;
     -fx-text-fill: #C0C0C0;
 }
 
 .scroll-pane .viewport{
-    -fx-background-color: #808080;
+    -fx-background-color: #c3c4c4;
+}
+
+.hbox {
+    -fx-background-color: tranparent;
+    -fx-border-style: hidden hidden solid hidden;
+    -fx-border-color: #A5A8A7;
+}
+.vbox {
+    -fx-background-color: tranparent;
+    -fx-border-style: hidden solid hidden hidden;
+    -fx-border-color: #A5A8A7;
 }
 
 .context-menu{
