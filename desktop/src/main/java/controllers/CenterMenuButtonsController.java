@@ -43,6 +43,7 @@ public class CenterMenuButtonsController {
 
     Point points[];
     Point pressedPoint = null;
+    boolean dragged = false;
     Point selectedPoint_1 = null;
     Point selectedPoint_2 = null;
     WritableImage copyImage = null;
@@ -88,6 +89,7 @@ public class CenterMenuButtonsController {
             pressedPoint.setX(mouseEvent.getX());
             pressedPoint.setY(mouseEvent.getY());
             RedrawCenter();
+            dragged = true;
 
         });
 
@@ -96,8 +98,9 @@ public class CenterMenuButtonsController {
         });
 
         canvas.onMouseClickedProperty().set((EventHandler<MouseEvent>) (MouseEvent t) -> {
-            if(pressedPoint != null)
+            if(dragged && pressedPoint != null)
             {
+                dragged = false;
                 WebServiceConnection.GetInstance().EditPoint(pressedPoint, masterWindowController.GetCurrentBuildingId(), masterWindowController.getCurrentLevel().getIdImage());
                 pressedPoint = null;
                 return;
