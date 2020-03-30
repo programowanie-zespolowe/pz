@@ -142,10 +142,12 @@ public class CenterMenuButtonsController {
                             if(connection != null) {
                                 WebServiceConnection.GetInstance().RemovePointConnection(connection);
                                 masterWindowController.ConnectionRemoved(connection);
+                                RedrawCenter();
                             } else {
                                 PointsConnection newConnection = WebServiceConnection.GetInstance().AddPointConnection(selectedPoint_1, selectedPoint_2);
                                 if (newConnection != null)
                                     masterWindowController.ConnectionAdded(newConnection);
+                                RedrawCenter();
                             }
                             selectedPoint_1 = null;
                             selectedPoint_2 = null;
