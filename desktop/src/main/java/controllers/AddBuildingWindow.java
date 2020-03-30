@@ -84,6 +84,7 @@ public class AddBuildingWindow {
                 Building building = new Building();
                 building.setIdBuilding(id);
                 building.setNameBuilding(BuildingNameTextField.getText());
+                building.setScale((double)spinnerScale.getValueFactory().getValue());
 
                 InputStream inputStream = new FileInputStream(imageFilePath.getText());
                 building.setImageBuilding(IOUtils.readFully(inputStream, inputStream.available()));

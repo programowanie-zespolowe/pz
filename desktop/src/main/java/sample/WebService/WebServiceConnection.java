@@ -237,7 +237,7 @@ public class WebServiceConnection {
                     .setMode(HttpMultipartMode.STRICT)
                     .build();
 
-            String url = MessageFormat.format(AddBuilding, buildingName.replace(" ", "_"), scale);
+            String url = MessageFormat.format(AddBuilding, buildingName.replace(" ", "_"), (int)scale);
             HttpPost httpPost = new HttpPost(url);
             httpPost.addHeader("Authorization", "Bearer " + tokenStruct.getToken());
             String name = entity.getContentType().getName();
