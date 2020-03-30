@@ -42,6 +42,7 @@ public class CenterMenuButtonsController {
     }
 
     Point points[];
+    Point pressedPoint = null;
     Point selectedPoint_1 = null;
     Point selectedPoint_2 = null;
     WritableImage copyImage = null;
@@ -66,6 +67,13 @@ public class CenterMenuButtonsController {
         scrollPane.setContent(canvas);
 
         canvas.onMouseMovedProperty().set((EventHandler<MouseEvent>) (MouseEvent t) -> {
+            if(t.getButton() == MouseButton.PRIMARY && pressedPoint != null)
+            {
+                pressedPoint.setX(t.getX());
+                pressedPoint.setY(t.getY());
+                RedrawCenter();
+                return;
+            }
             if(selectedPoint_1 == null || copyImage == null)
                 return;
             canvas.getGraphicsContext2D().drawImage(copyImage, 0, 0);
@@ -74,7 +82,26 @@ public class CenterMenuButtonsController {
             canvas.getGraphicsContext2D().stroke();
         });
 
+        canvas.onMouseDraggedProperty().set(mouseEvent -> {
+            if(pressedPoint == null)
+                return;
+            pressedPoint.setX(mouseEvent.getX());
+            pressedPoint.setY(mouseEvent.getY());
+            RedrawCenter();
+
+        });
+
+        canvas.onMousePressedProperty().set(mouseEvent -> {
+            pressedPoint = FindPoint(mouseEvent.getX(), mouseEvent.getY());
+        });
+
         canvas.onMouseClickedProperty().set((EventHandler<MouseEvent>) (MouseEvent t) -> {
+            if(pressedPoint != null)
+            {
+                WebServiceConnection.GetInstance().EditPoint(pressedPoint, masterWindowController.GetCurrentBuildingId(), masterWindowController.getCurrentLevel().getIdImage());
+                pressedPoint = null;
+                return;
+            }
             if(level == null)
                 return;
             if(t.getButton() != MouseButton.PRIMARY) {
@@ -139,6 +166,10 @@ public class CenterMenuButtonsController {
         mainPane.widthProperty().addListener((observableValue, number, t1) -> scrollPane.setMaxWidth(mainPane.getWidth()));
         mainPane.heightProperty().addListener((observableValue, number, t1) -> scrollPane.setMaxHeight(mainPane.getHeight()));
 
+    }
+
+    private void RedrawCenter() {
+        masterWindowController.BuildingLevelChanged(masterWindowController.getCurrentLevel());
     }
 
     private void ShowPointDetails(Point point)

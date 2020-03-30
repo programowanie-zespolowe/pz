@@ -597,7 +597,7 @@ public class WebServiceConnection {
                     .setMode(HttpMultipartMode.STRICT)
                     .build();
 
-            String url = MessageFormat.format(EditPointUrl, idBuilding, buildingLevelId, point.getIdPoint(), point.getX(), point.getY(), point.getIdPointType(), point.getDirection(), point.isOnOffDirection());
+            String url = MessageFormat.format(EditPointUrl, idBuilding, buildingLevelId, point.getIdPoint(), (int)point.getX(), (int)point.getY(), point.getIdPointType(), point.getDirection(), point.isOnOffDirection());
             HttpPost httpPost = new HttpPost(url);
             httpPost.addHeader("Authorization", "Bearer " + tokenStruct.getToken());
             String name = entity.getContentType().getName();
