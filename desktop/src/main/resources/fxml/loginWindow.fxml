@@ -22,10 +22,10 @@
       <RowConstraints />
    </rowConstraints>
    <children>
-       <Label alignment="CENTER" stylesheets="@../stylesheets/scene.css" text="%lw.label" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER" />
+       <Label alignment="CENTER" styleClass="labelGreen" stylesheets="@../stylesheets/confirm.css" text="%lw.label" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER" />
       <TextField fx:id="loginTextField" promptText="%lw.name" styleClass="text-field1" stylesheets="@../stylesheets/confirm.css" text="admin2" GridPane.rowIndex="1" />
       <PasswordField fx:id="passwordField" promptText="%lw.password" stylesheets="@../stylesheets/confirm.css" text="F5s4+FzNDGY=" GridPane.rowIndex="2" />
-      <Button fx:id="loginButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleLoginAction" styleClass="buttonConfirm" stylesheets="@../stylesheets/scene.css" text="%lw.button" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+      <Button fx:id="loginButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleLoginAction" styleClass="buttonConfirm" stylesheets="@../stylesheets/confirm.css" text="%lw.button" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
          <opaqueInsets>
             <Insets />
          </opaqueInsets></Button>

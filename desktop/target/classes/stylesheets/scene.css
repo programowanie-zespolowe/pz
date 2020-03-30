@@ -1,10 +1,10 @@
 .root{
-    -fx-background-color: #c3c4c4 ;
+    -fx-background-color: #E3E8E7 ;
     -fx-text-fill: #C0C0C0;
 }
 
 .scroll-pane .viewport{
-    -fx-background-color: #c3c4c4;
+    -fx-background-color: #E3E8E7;
 }
 
 .hbox {

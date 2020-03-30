@@ -1,15 +1,15 @@
 .scroll-pane{
-    -fx-background-color: #c3c4c4;
+    -fx-background-color: #E3E8E7;
 }
 
 .scroll-pane .scroll-bar{
-    -fx-background-color: #808080;
-    -fx-border-color: black ;
-    -fx-border-radius: 10;
+    -fx-background-color: #E3E8E7;
+    -fx-border-color: #666968 ;
+    -fx-border-radius: 5;
 }
 
 .scroll-pane .scroll-bar .thumb{
-    -fx-background-color: black;
+    -fx-background-color: #666968;
 }
 
 .scroll-pane .scroll-bar .leftbutton{
@@ -35,5 +35,5 @@
 }
 
 .scroll-pane .corner{
-    -fx-background-color: #c3c4c4;
+    -fx-background-color: #E3E8E7;
 }
