@@ -9,6 +9,7 @@ namespace WhereToGoEntities.WhereToGo.Models
         {
             BuildingImages = new HashSet<BuildingImages>();
             Groups = new HashSet<Groups>();
+            OutdoorGame = new HashSet<OutdoorGame>();
         }
 
         public int IdBuilding { get; set; }
@@ -20,5 +21,6 @@ namespace WhereToGoEntities.WhereToGo.Models
         public virtual Users IdUserNavigation { get; set; }
         public virtual ICollection<BuildingImages> BuildingImages { get; set; }
         public virtual ICollection<Groups> Groups { get; set; }
+        public virtual ICollection<OutdoorGame> OutdoorGame { get; set; }
     }
 }

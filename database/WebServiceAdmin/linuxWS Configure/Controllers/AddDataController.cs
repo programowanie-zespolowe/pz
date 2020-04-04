@@ -231,7 +231,8 @@ namespace WhereToGo.Admin.Controllers
                 try
                 {
                     whereToGo.SaveChanges();
-                }catch(Exception)
+                }
+                catch (Exception)
                 {
                     return BadRequest(999);
                 }
@@ -241,5 +242,110 @@ namespace WhereToGo.Admin.Controllers
             }
 
         }
+        [Route("OutdoorGame/{idBuilding}/{nameGame}/{StartDateGame}/{EndDateGame}/{idFirstPoint}")]
+        [HttpPost]
+        public IActionResult OutdoorGame(int idBuilding, string nameGame, DateTime StartDateGame, DateTime EndDateGame, int idFirstPoint, [FromForm] IFormFile ImageRead)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            using (var ms = new MemoryStream())
+            {
+                using WhereToGoContext whereToGo = new WhereToGoContext();
+                OutdoorGame mdlOutdoorGame = new OutdoorGame();
+                mdlOutdoorGame.IdBuilding = idBuilding;
+                mdlOutdoorGame.NameGame = nameGame;
+                mdlOutdoorGame.StartDateGame = StartDateGame;
+                mdlOutdoorGame.EndDateGame = EndDateGame;
+                if (idFirstPoint == -1)
+                    mdlOutdoorGame.IdFirstPoint = null;
+                else
+                    mdlOutdoorGame.IdFirstPoint = idFirstPoint;
+                if (ImageRead != null)
+                {
+                    ImageRead.CopyTo(ms);
+                    mdlOutdoorGame.ImageGame = ms.GetBuffer();
+                }
+                else
+                    mdlOutdoorGame.ImageGame = null;
+                whereToGo.OutdoorGame.Add(mdlOutdoorGame);
+                try
+                {
+                    whereToGo.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    return BadRequest(999);
+                }
+
+                return Ok(mdlOutdoorGame.IdOutdoorGame);
+
+            }
+        }
+        [Route("OutdoorGamePath/{idOutdoorGame}/{idPoint}/{Question}/{Answer}/{idNextPoint}/{idHintPoint}")]
+        [HttpPost]
+        public IActionResult OutdoorGamePath(int idOutdoorGame, int idPoint, string Question, string Answer, int idNextPoint, int idHintPoint)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            using (var ms = new MemoryStream())
+            {
+                using WhereToGoContext whereToGo = new WhereToGoContext();
+                OutdoorGamePath mdlOutdoorGamePath = new OutdoorGamePath();
+                mdlOutdoorGamePath.IdOutdoorGame = idOutdoorGame;
+                mdlOutdoorGamePath.IdPoint = idPoint;
+                mdlOutdoorGamePath.Question = Question;
+                mdlOutdoorGamePath.Answer = Answer;
+                if (idNextPoint == -1)
+                    mdlOutdoorGamePath.IdNextPoint = null;
+                else
+                    mdlOutdoorGamePath.IdNextPoint = idNextPoint;
+                if (idHintPoint == -1)
+                    mdlOutdoorGamePath.IdHintPoint = null;
+                else
+                    mdlOutdoorGamePath.IdHintPoint = idHintPoint;
+                whereToGo.OutdoorGamePath.Add(mdlOutdoorGamePath);
+                try
+                {
+                    whereToGo.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    return BadRequest(999);
+                }
+
+                return Ok(mdlOutdoorGamePath.IdQuestionPoint);
+
+            }
+
+        }
+        [Route("OutdoorGameHints/{idOutdoorGame}/{idPoint}/{Hint}")]
+        [HttpPost]
+        public IActionResult OutdoorGameHints(int idOutdoorGame, int idPoint, string Hint)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            using (var ms = new MemoryStream())
+            {
+                using WhereToGoContext whereToGo = new WhereToGoContext();
+                OutdoorGameHints mdlOutdoorGameHint = new OutdoorGameHints();
+                mdlOutdoorGameHint.IdOutdoorGame = idOutdoorGame;
+                mdlOutdoorGameHint.IdPoint = idPoint;
+                mdlOutdoorGameHint.Hint = Hint;
+                whereToGo.OutdoorGameHints.Add(mdlOutdoorGameHint);
+                try
+                {
+                    whereToGo.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    return BadRequest(999);
+                }
+
+                return Ok(mdlOutdoorGameHint.IdHints);
+
+            }
+
+        }
+
     }
 }

@@ -216,5 +216,107 @@ namespace WhereToGo.Admin.Controllers
 
             }
         }
+        [HttpPost]
+        [Route("OutdoorGame/{idOutdoorGame}/{idBuilding}/{nameGame}/{StartDateGame}/{EndDateGame}/{idFirstPoint}")]
+        public IActionResult OutdoorGame(int idOutdoorGame, int idBuilding, string nameGame, DateTime StartDateGame, DateTime EndDateGame, int idFirstPoint, [FromForm] IFormFile ImageRead)
+        {
+            using (var ms = new MemoryStream())
+            {
+                using WhereToGoContext whereToGo = new WhereToGoContext();
+                OutdoorGame mdlOutdoorGame = new OutdoorGame();
+                mdlOutdoorGame = whereToGo.OutdoorGame.Where(i => i.IdOutdoorGame == idOutdoorGame).FirstOrDefault();
+                mdlOutdoorGame.IdBuilding = idBuilding;
+                mdlOutdoorGame.NameGame = nameGame;
+                mdlOutdoorGame.StartDateGame = StartDateGame;
+                mdlOutdoorGame.EndDateGame = EndDateGame;
+                if (idFirstPoint == -1)
+                    mdlOutdoorGame.IdFirstPoint = null;
+                else
+                    mdlOutdoorGame.IdFirstPoint = idFirstPoint;
+                if (ImageRead != null)
+                {
+                    ImageRead.CopyTo(ms);
+                    mdlOutdoorGame.ImageGame = ms.GetBuffer();
+                }
+                else
+                    mdlOutdoorGame.ImageGame = mdlOutdoorGame.ImageGame;
+                whereToGo.OutdoorGame.Update(mdlOutdoorGame);
+
+                try
+                {
+                    whereToGo.SaveChanges();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    return NotFound();
+                }
+
+                return Ok(idOutdoorGame);
+
+            }
+        }
+        [HttpPost]
+        [Route("OutdoorGamePath/{idQuestionPoint}/{idOutdoorGame}/{idPoint}/{Question}/{Answer}/{idNextPoint}/{idHintPoint}")]
+        public IActionResult OutdoorGamePath(int idQuestionPoint, int idOutdoorGame, int idPoint, string Question, string Answer, int idNextpoint, int idHintPoint)
+        {
+            using (var ms = new MemoryStream())
+            {
+                using WhereToGoContext whereToGo = new WhereToGoContext();
+                OutdoorGamePath mdlOutdoorGamePath = new OutdoorGamePath();
+                mdlOutdoorGamePath = whereToGo.OutdoorGamePath.Where(i => i.IdQuestionPoint == idQuestionPoint).FirstOrDefault();
+                mdlOutdoorGamePath.IdOutdoorGame = idOutdoorGame;
+                mdlOutdoorGamePath.IdPoint = idPoint;
+                mdlOutdoorGamePath.Question = Question;
+                mdlOutdoorGamePath.Answer = Answer;
+                if (idNextpoint == -1)
+                    mdlOutdoorGamePath.IdNextPoint = null;
+                else
+                    mdlOutdoorGamePath.IdNextPoint = idNextpoint;
+                if (idHintPoint == -1)
+                    mdlOutdoorGamePath.IdHintPoint = null;
+                else
+                    mdlOutdoorGamePath.IdHintPoint = idHintPoint;
+                whereToGo.OutdoorGamePath.Update(mdlOutdoorGamePath);
+
+                try
+                {
+                    whereToGo.SaveChanges();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    return NotFound();
+                }
+
+                return Ok(idQuestionPoint);
+
+            }
+        }
+        [HttpPost]
+        [Route("OutdoorGameHints/{idHints}/{idOutdoorGame}/{idPoint}/{Hint}")]
+        public IActionResult OutdoorGameHints(int idHints, int idOutdoorGame, int idPoint, string Hint)
+        {
+            using (var ms = new MemoryStream())
+            {
+                using WhereToGoContext whereToGo = new WhereToGoContext();
+                OutdoorGameHints mdlOutdoorGameHint = new OutdoorGameHints();
+                mdlOutdoorGameHint = whereToGo.OutdoorGameHints.Where(i => i.IdHints == idHints).FirstOrDefault();
+                mdlOutdoorGameHint.IdOutdoorGame = idOutdoorGame;
+                mdlOutdoorGameHint.IdPoint = idPoint;
+                mdlOutdoorGameHint.Hint = Hint;
+                whereToGo.OutdoorGameHints.Update(mdlOutdoorGameHint);
+
+                try
+                {
+                    whereToGo.SaveChanges();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    return NotFound();
+                }
+
+                return Ok(idHints);
+
+            }
+        }
     }
 }

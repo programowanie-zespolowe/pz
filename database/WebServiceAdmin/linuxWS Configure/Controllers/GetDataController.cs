@@ -295,5 +295,68 @@ namespace linuxWS_Configure.Controllers
                 return listPointsConnection.ToList();
             }
         }
+        [HttpGet]
+        [Route("Buildings/OutdoorGame/{idBuilding}")]
+        public IEnumerable<MdlOutdoorGame> GetAllOutdoorGame(int idBuilding)
+        {
+            List<MdlOutdoorGame> listOutdoorGame = new List<MdlOutdoorGame>();
+            using (WhereToGoContext whereToGoEntities = new WhereToGoContext())
+            {
+                foreach (var element in whereToGoEntities.OutdoorGame.Where(i => i.IdBuilding == idBuilding))
+                {
+                    MdlOutdoorGame mdlOutdoorGame = new MdlOutdoorGame();
+                    mdlOutdoorGame.IdBuilding = element.IdBuilding;
+                    mdlOutdoorGame.NameGame = element.NameGame;
+                    mdlOutdoorGame.ImageGame = element.ImageGame;
+                    mdlOutdoorGame.StartDateGame = element.StartDateGame;
+                    mdlOutdoorGame.EndDateGame = element.EndDateGame;
+                    mdlOutdoorGame.IdFirstPoint = element.IdFirstPoint;
+
+                    listOutdoorGame.Add(mdlOutdoorGame);
+                }
+                return listOutdoorGame.ToList();
+            }
+        }
+        [HttpGet]
+        [Route("Buildings/OutdoorGamePath/{idOutdoorGame}")]
+        public IEnumerable<MdlOutdoorGamePath> GetOutdoorGamePathByGame(int idOutdoorGame)
+        {
+            List<MdlOutdoorGamePath> listOutdoorGamePaths = new List<MdlOutdoorGamePath>();
+            using (WhereToGoContext whereToGoEntities = new WhereToGoContext())
+            {
+                foreach (var element in whereToGoEntities.OutdoorGamePath.Where(i => i.IdOutdoorGame == idOutdoorGame))
+                {
+                    MdlOutdoorGamePath mdlOutdoorGamePath = new MdlOutdoorGamePath();
+                    mdlOutdoorGamePath.IdOutdoorGame = element.IdOutdoorGame;
+                    mdlOutdoorGamePath.IdPoint = element.IdPoint;
+                    mdlOutdoorGamePath.Question = element.Question;
+                    mdlOutdoorGamePath.Answer = element.Answer;
+                    mdlOutdoorGamePath.IdNextPoint = element.IdNextPoint;
+                    mdlOutdoorGamePath.IdHintPoint = element.IdHintPoint;
+
+                    listOutdoorGamePaths.Add(mdlOutdoorGamePath);
+                }
+                return listOutdoorGamePaths.ToList();
+            }
+        }
+        [HttpGet]
+        [Route("Buildings/OutdoorGameHints/{idOutdoorGame}")]
+        public IEnumerable<MdlOutdoorGameHints> GetOutdoorGameHintsByGame(int idOutdoorGame)
+        {
+            List<MdlOutdoorGameHints> listOutdoorGameHints = new List<MdlOutdoorGameHints>();
+            using (WhereToGoContext whereToGoEntities = new WhereToGoContext())
+            {
+                foreach (var element in whereToGoEntities.OutdoorGameHints.Where(i => i.IdOutdoorGame == idOutdoorGame))
+                {
+                    MdlOutdoorGameHints mdlOutdoorGameHints = new MdlOutdoorGameHints();
+                    mdlOutdoorGameHints.IdOutdoorGame = element.IdOutdoorGame;
+                    mdlOutdoorGameHints.IdPoint = element.IdPoint;
+                    mdlOutdoorGameHints.Hint = element.Hint;
+
+                    listOutdoorGameHints.Add(mdlOutdoorGameHints);
+                }
+                return listOutdoorGameHints.ToList();
+            }
+        }
     }
 }

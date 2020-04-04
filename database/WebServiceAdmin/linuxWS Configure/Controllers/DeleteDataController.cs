@@ -24,6 +24,13 @@ namespace WhereToGo.Admin.Controllers
                                                         .Include(p => p.Groups).ThenInclude(v => v.PointsDetail)
                                                         .Include(x => x.BuildingImages).ThenInclude(c => c.Points).ThenInclude(b => b.PointsConnectionIdPointStartNavigation)
                                                         .Include(x => x.BuildingImages).ThenInclude(c => c.Points).ThenInclude(b => b.PointsConnectionIdPointEndNavigation)
+                                                        .Include(x => x.BuildingImages).ThenInclude(c => c.Points).ThenInclude(b => b.OutdoorGameHints)
+                                                        .Include(x => x.BuildingImages).ThenInclude(c => c.Points).ThenInclude(b => b.OutdoorGamePathIdHintPointNavigation)
+                                                        .Include(x => x.BuildingImages).ThenInclude(c => c.Points).ThenInclude(b => b.OutdoorGamePathIdNextPointNavigation)
+                                                        .Include(x => x.BuildingImages).ThenInclude(c => c.Points).ThenInclude(b => b.OutdoorGamePathIdPointNavigation)
+                                                        .Include(x => x.OutdoorGame).ThenInclude(c => c.OutdoorGameRecordTime)
+                                                        .Include(x => x.OutdoorGame).ThenInclude(c => c.OutdoorGameHints)
+                                                        .Include(x => x.OutdoorGame).ThenInclude(c => c.OutdoorGamePath)
 
                                                         .FirstOrDefault();
             if (mdlBuilding == null)
@@ -57,6 +64,10 @@ namespace WhereToGo.Admin.Controllers
                                                         .Include(p => p.Points).ThenInclude(x => x.PointsDetail)
                                                         .Include(p => p.Points).ThenInclude(x => x.PointsConnectionIdPointStartNavigation)
                                                         .Include(p => p.Points).ThenInclude(x => x.PointsConnectionIdPointEndNavigation)
+                                                        .Include(c => c.Points).ThenInclude(b => b.OutdoorGameHints)
+                                                        .Include(c => c.Points).ThenInclude(b => b.OutdoorGamePathIdHintPointNavigation)
+                                                        .Include(c => c.Points).ThenInclude(b => b.OutdoorGamePathIdNextPointNavigation)
+                                                        .Include(c => c.Points).ThenInclude(b => b.OutdoorGamePathIdPointNavigation)
                                                         .FirstOrDefault();
             if (mdlBuilding == null)
                 return NotFound();
@@ -120,6 +131,10 @@ namespace WhereToGo.Admin.Controllers
                                                                             .Include(x => x.PointsDetail)
                                                                             .Include(c => c.PointsConnectionIdPointStartNavigation)
                                                                             .Include(c => c.PointsConnectionIdPointEndNavigation)
+                                                                            .Include(c => c.OutdoorGameHints)
+                                                                            .Include(c => c.OutdoorGamePathIdHintPointNavigation)
+                                                                            .Include(c => c.OutdoorGamePathIdNextPointNavigation)
+                                                                            .Include(c => c.OutdoorGamePathIdPointNavigation)
                                                                             .FirstOrDefault();
             if (mdlPoint == null)
                 return NotFound();
@@ -231,6 +246,99 @@ namespace WhereToGo.Admin.Controllers
             }
 
             return Ok(mdlIdPointConnection);
+        }
+        [HttpDelete("OutdoorGame/{idOutdoorGame}")]
+        public IActionResult OutdoorGame(int idOutdoorGame)
+        {
+            using WhereToGoContext whereToGo = new WhereToGoContext();
+            var mdlOutdoorGame = whereToGo.OutdoorGame.Where(i => i.IdOutdoorGame == idOutdoorGame)
+                                                                    .Include(p => p.OutdoorGameHints)
+                                                                    .Include(p => p.OutdoorGamePath)
+                                                                    .Include(p => p.OutdoorGameRecordTime)
+                                                                    .FirstOrDefault();
+            if (mdlOutdoorGame == null)
+                return NotFound();
+            try
+            {
+                whereToGo.OutdoorGame.Remove(mdlOutdoorGame);
+                whereToGo.SaveChanges();
+            }
+            catch (DbUpdateException ex)
+            {
+                var sqlException = ex.GetBaseException() as SqlException;
+
+                if (sqlException != null)
+                {
+                    var number = sqlException.Number;
+
+                    if (number == 547)
+                    {
+                        return BadRequest($"Must delete points which are connected with this PointType before deleting");
+                    }
+                }
+            }
+
+            return Ok(mdlOutdoorGame);
+        }
+        [HttpDelete("OutdoorGamePath/{idQuestionPoint}")]
+        public IActionResult OutdoorGamePath(int idQuestionPoint)
+        {
+            using WhereToGoContext whereToGo = new WhereToGoContext();
+            var mdlOutdoorGamePath = whereToGo.OutdoorGamePath.Where(i => i.IdQuestionPoint == idQuestionPoint)
+                                                                    .FirstOrDefault();
+            if (mdlOutdoorGamePath == null)
+                return NotFound();
+            try
+            {
+                whereToGo.OutdoorGamePath.Remove(mdlOutdoorGamePath);
+                whereToGo.SaveChanges();
+            }
+            catch (DbUpdateException ex)
+            {
+                var sqlException = ex.GetBaseException() as SqlException;
+
+                if (sqlException != null)
+                {
+                    var number = sqlException.Number;
+
+                    if (number == 547)
+                    {
+                        return BadRequest($"Must delete points which are connected with this PointType before deleting");
+                    }
+                }
+            }
+
+            return Ok(mdlOutdoorGamePath);
+        }
+        [HttpDelete("OutdoorGameHints/{idHints}")]
+        public IActionResult OutdoorGameHints(int idHints)
+        {
+            using WhereToGoContext whereToGo = new WhereToGoContext();
+            var mdlOutdoorGameHints = whereToGo.OutdoorGameHints.Where(i => i.IdHints == idHints)
+                                                                    .FirstOrDefault();
+            if (mdlOutdoorGameHints == null)
+                return NotFound();
+            try
+            {
+                whereToGo.OutdoorGameHints.Remove(mdlOutdoorGameHints);
+                whereToGo.SaveChanges();
+            }
+            catch (DbUpdateException ex)
+            {
+                var sqlException = ex.GetBaseException() as SqlException;
+
+                if (sqlException != null)
+                {
+                    var number = sqlException.Number;
+
+                    if (number == 547)
+                    {
+                        return BadRequest($"Must delete points which are connected with this PointType before deleting");
+                    }
+                }
+            }
+
+            return Ok(mdlOutdoorGameHints);
         }
     }
 }

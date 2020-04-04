@@ -19,6 +19,10 @@ namespace WhereToGoEntities.WhereToGo.Models
         public virtual DbSet<BuildingImages> BuildingImages { get; set; }
         public virtual DbSet<Buildings> Buildings { get; set; }
         public virtual DbSet<Groups> Groups { get; set; }
+        public virtual DbSet<OutdoorGame> OutdoorGame { get; set; }
+        public virtual DbSet<OutdoorGameHints> OutdoorGameHints { get; set; }
+        public virtual DbSet<OutdoorGamePath> OutdoorGamePath { get; set; }
+        public virtual DbSet<OutdoorGameRecordTime> OutdoorGameRecordTime { get; set; }
         public virtual DbSet<PointType> PointType { get; set; }
         public virtual DbSet<Points> Points { get; set; }
         public virtual DbSet<PointsConnection> PointsConnection { get; set; }
@@ -30,7 +34,7 @@ namespace WhereToGoEntities.WhereToGo.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=54.37.136.172;Database=WhereToGo;user id=sa;password=PEZET@2019;Persist Security Info=True;MultipleActiveResultSets=true;");
+                optionsBuilder.UseSqlServer("Server=54.37.136.172;Database=WhereToGo;user id=sa;password=PEZET@2019;Persist Security Info=True;");
             }
         }
 
@@ -71,7 +75,6 @@ namespace WhereToGoEntities.WhereToGo.Models
                     .HasColumnName("pathImage")
                     .HasColumnType("image");
 
-
                 entity.HasOne(d => d.IdBuildingNavigation)
                     .WithMany(p => p.BuildingImages)
                     .HasForeignKey(d => d.IdBuilding)
@@ -85,7 +88,6 @@ namespace WhereToGoEntities.WhereToGo.Models
                 entity.Property(e => e.IdBuilding).HasColumnName("idBuilding");
 
                 entity.Property(e => e.IdUser).HasColumnName("idUser");
-                entity.Property(e => e.Scale).HasColumnName("scale");
 
                 entity.Property(e => e.ImageBuilding)
                     .HasColumnName("imageBuilding")
@@ -95,6 +97,8 @@ namespace WhereToGoEntities.WhereToGo.Models
                     .HasColumnName("nameBuilding")
                     .HasMaxLength(255)
                     .IsUnicode(false);
+
+                entity.Property(e => e.Scale).HasColumnName("scale");
 
                 entity.HasOne(d => d.IdUserNavigation)
                     .WithMany(p => p.Buildings)
@@ -123,6 +127,127 @@ namespace WhereToGoEntities.WhereToGo.Models
                     .WithMany(p => p.Groups)
                     .HasForeignKey(d => d.IdBuilding)
                     .HasConstraintName("FK_Groups_Buildings").OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<OutdoorGame>(entity =>
+            {
+                entity.HasKey(e => e.IdOutdoorGame);
+
+                entity.Property(e => e.IdOutdoorGame).HasColumnName("idOutdoorGame");
+
+                entity.Property(e => e.EndDateGame).HasColumnType("datetime");
+
+                entity.Property(e => e.IdBuilding).HasColumnName("idBuilding");
+
+                entity.Property(e => e.IdFirstPoint).HasColumnName("idFirstPoint");
+
+                entity.Property(e => e.ImageGame)
+                    .HasColumnName("imageGame")
+                    .HasColumnType("image");
+
+                entity.Property(e => e.NameGame)
+                    .HasColumnName("nameGame")
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.StartDateGame).HasColumnType("datetime");
+
+                entity.HasOne(d => d.IdBuildingNavigation)
+                    .WithMany(p => p.OutdoorGame)
+                    .HasForeignKey(d => d.IdBuilding)
+                    .HasConstraintName("FK_OutdoorGame_Buildings").OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<OutdoorGameHints>(entity =>
+            {
+                entity.HasKey(e => e.IdHints);
+
+                entity.Property(e => e.IdHints).HasColumnName("idHints");
+
+                entity.Property(e => e.Hint)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.IdOutdoorGame).HasColumnName("idOutdoorGame");
+
+                entity.Property(e => e.IdPoint).HasColumnName("idPoint");
+
+                entity.HasOne(d => d.IdOutdoorGameNavigation)
+                    .WithMany(p => p.OutdoorGameHints)
+                    .HasForeignKey(d => d.IdOutdoorGame)
+                    .HasConstraintName("FK_OutdoorGameHints_OutdoorGame").OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(d => d.IdPointNavigation)
+                    .WithMany(p => p.OutdoorGameHints)
+                    .HasForeignKey(d => d.IdPoint)
+                    .HasConstraintName("FK_OutdoorGameHints_Points").OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<OutdoorGamePath>(entity =>
+            {
+                entity.HasKey(e => e.IdQuestionPoint);
+
+                entity.Property(e => e.IdQuestionPoint).HasColumnName("idQuestionPoint");
+
+                entity.Property(e => e.Answer)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.IdHintPoint).HasColumnName("idHintPoint");
+
+                entity.Property(e => e.IdNextPoint).HasColumnName("idNextPoint");
+
+                entity.Property(e => e.IdOutdoorGame).HasColumnName("idOutdoorGame");
+
+                entity.Property(e => e.IdPoint).HasColumnName("idPoint");
+
+                entity.Property(e => e.Question)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.IdHintPointNavigation)
+                    .WithMany(p => p.OutdoorGamePathIdHintPointNavigation)
+                    .HasForeignKey(d => d.IdHintPoint)
+                    .HasConstraintName("FK_OutdoorGamePath_Points1").OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(d => d.IdNextPointNavigation)
+                    .WithMany(p => p.OutdoorGamePathIdNextPointNavigation)
+                    .HasForeignKey(d => d.IdNextPoint)
+                    .HasConstraintName("FK_OutdoorGamePath_Points2").OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(d => d.IdOutdoorGameNavigation)
+                    .WithMany(p => p.OutdoorGamePath)
+                    .HasForeignKey(d => d.IdOutdoorGame)
+                    .HasConstraintName("FK_OutdoorGamePath_OutdoorGame").OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(d => d.IdPointNavigation)
+                    .WithMany(p => p.OutdoorGamePathIdPointNavigation)
+                    .HasForeignKey(d => d.IdPoint)
+                    .HasConstraintName("FK_OutdoorGamePath_Points").OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<OutdoorGameRecordTime>(entity =>
+            {
+                entity.HasKey(e => e.IdRecord)
+                    .HasName("PK_OutdoorGameRecordtime");
+
+                entity.Property(e => e.IdRecord).HasColumnName("idRecord");
+
+                entity.Property(e => e.EndDate).HasColumnType("datetime");
+
+                entity.Property(e => e.IdOutdoorGame).HasColumnName("idOutdoorGame");
+
+                entity.Property(e => e.Mac)
+                    .HasColumnName("MAC")
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.StartDate).HasColumnType("datetime");
+
+                entity.HasOne(d => d.IdOutdoorGameNavigation)
+                    .WithMany(p => p.OutdoorGameRecordTime)
+                    .HasForeignKey(d => d.IdOutdoorGame)
+                    .HasConstraintName("FK_OutdoorGameRecordTime_OutdoorGame").OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<PointType>(entity =>

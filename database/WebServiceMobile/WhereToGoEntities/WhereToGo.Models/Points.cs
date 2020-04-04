@@ -7,6 +7,10 @@ namespace WhereToGoEntities.WhereToGo.Models
     {
         public Points()
         {
+            OutdoorGameHints = new HashSet<OutdoorGameHints>();
+            OutdoorGamePathIdHintPointNavigation = new HashSet<OutdoorGamePath>();
+            OutdoorGamePathIdNextPointNavigation = new HashSet<OutdoorGamePath>();
+            OutdoorGamePathIdPointNavigation = new HashSet<OutdoorGamePath>();
             PointsConnectionIdPointEndNavigation = new HashSet<PointsConnection>();
             PointsConnectionIdPointStartNavigation = new HashSet<PointsConnection>();
             PointsDetail = new HashSet<PointsDetail>();
@@ -22,6 +26,10 @@ namespace WhereToGoEntities.WhereToGo.Models
         public bool? OnOffDirection { get; set; }
 
         public virtual BuildingImages IdImageNavigation { get; set; }
+        public virtual ICollection<OutdoorGameHints> OutdoorGameHints { get; set; }
+        public virtual ICollection<OutdoorGamePath> OutdoorGamePathIdHintPointNavigation { get; set; }
+        public virtual ICollection<OutdoorGamePath> OutdoorGamePathIdNextPointNavigation { get; set; }
+        public virtual ICollection<OutdoorGamePath> OutdoorGamePathIdPointNavigation { get; set; }
         public virtual ICollection<PointsConnection> PointsConnectionIdPointEndNavigation { get; set; }
         public virtual ICollection<PointsConnection> PointsConnectionIdPointStartNavigation { get; set; }
         public virtual ICollection<PointsDetail> PointsDetail { get; set; }
