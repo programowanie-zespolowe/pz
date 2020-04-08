@@ -51,6 +51,9 @@ public class MasterWindowController {
     Group[] groups;
     List<PointDetail>[] pointDetails;
     PointsConnection[] pointsConnections;
+    OutdoorGame[] outdoorGames;
+    OutdoorGamePath[] outdoorGamePoints;
+    OutdoorGameHints[] outdoorGameHints;
     private BuildingLevel currentLevel;
 
     public BuildingLevel getCurrentLevel() {
@@ -98,6 +101,22 @@ public class MasterWindowController {
                         groups = WebServiceConnection.GetInstance().Groups(buildingId);
                         pointsConnections = WebServiceConnection.GetInstance().PointsConnections(buildingId);
                         LoadPointDetails();
+                        outdoorGames = WebServiceConnection.GetInstance().OutdoorGames(buildingId);
+                        for (OutdoorGame game :
+                                outdoorGames) {
+                            OutdoorGamePath[] gamePoints = WebServiceConnection.GetInstance().OutdoorGamePoints(game.getIdOutdoorGame());
+                            if(outdoorGamePoints == null)
+                                outdoorGamePoints = gamePoints;
+                            else
+                                outdoorGamePoints = ArrayUtils.addAll(outdoorGamePoints, gamePoints);
+
+                            OutdoorGameHints[] gameHints = WebServiceConnection.GetInstance().OutdoorGameHints(game.getIdOutdoorGame());
+                            if(outdoorGameHints == null)
+                                outdoorGameHints = gameHints;
+                            else
+                                outdoorGameHints = ArrayUtils.addAll(outdoorGameHints, gameHints);
+
+                        }
                     }
                     catch (Exception e)
                     {

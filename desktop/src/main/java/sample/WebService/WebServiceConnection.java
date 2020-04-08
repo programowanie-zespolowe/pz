@@ -1,10 +1,8 @@
 package sample.WebService;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.http.*;
 import org.apache.http.client.methods.*;
 import org.apache.http.entity.ContentType;
-import org.apache.http.entity.mime.FormBodyPart;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -16,7 +14,10 @@ import sample.Structs.*;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.text.DateFormat;
 import java.text.MessageFormat;
+import java.text.SimpleDateFormat;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -57,6 +58,21 @@ public class WebServiceConnection {
     private final String PointsConnectionsUrl = "http://54.37.136.172:90/admin/GetData/Buildings/{0}/PointsConnection";
     private final String AddPointsConnectionUrl = "http://54.37.136.172:90/admin/AddData/Points/{0}/{1}/PointsConnection";
     private final String RemovePointConnectionUrl = "http://54.37.136.172:90/admin/DeleteData/PointsConnection/{0}";
+
+    private final String OutdoorGamesUrl = "http://54.37.136.172:90/admin/GetData/Buildings/OutdoorGame/{0}";
+    private final String AddOutdoorGameUrl = "http://54.37.136.172:90/admin/AddData/OutdoorGame/{0}/{1}/{2}/{3}/{4}";
+    private final String RemoveOutdoorGameUrl = "http://54.37.136.172:90/admin/DeleteData/OutdoorGame/{0}";
+    private final String EditOutdoorGameUrl = "http://54.37.136.172:90/admin/EditData/OutdoorGame/{0}/{1}/{2}/{3}/{4}/{5}";
+
+    private final String OutdoorGamePointsUrl = "http://54.37.136.172:90/admin/GetData/Buildings/OutdoorGame/{0}";
+    private final String AddOutdoorGamePointUrl = "http://54.37.136.172:90/admin/AddData/OutdoorGame/{0}/{1}/{2}/{3}/{4}";
+    private final String RemoveOutdoorGamePointUrl = "http://54.37.136.172:90/admin/DeleteData/OutdoorGame/{0}";
+    private final String EditOutdoorGamePointUrl = "http://54.37.136.172:90/admin/EditData/OutdoorGame/{0}/{1}/{2}/{3}/{4}/{5}";
+
+    private final String OutdoorGameHintsUrl = "http://54.37.136.172:90/admin/GetData/Buildings/OutdoorGamePath/{0}";
+    private final String AddOutdoorGameHintUrl = "http://54.37.136.172:90/admin/AddData/OutdoorGamePath/{0}/{1}/{2}/{3}/{4}/{5}";
+    private final String RemoveOutdoorGameHintUrl = "http://54.37.136.172:90/admin/DeleteData/OutdoorGamePath/{0}";
+    private final String EditOutdoorGameHintUrl = "http://54.37.136.172:90/admin/EditData/OutdoorGamePath/{0}/{1}/{2}/{3}/{4}/{5}/{6}";
 
     private final String AddPointType = "http://54.37.136.172:90/Admin/AddData/PointType";
 
@@ -707,5 +723,279 @@ public class WebServiceConnection {
             return false;
         }
 
+    }
+
+    public OutdoorGame[] OutdoorGames(int buildingId) {
+        try {
+            String response = MakeGETRequest(MessageFormat.format(OutdoorGamesUrl, buildingId));
+            return JSONConverter.ConvertToObject(response, OutdoorGame[].class);
+        }
+        catch (IOException e)
+        {
+            return null;
+        }
+    }
+
+    public OutdoorGame AddOutdoorGame(OutdoorGame game, int idBuilding)
+    {
+        try{
+            CloseableHttpClient httpClient = HttpClients.createDefault();
+            HttpEntity entity = MultipartEntityBuilder
+                    .create()
+                    .setMode(HttpMultipartMode.STRICT)
+                    .build();
+
+            DateFormat dateFormat = new SimpleDateFormat("yyyy_MM_dd_hh_mm_ss");
+            String url = MessageFormat.format(AddOutdoorGameUrl, idBuilding,
+                    game.getNameGame().replace(" ", "_"),
+                    dateFormat.format(game.getStartDateGame()),
+                    dateFormat.format(game.getEndDateGame()),
+                    game.getIdFirstPoint() == null ? -1 : game.getIdFirstPoint());
+            HttpPost httpPost = new HttpPost(url);
+            httpPost.addHeader("Authorization", "Bearer " + tokenStruct.getToken());
+            String name = entity.getContentType().getName();
+            String value = entity.getContentType().getValue();
+            httpPost.addHeader(name, value);
+            httpPost.setEntity(entity);
+            HttpResponse response = httpClient.execute(httpPost);
+            HttpEntity result = response.getEntity();
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(result.getContent()));
+            String content = br.readLine();
+            game.setIdOutdoorGame(Integer.parseInt(content));
+            return game;
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
+    }
+
+    public boolean EditOutdoorGame(OutdoorGame game, String filePath) {
+        try{
+            File file = new File(filePath);
+            CloseableHttpClient httpClient = HttpClients.createDefault();
+            MultipartEntityBuilder builder = MultipartEntityBuilder
+                    .create();
+            HttpEntity entity = null;
+            if(filePath.length() > 2)
+                entity = builder
+                        .addBinaryBody("ImageRead", file, ContentType.create("application/octet-stream"), "filename")
+                        .setMode(HttpMultipartMode.STRICT)
+                        .build();
+            else
+                entity = builder
+                        .setMode(HttpMultipartMode.STRICT)
+                        .build();
+
+            DateFormat dateFormat = new SimpleDateFormat("yyyy_MM_dd_hh_mm_ss");
+            String url = MessageFormat.format(EditOutdoorGameUrl, game.getIdOutdoorGame(),
+                    game.getIdBuilding(),
+                    game.getNameGame().replace(" ", "_"),
+                    dateFormat.format(game.getStartDateGame()),
+                    dateFormat.format(game.getEndDateGame()),
+                    game.getIdFirstPoint() == null ? -1 : game.getIdFirstPoint());
+            HttpPost httpPost = new HttpPost(url);
+            httpPost.addHeader("Authorization", "Bearer " + tokenStruct.getToken());
+            String name = entity.getContentType().getName();
+            String value = entity.getContentType().getValue();
+            httpPost.addHeader(name, value);
+            httpPost.setEntity(entity);
+            HttpResponse response = httpClient.execute(httpPost);
+            HttpEntity result = response.getEntity();
+            return true;
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+    }
+
+    public boolean DeleteOutdoorGame(int idGame) {
+        try{
+            DeleteRequest(MessageFormat.format(RemoveOutdoorGameUrl, idGame));
+            return true;
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+    }
+
+
+    public OutdoorGamePath[] OutdoorGamePoints(int outdoorGameId) {
+        try {
+            String response = MakeGETRequest(MessageFormat.format(OutdoorGamePointsUrl, outdoorGameId));
+            return JSONConverter.ConvertToObject(response, OutdoorGamePath[].class);
+        }
+        catch (IOException e)
+        {
+            return null;
+        }
+    }
+
+    public OutdoorGamePath AddOutdoorGamePoint(OutdoorGamePath point)
+    {
+        try{
+            CloseableHttpClient httpClient = HttpClients.createDefault();
+            HttpEntity entity = MultipartEntityBuilder
+                    .create()
+                    .setMode(HttpMultipartMode.STRICT)
+                    .build();
+
+            String url = MessageFormat.format(AddOutdoorGamePointUrl,
+                    point.getIdOutdoorGame(),
+                    point.getIdPoint(),
+                    point.getQuestion().replace(" ", "_"),
+                    point.getAnswer().replace(" ", "_"),
+                    point.getIdNextPoint() == null ? -1 : point.getIdNextPoint(),
+                    point.getIdHintPoint() == null ? -1 : point.getIdHintPoint());
+            HttpPost httpPost = new HttpPost(url);
+            httpPost.addHeader("Authorization", "Bearer " + tokenStruct.getToken());
+            String name = entity.getContentType().getName();
+            String value = entity.getContentType().getValue();
+            httpPost.addHeader(name, value);
+            httpPost.setEntity(entity);
+            HttpResponse response = httpClient.execute(httpPost);
+            HttpEntity result = response.getEntity();
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(result.getContent()));
+            String content = br.readLine();
+            point.setIdQuestionPoint(Integer.parseInt(content));
+            return point;
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
+    }
+
+    public boolean EditOutdoorGamePoint(OutdoorGamePath point) {
+        try{
+            CloseableHttpClient httpClient = HttpClients.createDefault();
+            MultipartEntityBuilder builder = MultipartEntityBuilder
+                    .create();
+            HttpEntity entity = builder
+                    .setMode(HttpMultipartMode.STRICT)
+                    .build();
+
+            String url = MessageFormat.format(EditOutdoorGamePointUrl,
+                    point.getIdQuestionPoint(),
+                    point.getIdOutdoorGame(),
+                    point.getIdPoint(),
+                    point.getQuestion().replace(" ", "_"),
+                    point.getAnswer().replace(" ", "_"),
+                    point.getIdNextPoint() == null ? -1 : point.getIdNextPoint(),
+                    point.getIdHintPoint() == null ? -1 : point.getIdHintPoint());
+            HttpPost httpPost = new HttpPost(url);
+            httpPost.addHeader("Authorization", "Bearer " + tokenStruct.getToken());
+            String name = entity.getContentType().getName();
+            String value = entity.getContentType().getValue();
+            httpPost.addHeader(name, value);
+            httpPost.setEntity(entity);
+            HttpResponse response = httpClient.execute(httpPost);
+            HttpEntity result = response.getEntity();
+            return true;
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+    }
+
+    public boolean DeleteOutdoorGamePoint(int idOutdoorGamePoint) {
+        try{
+            DeleteRequest(MessageFormat.format(RemoveOutdoorGamePointUrl, idOutdoorGamePoint));
+            return true;
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+    }
+
+    public OutdoorGameHints[] OutdoorGameHints(int outdoorGameId) {
+        try {
+            String response = MakeGETRequest(MessageFormat.format(OutdoorGameHintsUrl, outdoorGameId));
+            return JSONConverter.ConvertToObject(response, OutdoorGameHints[].class);
+        }
+        catch (IOException e)
+        {
+            return null;
+        }
+    }
+
+    public OutdoorGameHints AddOutdoorGameHint(OutdoorGameHints hint)
+    {
+        try{
+            CloseableHttpClient httpClient = HttpClients.createDefault();
+            HttpEntity entity = MultipartEntityBuilder
+                    .create()
+                    .setMode(HttpMultipartMode.STRICT)
+                    .build();
+
+            String url = MessageFormat.format(AddOutdoorGameHintUrl,
+                    hint.getIdOutdoorGame(),
+                    hint.getIdPoint(),
+                    hint.getHint().replace(" ", "_"));
+            HttpPost httpPost = new HttpPost(url);
+            httpPost.addHeader("Authorization", "Bearer " + tokenStruct.getToken());
+            String name = entity.getContentType().getName();
+            String value = entity.getContentType().getValue();
+            httpPost.addHeader(name, value);
+            httpPost.setEntity(entity);
+            HttpResponse response = httpClient.execute(httpPost);
+            HttpEntity result = response.getEntity();
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(result.getContent()));
+            String content = br.readLine();
+            hint.setIdHints(Integer.parseInt(content));
+            return hint;
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
+    }
+
+    public boolean EditOutdoorGameHint(OutdoorGameHints hint) {
+        try{
+            CloseableHttpClient httpClient = HttpClients.createDefault();
+            MultipartEntityBuilder builder = MultipartEntityBuilder
+                    .create();
+            HttpEntity entity = builder
+                    .setMode(HttpMultipartMode.STRICT)
+                    .build();
+
+            String url = MessageFormat.format(EditOutdoorGameHintUrl,
+                    hint.getIdHints(),
+                    hint.getIdOutdoorGame(),
+                    hint.getIdPoint(),
+                    hint.getHint().replace(" ", "_"));
+            HttpPost httpPost = new HttpPost(url);
+            httpPost.addHeader("Authorization", "Bearer " + tokenStruct.getToken());
+            String name = entity.getContentType().getName();
+            String value = entity.getContentType().getValue();
+            httpPost.addHeader(name, value);
+            httpPost.setEntity(entity);
+            HttpResponse response = httpClient.execute(httpPost);
+            HttpEntity result = response.getEntity();
+            return true;
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+    }
+
+    public boolean DeleteOutdoorGameHint(int idOutdoorGameHint) {
+        try{
+            DeleteRequest(MessageFormat.format(RemoveOutdoorGameHintUrl, idOutdoorGameHint));
+            return true;
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
     }
 }
