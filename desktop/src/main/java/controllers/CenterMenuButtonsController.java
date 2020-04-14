@@ -16,6 +16,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import sample.Constants;
 import sample.Structs.*;
@@ -170,9 +171,7 @@ public class CenterMenuButtonsController {
                 Point point = FindPoint(t.getX(), t.getY());
                 if (point != null) {
                     Integer number = masterWindowController.addOutdoorGamePoint(point);
-                    canvas.getGraphicsContext2D().setStroke(Color.rgb(255,0,0,1.0));
-                    canvas.getGraphicsContext2D().strokeText(String.valueOf(number), point.getX() + 5, point.getY() - 5);
-                    canvas.getGraphicsContext2D().stroke();
+                    drawText(number, point.getX() + 5, point.getY() - 5);
                 }
 
             }
@@ -181,6 +180,13 @@ public class CenterMenuButtonsController {
         mainPane.widthProperty().addListener((observableValue, number, t1) -> scrollPane.setMaxWidth(mainPane.getWidth()));
         mainPane.heightProperty().addListener((observableValue, number, t1) -> scrollPane.setMaxHeight(mainPane.getHeight()));
 
+    }
+
+    private void drawText(Integer number, double X, double Y) {
+        canvas.getGraphicsContext2D().setFont(new Font(20));
+        canvas.getGraphicsContext2D().setStroke(Color.rgb(0,0,0,1.0));
+        canvas.getGraphicsContext2D().strokeText(String.valueOf(number), X, Y);
+        canvas.getGraphicsContext2D().stroke();
     }
 
     private void RedrawCenter() {
@@ -284,9 +290,7 @@ public class CenterMenuButtonsController {
             Point point = getPoint(points, gamePoint.getIdPoint());
             if(point.getIdImage() == currentLevelId)
             {
-                canvas.getGraphicsContext2D().setStroke(Color.rgb(255,0,0,1.0));
-                canvas.getGraphicsContext2D().strokeText(String.valueOf(number), point.getX() + 5, point.getY() - 5);
-                canvas.getGraphicsContext2D().stroke();
+                drawText(number, point.getX() + 5, point.getY() - 5);
             }
             number++;
             idNextPoint = gamePoint.getIdNextPoint();

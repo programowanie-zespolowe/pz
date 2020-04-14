@@ -67,7 +67,7 @@ public class WebServiceConnection {
     private final String OutdoorGamePointsUrl = "http://54.37.136.172:90/admin/GetData/Buildings/OutdoorGamePath/{0}";
     private final String AddOutdoorGamePointUrl = "http://54.37.136.172:90/admin/AddData/OutdoorGamePath/{0}/{1}/{2}/{3}/{4}/{5}";
     private final String RemoveOutdoorGamePointUrl = "http://54.37.136.172:90/admin/DeleteData/OutdoorGamePath/{0}";
-    private final String EditOutdoorGamePointUrl = "http://54.37.136.172:90/admin/EditData/OutdoorGamePath/{0}/{1}/{2}/{3}/{4}/{5}";
+    private final String EditOutdoorGamePointUrl = "http://54.37.136.172:90/admin/EditData/OutdoorGamePath/{0}/{1}/{2}/{3}/{4}/{5}/{6}";
 
     private final String OutdoorGameHintsUrl = "http://54.37.136.172:90/admin/GetData/Buildings/OutdoorGameHints/{0}";
     private final String AddOutdoorGameHintUrl = "http://54.37.136.172:90/admin/AddData/OutdoorGameHints/{0}/{1}/{2}/{3}/{4}/{5}";
