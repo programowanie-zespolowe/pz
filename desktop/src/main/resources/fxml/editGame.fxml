@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.image.ImageView?>
+<?import tornadofx.control.DateTimePicker?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controllers.EditGameController"
+            prefHeight="400.0" prefWidth="600.0">
+    <GridPane>
+        <Label text="Nazwa:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <TextField fx:id="nameTextField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+        <Label text="Start Gry:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <DateTimePicker fx:id="startDatePicker" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+        <Label text="Koniec Gry:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+        <DateTimePicker fx:id="endDatePicker" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+        <ImageView fx:id="gameImage" GridPane.rowIndex="3" GridPane.columnIndex="0" visible="false"/>
+        <Label fx:id="noImageLabel" text="Brak obrazka" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+        <Button onAction="#pickImage" text="Wybierz obrazek" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+        <Button onAction="#saveGame" GridPane.rowIndex="10" GridPane.columnIndex="0" text="Zapisz"/>
+        <Button onAction="#deleteGame" GridPane.rowIndex="10" GridPane.columnIndex="1" text="Usuń grę"/>
+
+    </GridPane>
+
+</AnchorPane>

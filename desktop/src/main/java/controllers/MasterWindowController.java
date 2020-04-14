@@ -131,6 +131,7 @@ public class MasterWindowController {
                 leftMenuButtonsController.RefreshLevels(levels);
                 centerMenuButtonsController.ShowPoints(points, leftMenuButtonsController.getCurrentBuildLevel());
                 loadingStage.hide();
+                topMenuButtonsController.refreshGames(outdoorGames);
             });
             new Thread(task).start();
         });
@@ -138,6 +139,15 @@ public class MasterWindowController {
         centerScrollPane.heightProperty().addListener((observableValue, number, t1) -> centerMenuButtonsController.mainPane.setPrefHeight(centerScrollPane.getHeight()));
 
         LoadComponents();
+
+
+        topMenuButtonsController.outdoorGameTypeCombobox.getSelectionModel().selectedIndexProperty().addListener((observableValue, number, t1) -> {
+            if(topMenuButtonsController.outdoorGameTypeCombobox.getSelectionModel().getSelectedIndex() == 0)
+                centerMenuButtonsController.SetEditMode(CenterMenuButtonsController.EditMode.EditPoints);
+            else
+                centerMenuButtonsController.SetEditMode(CenterMenuButtonsController.EditMode.EditGame);
+            BuildingLevelChanged(getCurrentLevel());
+        });
     }
 
     public void BuildingLevelChanged(BuildingLevel level)
@@ -158,6 +168,11 @@ public class MasterWindowController {
 
             centerMenuButtonsController.ShowPoints(points, level);
             centerMenuButtonsController.ShowPointsConnections(pointsConnections, points, level);
+            if(topMenuButtonsController.outdoorGameTypeCombobox.getSelectionModel().getSelectedIndex() > 0)
+                centerMenuButtonsController.ShowGame(outdoorGames[topMenuButtonsController.outdoorGameTypeCombobox.getSelectionModel().getSelectedIndex() - 1],
+                        outdoorGamePoints,
+                        points,
+                        currentLevel.getIdImage());
         }
         catch (IOException exception)
         {
@@ -541,5 +556,70 @@ public class MasterWindowController {
         BuildingLevel currentLevel = getCurrentLevel();
         leftMenuButtonsController.RefreshLevels(levels);
         leftMenuButtonsController.SetSelectedColor(currentLevel);
+    }
+
+    public void GameAdded(OutdoorGame game) {
+        outdoorGames = ArrayUtils.add(outdoorGames, game);
+    }
+
+    public void OutdoorGameDeleted(int idOutdoorGame) {
+        for(int i = 0; i < outdoorGames.length; i++)
+        {
+            if(outdoorGames[i].getIdOutdoorGame() == idOutdoorGame)
+            {
+                outdoorGames = ArrayUtils.remove(outdoorGames, i);
+                break;
+            }
+        }
+        topMenuButtonsController.refreshGames(outdoorGames);
+    }
+
+    public void outdoorGameEdited(OutdoorGame game) {
+        topMenuButtonsController.refreshCurrentGameName();
+    }
+
+    public OutdoorGamePath getOutdoorGamePoint(int id)
+    {
+        for (OutdoorGamePath point :
+                outdoorGamePoints) {
+            if (point.getIdQuestionPoint()  != id)
+                continue;
+            return point;
+        }
+        return null;
+    }
+
+    public Integer addOutdoorGamePoint(Point findPoint) {
+        if(topMenuButtonsController.outdoorGameTypeCombobox.getSelectionModel().getSelectedIndex() == 0)
+            return null;
+
+        OutdoorGame game = outdoorGames[topMenuButtonsController.outdoorGameTypeCombobox.getSelectionModel().getSelectedIndex() - 1];
+
+        OutdoorGamePath gamePoint = new OutdoorGamePath();
+        gamePoint.setIdPoint(findPoint.getIdPoint());
+        gamePoint.setIdOutdoorGame(game.getIdOutdoorGame());
+        gamePoint = WebServiceConnection.GetInstance().AddOutdoorGamePoint(gamePoint);
+        outdoorGamePoints = ArrayUtils.add(outdoorGamePoints, gamePoint);
+        Integer number = 1;
+
+        if(game.getIdFirstPoint() == null || game.getIdFirstPoint() == -1)
+        {
+            game.setIdFirstPoint(gamePoint.getIdQuestionPoint());
+            WebServiceConnection.GetInstance().EditOutdoorGame(game, "");
+            return number;
+        }
+        else
+        {
+            number++;
+            OutdoorGamePath currentPoint = getOutdoorGamePoint(game.getIdFirstPoint());
+            while(currentPoint.getIdNextPoint() != null)
+            {
+                currentPoint = getOutdoorGamePoint(currentPoint.getIdNextPoint());
+                number++;
+            }
+            currentPoint.setIdNextPoint(gamePoint.getIdQuestionPoint());
+            WebServiceConnection.GetInstance().EditOutdoorGamePoint(currentPoint);
+            return number;
+        }
     }
 }

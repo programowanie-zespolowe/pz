@@ -4,10 +4,10 @@ public class OutdoorGamePath {
     int idQuestionPoint;
     int idOutdoorGame;
     int idPoint;
-    String question;
-    String answer;
-    Integer idNextPoint;
-    Integer idHintPoint;
+    String question = "Pytanie";
+    String answer = "Odpowiedź";
+    Integer idNextPoint = null;
+    Integer idHintPoint = null;
 
     public int getIdQuestionPoint() {
         return idQuestionPoint;

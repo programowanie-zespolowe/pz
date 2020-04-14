@@ -64,15 +64,15 @@ public class WebServiceConnection {
     private final String RemoveOutdoorGameUrl = "http://54.37.136.172:90/admin/DeleteData/OutdoorGame/{0}";
     private final String EditOutdoorGameUrl = "http://54.37.136.172:90/admin/EditData/OutdoorGame/{0}/{1}/{2}/{3}/{4}/{5}";
 
-    private final String OutdoorGamePointsUrl = "http://54.37.136.172:90/admin/GetData/Buildings/OutdoorGame/{0}";
-    private final String AddOutdoorGamePointUrl = "http://54.37.136.172:90/admin/AddData/OutdoorGame/{0}/{1}/{2}/{3}/{4}";
-    private final String RemoveOutdoorGamePointUrl = "http://54.37.136.172:90/admin/DeleteData/OutdoorGame/{0}";
-    private final String EditOutdoorGamePointUrl = "http://54.37.136.172:90/admin/EditData/OutdoorGame/{0}/{1}/{2}/{3}/{4}/{5}";
+    private final String OutdoorGamePointsUrl = "http://54.37.136.172:90/admin/GetData/Buildings/OutdoorGamePath/{0}";
+    private final String AddOutdoorGamePointUrl = "http://54.37.136.172:90/admin/AddData/OutdoorGamePath/{0}/{1}/{2}/{3}/{4}/{5}";
+    private final String RemoveOutdoorGamePointUrl = "http://54.37.136.172:90/admin/DeleteData/OutdoorGamePath/{0}";
+    private final String EditOutdoorGamePointUrl = "http://54.37.136.172:90/admin/EditData/OutdoorGamePath/{0}/{1}/{2}/{3}/{4}/{5}";
 
-    private final String OutdoorGameHintsUrl = "http://54.37.136.172:90/admin/GetData/Buildings/OutdoorGamePath/{0}";
-    private final String AddOutdoorGameHintUrl = "http://54.37.136.172:90/admin/AddData/OutdoorGamePath/{0}/{1}/{2}/{3}/{4}/{5}";
-    private final String RemoveOutdoorGameHintUrl = "http://54.37.136.172:90/admin/DeleteData/OutdoorGamePath/{0}";
-    private final String EditOutdoorGameHintUrl = "http://54.37.136.172:90/admin/EditData/OutdoorGamePath/{0}/{1}/{2}/{3}/{4}/{5}/{6}";
+    private final String OutdoorGameHintsUrl = "http://54.37.136.172:90/admin/GetData/Buildings/OutdoorGameHints/{0}";
+    private final String AddOutdoorGameHintUrl = "http://54.37.136.172:90/admin/AddData/OutdoorGameHints/{0}/{1}/{2}/{3}/{4}/{5}";
+    private final String RemoveOutdoorGameHintUrl = "http://54.37.136.172:90/admin/DeleteData/OutdoorGameHints/{0}";
+    private final String EditOutdoorGameHintUrl = "http://54.37.136.172:90/admin/EditData/OutdoorGameHints/{0}/{1}/{2}/{3}/{4}/{5}/{6}";
 
     private final String AddPointType = "http://54.37.136.172:90/Admin/AddData/PointType";
 
@@ -745,7 +745,7 @@ public class WebServiceConnection {
                     .setMode(HttpMultipartMode.STRICT)
                     .build();
 
-            DateFormat dateFormat = new SimpleDateFormat("yyyy_MM_dd_hh_mm_ss");
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");
             String url = MessageFormat.format(AddOutdoorGameUrl, idBuilding,
                     game.getNameGame().replace(" ", "_"),
                     dateFormat.format(game.getStartDateGame()),
@@ -788,7 +788,7 @@ public class WebServiceConnection {
                         .setMode(HttpMultipartMode.STRICT)
                         .build();
 
-            DateFormat dateFormat = new SimpleDateFormat("yyyy_MM_dd_hh_mm_ss");
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");
             String url = MessageFormat.format(EditOutdoorGameUrl, game.getIdOutdoorGame(),
                     game.getIdBuilding(),
                     game.getNameGame().replace(" ", "_"),

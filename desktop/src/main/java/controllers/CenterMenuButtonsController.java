@@ -18,9 +18,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import sample.Constants;
-import sample.Structs.BuildingLevel;
-import sample.Structs.Point;
-import sample.Structs.PointsConnection;
+import sample.Structs.*;
 import sample.WebService.WebServiceConnection;
 import utils.FxmlUtils;
 
@@ -35,6 +33,7 @@ public class CenterMenuButtonsController {
     private MasterWindowController masterWindowController;
 
     private BuildingLevel level;
+    private EditMode editMode = EditMode.EditPoints;
 
     public void setMasterWindowController(MasterWindowController masterWindowController) {
         this.masterWindowController = masterWindowController;
@@ -68,104 +67,115 @@ public class CenterMenuButtonsController {
         scrollPane.setContent(canvas);
 
         canvas.onMouseMovedProperty().set((EventHandler<MouseEvent>) (MouseEvent t) -> {
-            if(t.getButton() == MouseButton.PRIMARY && pressedPoint != null)
-            {
-                pressedPoint.setX(t.getX());
-                pressedPoint.setY(t.getY());
-                RedrawCenter();
-                return;
+            if(editMode == EditMode.EditPoints) {
+                if (t.getButton() == MouseButton.PRIMARY && pressedPoint != null) {
+                    pressedPoint.setX(t.getX());
+                    pressedPoint.setY(t.getY());
+                    RedrawCenter();
+                    return;
+                }
+                if (selectedPoint_1 == null || copyImage == null)
+                    return;
+                canvas.getGraphicsContext2D().drawImage(copyImage, 0, 0);
+                canvas.getGraphicsContext2D().setStroke(Color.rgb(255, 0, 0, 1.0));
+                canvas.getGraphicsContext2D().strokeLine(selectedPoint_1.getX(), selectedPoint_1.getY(), t.getX(), t.getY());
+                canvas.getGraphicsContext2D().stroke();
             }
-            if(selectedPoint_1 == null || copyImage == null)
-                return;
-            canvas.getGraphicsContext2D().drawImage(copyImage, 0, 0);
-            canvas.getGraphicsContext2D().setStroke(Color.rgb(255,0,0,1.0));
-            canvas.getGraphicsContext2D().strokeLine(selectedPoint_1.getX(), selectedPoint_1.getY(), t.getX(), t.getY());
-            canvas.getGraphicsContext2D().stroke();
         });
 
         canvas.onMouseDraggedProperty().set(mouseEvent -> {
-            if(pressedPoint == null)
-                return;
-            pressedPoint.setX(mouseEvent.getX());
-            pressedPoint.setY(mouseEvent.getY());
-            RedrawCenter();
-            dragged = true;
+            if(editMode == EditMode.EditPoints) {
+                if (pressedPoint == null)
+                    return;
+                pressedPoint.setX(mouseEvent.getX());
+                pressedPoint.setY(mouseEvent.getY());
+                RedrawCenter();
+                dragged = true;
+            }
 
         });
 
         canvas.onMousePressedProperty().set(mouseEvent -> {
-            pressedPoint = FindPoint(mouseEvent.getX(), mouseEvent.getY());
+            if(editMode == EditMode.EditPoints) {
+                pressedPoint = FindPoint(mouseEvent.getX(), mouseEvent.getY());
+            }
         });
 
         canvas.onMouseClickedProperty().set((EventHandler<MouseEvent>) (MouseEvent t) -> {
-            if(dragged && pressedPoint != null)
-            {
-                dragged = false;
-                WebServiceConnection.GetInstance().EditPoint(pressedPoint, masterWindowController.GetCurrentBuildingId(), masterWindowController.getCurrentLevel().getIdImage());
-                pressedPoint = null;
-                return;
-            }
-            if(level == null)
-                return;
-            if(t.getButton() != MouseButton.PRIMARY) {
-                if(selectedPoint_1 != null)
-                {
-                    selectedPoint_1 = null;
-                    canvas.getGraphicsContext2D().drawImage(copyImage, 0, 0);
+            if(editMode == EditMode.EditPoints) {
+                if (dragged && pressedPoint != null) {
+                    dragged = false;
+                    WebServiceConnection.GetInstance().EditPoint(pressedPoint, masterWindowController.GetCurrentBuildingId(), masterWindowController.getCurrentLevel().getIdImage());
+                    pressedPoint = null;
+                    return;
                 }
-                return;
-            }
-            if(FindPoint(t.getX(), t.getY()) != null)
-            {
-                if(t.getButton().equals(MouseButton.PRIMARY)){
-                    if(t.getClickCount() == 2){
+                if (level == null)
+                    return;
+                if (t.getButton() != MouseButton.PRIMARY) {
+                    if (selectedPoint_1 != null) {
                         selectedPoint_1 = null;
-                        selectedPoint_2 = null;
-                        ShowPointDetails(FindPoint(t.getX(), t.getY()));
+                        canvas.getGraphicsContext2D().drawImage(copyImage, 0, 0);
                     }
-                    else
-                    {
-                        if(selectedPoint_1 == null) {
-                            selectedPoint_1 = FindPoint(t.getX(), t.getY());
-                            SnapshotParameters params = new SnapshotParameters();
-                            copyImage = canvas.snapshot(params, null);
-                        }
-                        else if(selectedPoint_2 == null) {
-                            selectedPoint_2 = FindPoint(t.getX(), t.getY());
-                            if(selectedPoint_2 == selectedPoint_1)
-                            {
-                                selectedPoint_2 = null;
-                                selectedPoint_1 = null;
-                                return;
-                            }
-                            PointsConnection connection = masterWindowController.GetPointsConnection(selectedPoint_1, selectedPoint_2);
-                            if(connection != null) {
-                                WebServiceConnection.GetInstance().RemovePointConnection(connection);
-                                masterWindowController.ConnectionRemoved(connection);
-                                RedrawCenter();
-                            } else {
-                                PointsConnection newConnection = WebServiceConnection.GetInstance().AddPointConnection(selectedPoint_1, selectedPoint_2);
-                                if (newConnection != null)
-                                    masterWindowController.ConnectionAdded(newConnection);
-                                RedrawCenter();
-                            }
+                    return;
+                }
+                if (FindPoint(t.getX(), t.getY()) != null) {
+                    if (t.getButton().equals(MouseButton.PRIMARY)) {
+                        if (t.getClickCount() == 2) {
                             selectedPoint_1 = null;
                             selectedPoint_2 = null;
+                            ShowPointDetails(FindPoint(t.getX(), t.getY()));
+                        } else {
+                            if (selectedPoint_1 == null) {
+                                selectedPoint_1 = FindPoint(t.getX(), t.getY());
+                                SnapshotParameters params = new SnapshotParameters();
+                                copyImage = canvas.snapshot(params, null);
+                            } else if (selectedPoint_2 == null) {
+                                selectedPoint_2 = FindPoint(t.getX(), t.getY());
+                                if (selectedPoint_2 == selectedPoint_1) {
+                                    selectedPoint_2 = null;
+                                    selectedPoint_1 = null;
+                                    return;
+                                }
+                                PointsConnection connection = masterWindowController.GetPointsConnection(selectedPoint_1, selectedPoint_2);
+                                if (connection != null) {
+                                    WebServiceConnection.GetInstance().RemovePointConnection(connection);
+                                    masterWindowController.ConnectionRemoved(connection);
+                                    RedrawCenter();
+                                } else {
+                                    PointsConnection newConnection = WebServiceConnection.GetInstance().AddPointConnection(selectedPoint_1, selectedPoint_2);
+                                    if (newConnection != null)
+                                        masterWindowController.ConnectionAdded(newConnection);
+                                    RedrawCenter();
+                                }
+                                selectedPoint_1 = null;
+                                selectedPoint_2 = null;
+                            }
                         }
                     }
+                    return;
                 }
-                return;
-            }
-            Point point = new Point();
-            point.setX((int)t.getX());
-            point.setY((int)t.getY());
-            point.setIdImage(level.getIdImage());
-            point.setDirection(0);
-            point.setOnOffDirection(false);
+                Point point = new Point();
+                point.setX((int) t.getX());
+                point.setY((int) t.getY());
+                point.setIdImage(level.getIdImage());
+                point.setDirection(0);
+                point.setOnOffDirection(false);
 
-            Point addedPoint = WebServiceConnection.GetInstance().AddPoint(point, level.getIdImage());
-            if(addedPoint != null)
-                masterWindowController.PointAdded(addedPoint);
+                Point addedPoint = WebServiceConnection.GetInstance().AddPoint(point, level.getIdImage());
+                if (addedPoint != null)
+                    masterWindowController.PointAdded(addedPoint);
+            }
+            else
+            {
+                Point point = FindPoint(t.getX(), t.getY());
+                if (point != null) {
+                    Integer number = masterWindowController.addOutdoorGamePoint(point);
+                    canvas.getGraphicsContext2D().setStroke(Color.rgb(255,0,0,1.0));
+                    canvas.getGraphicsContext2D().strokeText(String.valueOf(number), point.getX() + 5, point.getY() - 5);
+                    canvas.getGraphicsContext2D().stroke();
+                }
+
+            }
         });
 
         mainPane.widthProperty().addListener((observableValue, number, t1) -> scrollPane.setMaxWidth(mainPane.getWidth()));
@@ -258,6 +268,58 @@ public class CenterMenuButtonsController {
             canvas.getGraphicsContext2D().strokeLine(startPoint.getX(), startPoint.getY(), endPoint.getX(), endPoint.getY());
             canvas.getGraphicsContext2D().stroke();
         }
+    }
+
+    public void SetEditMode(EditMode editMode)
+    {
+        this.editMode = editMode;
+    }
+
+    public void ShowGame(OutdoorGame outdoorGame, OutdoorGamePath[] outdoorGamePoints, Point[] points, int currentLevelId) {
+        int number = 1;
+        Integer idNextPoint = outdoorGame.getIdFirstPoint();
+        while(idNextPoint != null && idNextPoint != -1)
+        {
+            OutdoorGamePath gamePoint = getOutdoorGamePath(outdoorGamePoints, idNextPoint);
+            Point point = getPoint(points, gamePoint.getIdPoint());
+            if(point.getIdImage() == currentLevelId)
+            {
+                canvas.getGraphicsContext2D().setStroke(Color.rgb(255,0,0,1.0));
+                canvas.getGraphicsContext2D().strokeText(String.valueOf(number), point.getX() + 5, point.getY() - 5);
+                canvas.getGraphicsContext2D().stroke();
+            }
+            number++;
+            idNextPoint = gamePoint.getIdNextPoint();
+        }
+    }
+
+    private  OutdoorGamePath getOutdoorGamePath(OutdoorGamePath[] outdoorGamePoints, int id)
+    {
+        for (OutdoorGamePath point :
+                outdoorGamePoints) {
+            if (point.getIdQuestionPoint()  != id)
+                continue;
+            return point;
+        }
+        return null;
+
+    }
+
+    private Point getPoint(Point[] points, int id)
+    {
+        for (Point point :
+                points) {
+            if (point.getIdPoint() != id)
+                continue;
+            return point;
+        }
+        return null;
+    }
+
+    public enum EditMode
+    {
+        EditPoints,
+        EditGame
     }
 }
 
