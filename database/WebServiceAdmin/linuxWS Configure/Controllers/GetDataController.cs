@@ -305,6 +305,7 @@ namespace linuxWS_Configure.Controllers
                 foreach (var element in whereToGoEntities.OutdoorGame.Where(i => i.IdBuilding == idBuilding))
                 {
                     MdlOutdoorGame mdlOutdoorGame = new MdlOutdoorGame();
+                    mdlOutdoorGame.IdOutdoorGame = element.IdOutdoorGame;
                     mdlOutdoorGame.IdBuilding = element.IdBuilding;
                     mdlOutdoorGame.NameGame = element.NameGame;
                     mdlOutdoorGame.ImageGame = element.ImageGame;

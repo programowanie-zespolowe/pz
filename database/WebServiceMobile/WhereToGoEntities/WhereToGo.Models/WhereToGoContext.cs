@@ -34,7 +34,7 @@ namespace WhereToGoEntities.WhereToGo.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=54.37.136.172;Database=WhereToGo;user id=sa;password=PEZET@2019;Persist Security Info=True;");
+                optionsBuilder.UseSqlServer("Server=54.37.136.172;Database=WhereToGo;user id=sa;password=PEZET@2019;Persist Security Info=True;MultipleActiveResultSets=True");
             }
         }
 
