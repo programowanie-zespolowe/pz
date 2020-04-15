@@ -316,7 +316,7 @@ public class CenterMenuButtonsController {
                 Point hintPoint = getPoint(points, gameHint.getIdPoint());
                 if(hintPoint.getIdImage() == currentLevelId)
                 {
-                    drawText(String.valueOf(number) + "H", hintPoint.getX() + 5, hintPoint.getY() - 5);
+                    drawText(String.valueOf(number) + "P", hintPoint.getX() + 5, hintPoint.getY() - 5);
                 }
             }
             number++;

@@ -83,7 +83,8 @@ public class EditGameController {
             else
                 pointDetailsVBox.setVisible(false);
             blocked = true;
-            pointSelectionChanged(pointsListView.getSelectionModel().getSelectedIndex());
+            if(pointsListView.getSelectionModel().getSelectedIndex() >= 0)
+                pointSelectionChanged(pointsListView.getSelectionModel().getSelectedIndex());
             blocked = false;
         });
 
@@ -279,13 +280,20 @@ public class EditGameController {
         {
 
         }
+        refreshPointList();
+    }
 
+    public void refreshPointList()
+    {
         pointsListView.getItems().clear();
         Integer idGamePoint = game.getIdFirstPoint();
         int number = 1;
         while(idGamePoint != null)
         {
-            pointsListView.getItems().add(String.valueOf(number++));
+            if(getOutdoorGamePoint(idGamePoint).getIdHintPoint() != null)
+                pointsListView.getItems().add(String.valueOf(number++) + "P");
+            else
+                pointsListView.getItems().add(String.valueOf(number++));
             idGamePoint = getOutdoorGamePoint(idGamePoint).getIdNextPoint();
         }
     }
@@ -400,6 +408,7 @@ public class EditGameController {
         getOutdoorGamePoint(previousId).setIdNextPoint(nextId);
         if(!EditedPoints.contains(previousId))
             EditedPoints.add(previousId);
+        refreshPointList();
         pointsListView.getSelectionModel().select(index -  1);
     }
 
@@ -467,7 +476,8 @@ public class EditGameController {
         gamePoint.setIdHintPoint(hint.getIdHints());
         if(!EditedPoints.contains(gamePoint.getIdQuestionPoint()))
             EditedPoints.add(gamePoint.getIdQuestionPoint());
-        pointSelectionChanged(index);
+        refreshPointList();
+        pointsListView.getSelectionModel().select(index);
     }
 
     public void deleteHint(ActionEvent actionEvent) {
@@ -479,6 +489,7 @@ public class EditGameController {
 
         gamePoint.setIdHintPoint(null);
         WebServiceConnection.GetInstance().DeleteOutdoorGameHint(hint.getIdHints());
-        pointSelectionChanged(index);
+        refreshPointList();
+        pointsListView.getSelectionModel().select(index);
     }
 }
