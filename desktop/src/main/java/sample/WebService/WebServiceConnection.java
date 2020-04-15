@@ -509,9 +509,9 @@ public class WebServiceConnection {
         }
     }
 
-    public boolean RemoveGroup(Group group) {
+    public boolean RemoveGroup(int groupId) {
         try{
-            DeleteRequest(MessageFormat.format(RemoveGroupUrl, group.getIdGroup()));
+            DeleteRequest(MessageFormat.format(RemoveGroupUrl, groupId));
             return true;
         }
         catch (Exception e)
