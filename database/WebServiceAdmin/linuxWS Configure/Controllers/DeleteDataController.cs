@@ -25,7 +25,6 @@ namespace WhereToGo.Admin.Controllers
                                                         .Include(x => x.BuildingImages).ThenInclude(c => c.Points).ThenInclude(b => b.PointsConnectionIdPointStartNavigation)
                                                         .Include(x => x.BuildingImages).ThenInclude(c => c.Points).ThenInclude(b => b.PointsConnectionIdPointEndNavigation)
                                                         .Include(x => x.BuildingImages).ThenInclude(c => c.Points).ThenInclude(b => b.OutdoorGameHints)
-                                                        .Include(x => x.BuildingImages).ThenInclude(c => c.Points).ThenInclude(b => b.OutdoorGamePathIdHintPointNavigation)
                                                         .Include(x => x.BuildingImages).ThenInclude(c => c.Points).ThenInclude(b => b.OutdoorGamePathIdNextPointNavigation)
                                                         .Include(x => x.BuildingImages).ThenInclude(c => c.Points).ThenInclude(b => b.OutdoorGamePathIdPointNavigation)
                                                         .Include(x => x.OutdoorGame).ThenInclude(c => c.OutdoorGameRecordTime)
@@ -65,7 +64,6 @@ namespace WhereToGo.Admin.Controllers
                                                         .Include(p => p.Points).ThenInclude(x => x.PointsConnectionIdPointStartNavigation)
                                                         .Include(p => p.Points).ThenInclude(x => x.PointsConnectionIdPointEndNavigation)
                                                         .Include(c => c.Points).ThenInclude(b => b.OutdoorGameHints)
-                                                        .Include(c => c.Points).ThenInclude(b => b.OutdoorGamePathIdHintPointNavigation)
                                                         .Include(c => c.Points).ThenInclude(b => b.OutdoorGamePathIdNextPointNavigation)
                                                         .Include(c => c.Points).ThenInclude(b => b.OutdoorGamePathIdPointNavigation)
                                                         .FirstOrDefault();
@@ -132,7 +130,6 @@ namespace WhereToGo.Admin.Controllers
                                                                             .Include(c => c.PointsConnectionIdPointStartNavigation)
                                                                             .Include(c => c.PointsConnectionIdPointEndNavigation)
                                                                             .Include(c => c.OutdoorGameHints)
-                                                                            .Include(c => c.OutdoorGamePathIdHintPointNavigation)
                                                                             .Include(c => c.OutdoorGamePathIdNextPointNavigation)
                                                                             .Include(c => c.OutdoorGamePathIdPointNavigation)
                                                                             .FirstOrDefault();
@@ -315,6 +312,7 @@ namespace WhereToGo.Admin.Controllers
         {
             using WhereToGoContext whereToGo = new WhereToGoContext();
             var mdlOutdoorGameHints = whereToGo.OutdoorGameHints.Where(i => i.IdHints == idHints)
+                                                                .Include(i => i.OutdoorGamePath)
                                                                     .FirstOrDefault();
             if (mdlOutdoorGameHints == null)
                 return NotFound();

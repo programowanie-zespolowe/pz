@@ -328,6 +328,7 @@ namespace linuxWS_Configure.Controllers
                 foreach (var element in whereToGoEntities.OutdoorGamePath.Where(i => i.IdOutdoorGame == idOutdoorGame))
                 {
                     MdlOutdoorGamePath mdlOutdoorGamePath = new MdlOutdoorGamePath();
+                    mdlOutdoorGamePath.IdQuestionPoint = element.IdQuestionPoint;
                     mdlOutdoorGamePath.IdOutdoorGame = element.IdOutdoorGame;
                     mdlOutdoorGamePath.IdPoint = element.IdPoint;
                     mdlOutdoorGamePath.Question = element.Question;
@@ -350,6 +351,7 @@ namespace linuxWS_Configure.Controllers
                 foreach (var element in whereToGoEntities.OutdoorGameHints.Where(i => i.IdOutdoorGame == idOutdoorGame))
                 {
                     MdlOutdoorGameHints mdlOutdoorGameHints = new MdlOutdoorGameHints();
+                    mdlOutdoorGameHints.IdHints = element.IdHints;
                     mdlOutdoorGameHints.IdOutdoorGame = element.IdOutdoorGame;
                     mdlOutdoorGameHints.IdPoint = element.IdPoint;
                     mdlOutdoorGameHints.Hint = element.Hint;

@@ -206,7 +206,7 @@ namespace WhereToGoEntities.WhereToGo.Models
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.IdHintPointNavigation)
-                    .WithMany(p => p.OutdoorGamePathIdHintPointNavigation)
+                    .WithMany(p => p.OutdoorGamePath)
                     .HasForeignKey(d => d.IdHintPoint)
                     .HasConstraintName("FK_OutdoorGamePath_Points1").OnDelete(DeleteBehavior.Cascade);
 

@@ -13,7 +13,7 @@ namespace WhereToGoEntities.WhereToGo.Models
         public int? IdNextPoint { get; set; }
         public int? IdHintPoint { get; set; }
 
-        public virtual Points IdHintPointNavigation { get; set; }
+        public virtual OutdoorGameHints IdHintPointNavigation { get; set; }
         public virtual Points IdNextPointNavigation { get; set; }
         public virtual OutdoorGame IdOutdoorGameNavigation { get; set; }
         public virtual Points IdPointNavigation { get; set; }
