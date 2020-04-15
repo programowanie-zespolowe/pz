@@ -4,7 +4,7 @@ public class OutdoorGameHints {
     int idHints;
     int idOutdoorGame;
     int idPoint;
-    String hint;
+    String hint = "Podpowiedź";
 
     public int getIdHints() {
         return idHints;

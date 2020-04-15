@@ -11,7 +11,7 @@
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="controllers.EditGameController"
-            prefHeight="400.0" prefWidth="600.0">
+            prefHeight="500.0" prefWidth="600.0">
     <GridPane>
         <Label text="Nazwa:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
         <TextField fx:id="nameTextField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
@@ -22,8 +22,22 @@
         <ImageView fx:id="gameImage" GridPane.rowIndex="3" GridPane.columnIndex="0" visible="false"/>
         <Label fx:id="noImageLabel" text="Brak obrazka" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
         <Button onAction="#pickImage" text="Wybierz obrazek" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
-        <Button onAction="#saveGame" GridPane.rowIndex="10" GridPane.columnIndex="0" text="Zapisz"/>
-        <Button onAction="#deleteGame" GridPane.rowIndex="10" GridPane.columnIndex="1" text="Usuń grę"/>
+
+        <ListView fx:id="pointsListView" GridPane.rowIndex="4" GridPane.columnIndex="0" prefHeight="300"/>
+        <VBox fx:id="pointDetailsVBox" GridPane.rowIndex="4" GridPane.columnIndex="1" visible="false">
+            <HBox>
+                <Button text="↑" fx:id="upButton" onAction="#upClicked"/>
+                <Button text="↓" fx:id="downButton" onAction="#downClicked"/>
+                <Button text="❌" fx:id="deleteButton" onAction="#deleteClicked"/>
+            </HBox>
+            <TextField fx:id="questionTextField" promptText="Zagadka"/>
+            <TextField fx:id="answerTextFeild" promptText="Odpowiedź"/>
+            <Button fx:id="deleteHint" text="Usuń punkt podpowiedzi" onAction="#deleteHint"/>
+            <Button fx:id="selectHint" text="Wybierz punkt podpowiedzi" onAction="#selectHint"/>
+            <TextField fx:id="hintTextField" promptText="Podpowiedź"/>
+        </VBox>
+        <Button onAction="#saveGame" GridPane.rowIndex="5" GridPane.columnIndex="0" text="Zapisz"/>
+        <Button onAction="#deleteGame" GridPane.rowIndex="5" GridPane.columnIndex="1" text="Usuń grę"/>
 
     </GridPane>
 

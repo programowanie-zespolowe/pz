@@ -70,9 +70,9 @@ public class WebServiceConnection {
     private final String EditOutdoorGamePointUrl = "http://54.37.136.172:90/admin/EditData/OutdoorGamePath/{0}/{1}/{2}/{3}/{4}/{5}/{6}";
 
     private final String OutdoorGameHintsUrl = "http://54.37.136.172:90/admin/GetData/Buildings/OutdoorGameHints/{0}";
-    private final String AddOutdoorGameHintUrl = "http://54.37.136.172:90/admin/AddData/OutdoorGameHints/{0}/{1}/{2}/{3}/{4}/{5}";
+    private final String AddOutdoorGameHintUrl = "http://54.37.136.172:90/admin/AddData/OutdoorGameHints/{0}/{1}/{2}";
     private final String RemoveOutdoorGameHintUrl = "http://54.37.136.172:90/admin/DeleteData/OutdoorGameHints/{0}";
-    private final String EditOutdoorGameHintUrl = "http://54.37.136.172:90/admin/EditData/OutdoorGameHints/{0}/{1}/{2}/{3}/{4}/{5}/{6}";
+    private final String EditOutdoorGameHintUrl = "http://54.37.136.172:90/admin/EditData/OutdoorGameHints/{0}/{1}/{2}/{3}";
 
     private final String AddPointType = "http://54.37.136.172:90/Admin/AddData/PointType";
 
@@ -253,7 +253,9 @@ public class WebServiceConnection {
                     .setMode(HttpMultipartMode.STRICT)
                     .build();
 
-            String url = MessageFormat.format(AddBuilding, buildingName.replace(" ", "_"), (int)scale);
+            String url = MessageFormat.format(AddBuilding,
+                    URLEncoder.encode(buildingName, "UTF-8"),
+                    (int)scale);
             HttpPost httpPost = new HttpPost(url);
             httpPost.addHeader("Authorization", "Bearer " + tokenStruct.getToken());
             String name = entity.getContentType().getName();
@@ -447,7 +449,9 @@ public class WebServiceConnection {
                     .setMode(HttpMultipartMode.STRICT)
                     .build();
 
-            String url = MessageFormat.format(AddGroupUrl, group.getNameGroup().replace(" ", "_"), idBuilding);
+            String url = MessageFormat.format(AddGroupUrl,
+                    URLEncoder.encode(group.getNameGroup(), "UTF-8"),
+                    idBuilding);
             HttpPost httpPost = new HttpPost(url);
             httpPost.addHeader("Authorization", "Bearer " + tokenStruct.getToken());
             String name = entity.getContentType().getName();
@@ -486,7 +490,9 @@ public class WebServiceConnection {
                         .setMode(HttpMultipartMode.STRICT)
                         .build();
 
-            String url = MessageFormat.format(EditGroupUrl, group.getIdGroup(), group.getNameGroup().replace(" ", "_"), idBuilding);
+            String url = MessageFormat.format(EditGroupUrl, group.getIdGroup(),
+                    URLEncoder.encode(group.getNameGroup(), "UTF-8"),
+                    idBuilding);
             HttpPost httpPost = new HttpPost(url);
             httpPost.addHeader("Authorization", "Bearer " + tokenStruct.getToken());
             String name = entity.getContentType().getName();
@@ -524,7 +530,7 @@ public class WebServiceConnection {
                     .build();
 
             String url = MessageFormat.format(AddPointDetailUrl, pointDetail.getIdPoint(),
-                    pointDetail.getNamePoint().replace(" ", "_"),
+                    URLEncoder.encode(pointDetail.getNamePoint(), "UTF-8"),
                     pointDetail.getIdGroup());
             HttpPost httpPost = new HttpPost(url);
             httpPost.addHeader("Authorization", "Bearer " + tokenStruct.getToken());
@@ -587,7 +593,7 @@ public class WebServiceConnection {
 
             String url = MessageFormat.format(EditPointDetailUrl, pointDetail.getIdPoint(),
                     pointDetail.getIdPointDetails(),
-                    pointDetail.getNamePoint().replace(" ", "_"),
+                    URLEncoder.encode(pointDetail.getNamePoint(), "UTF-8"),
                     pointDetail.getIdGroup());
             HttpPost httpPost = new HttpPost(url);
             httpPost.addHeader("Authorization", "Bearer " + tokenStruct.getToken());
@@ -666,7 +672,7 @@ public class WebServiceConnection {
                         .build();
 
             String url = MessageFormat.format(EditBuildingUrl, building.getIdBuilding(),
-                    building.getNameBuilding().replace(" ", "_"),
+                    URLEncoder.encode(building.getNameBuilding(), "UTF-8"),
                     building.getScale());
             HttpPost httpPost = new HttpPost(url);
             httpPost.addHeader("Authorization", "Bearer " + tokenStruct.getToken());
@@ -747,7 +753,7 @@ public class WebServiceConnection {
 
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");
             String url = MessageFormat.format(AddOutdoorGameUrl, idBuilding,
-                    game.getNameGame().replace(" ", "_"),
+                    URLEncoder.encode(game.getNameGame(), "UTF-8"),
                     dateFormat.format(game.getStartDateGame()),
                     dateFormat.format(game.getEndDateGame()),
                     game.getIdFirstPoint() == null ? -1 : game.getIdFirstPoint());
@@ -791,7 +797,7 @@ public class WebServiceConnection {
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");
             String url = MessageFormat.format(EditOutdoorGameUrl, game.getIdOutdoorGame(),
                     game.getIdBuilding(),
-                    game.getNameGame().replace(" ", "_"),
+                    URLEncoder.encode(game.getNameGame(), "UTF-8"),
                     dateFormat.format(game.getStartDateGame()),
                     dateFormat.format(game.getEndDateGame()),
                     game.getIdFirstPoint() == null ? -1 : game.getIdFirstPoint());
@@ -846,8 +852,8 @@ public class WebServiceConnection {
             String url = MessageFormat.format(AddOutdoorGamePointUrl,
                     point.getIdOutdoorGame(),
                     point.getIdPoint(),
-                    point.getQuestion().replace(" ", "_"),
-                    point.getAnswer().replace(" ", "_"),
+                    URLEncoder.encode(point.getQuestion(), "UTF-8"),
+                    URLEncoder.encode(point.getAnswer(), "UTF-8"),
                     point.getIdNextPoint() == null ? -1 : point.getIdNextPoint(),
                     point.getIdHintPoint() == null ? -1 : point.getIdHintPoint());
             HttpPost httpPost = new HttpPost(url);
@@ -883,8 +889,8 @@ public class WebServiceConnection {
                     point.getIdQuestionPoint(),
                     point.getIdOutdoorGame(),
                     point.getIdPoint(),
-                    point.getQuestion().replace(" ", "_"),
-                    point.getAnswer().replace(" ", "_"),
+                    URLEncoder.encode(point.getQuestion(), "UTF-8"),
+                    URLEncoder.encode(point.getAnswer(), "UTF-8"),
                     point.getIdNextPoint() == null ? -1 : point.getIdNextPoint(),
                     point.getIdHintPoint() == null ? -1 : point.getIdHintPoint());
             HttpPost httpPost = new HttpPost(url);
@@ -937,7 +943,7 @@ public class WebServiceConnection {
             String url = MessageFormat.format(AddOutdoorGameHintUrl,
                     hint.getIdOutdoorGame(),
                     hint.getIdPoint(),
-                    hint.getHint().replace(" ", "_"));
+                    URLEncoder.encode(hint.getHint(), "UTF-8"));
             HttpPost httpPost = new HttpPost(url);
             httpPost.addHeader("Authorization", "Bearer " + tokenStruct.getToken());
             String name = entity.getContentType().getName();
@@ -971,7 +977,7 @@ public class WebServiceConnection {
                     hint.getIdHints(),
                     hint.getIdOutdoorGame(),
                     hint.getIdPoint(),
-                    hint.getHint().replace(" ", "_"));
+                    URLEncoder.encode(hint.getHint(), "UTF-8"));
             HttpPost httpPost = new HttpPost(url);
             httpPost.addHeader("Authorization", "Bearer " + tokenStruct.getToken());
             String name = entity.getContentType().getName();

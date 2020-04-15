@@ -4,6 +4,7 @@ import javafx.concurrent.Task;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
@@ -28,7 +29,7 @@ public class MasterWindowController {
     @FXML
     public Pane centerMenuButtons;
     @FXML
-    private BorderPane masterWindow;
+    public BorderPane masterWindow;
 
     @FXML
     private TopMenuButtonsController topMenuButtonsController;
@@ -81,6 +82,7 @@ public class MasterWindowController {
             loadingStage.setScene(scene);
             scene.getStylesheets().add(getClass().getResource("/stylesheets/confirm.css").toExternalForm());
             scene.getStylesheets().add(getClass().getResource("/stylesheets/scene.css").toExternalForm());
+            scene.setCursor(Cursor.WAIT);
         }
         catch (Exception e1)
         {
@@ -96,6 +98,7 @@ public class MasterWindowController {
             Task task = new Task<Boolean>() {
                 @Override protected Boolean call() throws Exception {
                     try {
+                        centerMenuButtons.getScene().setCursor(Cursor.WAIT);
                         levels = WebServiceConnection.GetInstance().BuildingLevelList(buildingId);
                         points = WebServiceConnection.GetInstance().Points(buildingId);
                         groups = WebServiceConnection.GetInstance().Groups(buildingId);
@@ -132,6 +135,7 @@ public class MasterWindowController {
                 centerMenuButtonsController.ShowPoints(points, leftMenuButtonsController.getCurrentBuildLevel());
                 loadingStage.hide();
                 topMenuButtonsController.refreshGames(outdoorGames);
+                centerMenuButtons.getScene().setCursor(Cursor.DEFAULT);
             });
             new Thread(task).start();
         });
@@ -171,10 +175,11 @@ public class MasterWindowController {
             if(topMenuButtonsController.outdoorGameTypeCombobox.getSelectionModel().getSelectedIndex() > 0)
                 centerMenuButtonsController.ShowGame(outdoorGames[topMenuButtonsController.outdoorGameTypeCombobox.getSelectionModel().getSelectedIndex() - 1],
                         outdoorGamePoints,
+                        outdoorGameHints,
                         points,
                         currentLevel.getIdImage());
         }
-        catch (IOException exception)
+        catch (Exception e)
         {
             centerMenuButtonsController.canvas.getGraphicsContext2D().clearRect(0,
                     0,
@@ -575,7 +580,16 @@ public class MasterWindowController {
     }
 
     public void outdoorGameEdited(OutdoorGame game) {
+        for(int i = 0; i < outdoorGames.length; i++)
+        {
+            if(outdoorGames[i].getIdOutdoorGame() == game.getIdOutdoorGame())
+            {
+                outdoorGames[i] = game;
+                break;
+            }
+        }
         topMenuButtonsController.refreshCurrentGameName();
+        BuildingLevelChanged(getCurrentLevel());
     }
 
     public OutdoorGamePath getOutdoorGamePoint(int id)
@@ -620,6 +634,61 @@ public class MasterWindowController {
             currentPoint.setIdNextPoint(gamePoint.getIdQuestionPoint());
             WebServiceConnection.GetInstance().EditOutdoorGamePoint(currentPoint);
             return number;
+        }
+    }
+
+    public void outdoorGamePointEdited(OutdoorGamePath outdoorGamePoint) {
+        for(int i = 0; i < outdoorGamePoints.length; i++)
+        {
+            if(outdoorGamePoints[i].getIdQuestionPoint() == outdoorGamePoint.getIdQuestionPoint())
+            {
+                outdoorGamePoints[i] = outdoorGamePoint;
+                break;
+            }
+        }
+    }
+
+    public void outdoorGamePointDeleted(OutdoorGamePath outdoorGamePoint) {
+        for(int i = 0; i < outdoorGamePoints.length; i++)
+        {
+            if(outdoorGamePoints[i].getIdQuestionPoint() == outdoorGamePoint.getIdQuestionPoint())
+            {
+                outdoorGamePoints = ArrayUtils.remove(outdoorGamePoints, i);
+                break;
+            }
+        }
+    }
+
+    public void selectHintPoint(EditGameController editGameController) {
+        Stage stage = (Stage) masterWindow.getScene().getWindow();
+        stage.setAlwaysOnTop(true);
+        stage.setAlwaysOnTop(false);
+        centerMenuButtonsController.selectHintPoint(editGameController);
+    }
+
+    public void hintAdded(OutdoorGameHints gameHint) {
+        outdoorGameHints = ArrayUtils.add(outdoorGameHints, gameHint);
+    }
+
+    public void hintEdited(OutdoorGameHints gameHint) {
+        for(int i = 0; i < outdoorGameHints.length; i++)
+        {
+            if(outdoorGameHints[i].getIdHints() == gameHint.getIdHints())
+            {
+                outdoorGameHints[i] = gameHint;
+                break;
+            }
+        }
+    }
+
+    public void hintDeleted(OutdoorGameHints gameHint) {
+        for(int i = 0; i < outdoorGameHints.length; i++)
+        {
+            if(outdoorGameHints[i].getIdHints() == gameHint.getIdHints())
+            {
+                outdoorGameHints = ArrayUtils.remove(outdoorGameHints, i);
+                break;
+            }
         }
     }
 }

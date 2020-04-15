@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
@@ -166,14 +167,27 @@ public class CenterMenuButtonsController {
                 if (addedPoint != null)
                     masterWindowController.PointAdded(addedPoint);
             }
-            else
+            else if (editMode == EditMode.EditGame)
             {
                 Point point = FindPoint(t.getX(), t.getY());
                 if (point != null) {
                     Integer number = masterWindowController.addOutdoorGamePoint(point);
-                    drawText(number, point.getX() + 5, point.getY() - 5);
+                    drawText(String.valueOf(number), point.getX() + 5, point.getY() - 5);
                 }
-
+            }
+            else if (editMode == EditMode.EditGameHintPoint)
+            {
+                if (t.getButton() != MouseButton.PRIMARY) {
+                    editMode = EditMode.EditGame;
+                    canvas.setCursor(Cursor.DEFAULT);
+                    return;
+                }
+                Point point = FindPoint(t.getX(), t.getY());
+                if (point != null) {
+                    editMode = EditMode.EditGame;
+                    editGameController.hintSelected(point);
+                    canvas.setCursor(Cursor.DEFAULT);
+                }
             }
         });
 
@@ -182,10 +196,10 @@ public class CenterMenuButtonsController {
 
     }
 
-    private void drawText(Integer number, double X, double Y) {
+    private void drawText(String text, double X, double Y) {
         canvas.getGraphicsContext2D().setFont(new Font(20));
         canvas.getGraphicsContext2D().setStroke(Color.rgb(0,0,0,1.0));
-        canvas.getGraphicsContext2D().strokeText(String.valueOf(number), X, Y);
+        canvas.getGraphicsContext2D().fillText(text, X, Y);
         canvas.getGraphicsContext2D().stroke();
     }
 
@@ -281,7 +295,11 @@ public class CenterMenuButtonsController {
         this.editMode = editMode;
     }
 
-    public void ShowGame(OutdoorGame outdoorGame, OutdoorGamePath[] outdoorGamePoints, Point[] points, int currentLevelId) {
+    public void ShowGame(OutdoorGame outdoorGame,
+                         OutdoorGamePath[] outdoorGamePoints,
+                         OutdoorGameHints[] outdoorGameHints,
+                         Point[] points,
+                         int currentLevelId) {
         int number = 1;
         Integer idNextPoint = outdoorGame.getIdFirstPoint();
         while(idNextPoint != null && idNextPoint != -1)
@@ -290,11 +308,30 @@ public class CenterMenuButtonsController {
             Point point = getPoint(points, gamePoint.getIdPoint());
             if(point.getIdImage() == currentLevelId)
             {
-                drawText(number, point.getX() + 5, point.getY() - 5);
+                drawText(String.valueOf(number), point.getX() + 5, point.getY() - 5);
+            }
+            if(gamePoint.getIdHintPoint() != null)
+            {
+                OutdoorGameHints gameHint = getOutdoorGameHint(outdoorGameHints, gamePoint.getIdHintPoint());
+                Point hintPoint = getPoint(points, gameHint.getIdPoint());
+                if(hintPoint.getIdImage() == currentLevelId)
+                {
+                    drawText(String.valueOf(number) + "H", hintPoint.getX() + 5, hintPoint.getY() - 5);
+                }
             }
             number++;
             idNextPoint = gamePoint.getIdNextPoint();
         }
+    }
+
+    private OutdoorGameHints getOutdoorGameHint(OutdoorGameHints[] outdoorGameHints, Integer idHintPoint) {
+        for (OutdoorGameHints hint :
+                outdoorGameHints) {
+            if (hint.getIdHints()  != idHintPoint)
+                continue;
+            return hint;
+        }
+        return null;
     }
 
     private  OutdoorGamePath getOutdoorGamePath(OutdoorGamePath[] outdoorGamePoints, int id)
@@ -306,7 +343,6 @@ public class CenterMenuButtonsController {
             return point;
         }
         return null;
-
     }
 
     private Point getPoint(Point[] points, int id)
@@ -320,10 +356,18 @@ public class CenterMenuButtonsController {
         return null;
     }
 
+    EditGameController editGameController = null;
+    public void selectHintPoint(EditGameController editGameController) {
+        canvas.setCursor(Cursor.CROSSHAIR);
+        this.editMode = EditMode.EditGameHintPoint;
+        this.editGameController = editGameController;
+    }
+
     public enum EditMode
     {
         EditPoints,
-        EditGame
+        EditGame,
+        EditGameHintPoint
     }
 }
 
