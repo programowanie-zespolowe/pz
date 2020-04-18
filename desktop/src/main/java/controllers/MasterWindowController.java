@@ -82,6 +82,7 @@ public class MasterWindowController {
             loadingStage.setScene(scene);
             scene.getStylesheets().add(getClass().getResource("/stylesheets/confirm.css").toExternalForm());
             scene.getStylesheets().add(getClass().getResource("/stylesheets/scene.css").toExternalForm());
+            scene.getStylesheets().add(getClass().getResource("/stylesheets/comboBoxLittle.css").toExternalForm());
             scene.setCursor(Cursor.WAIT);
         }
         catch (Exception e1)

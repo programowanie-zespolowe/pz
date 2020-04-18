@@ -222,6 +222,7 @@ public class CenterMenuButtonsController {
             scene.getStylesheets().add(getClass().getResource("/stylesheets/confirm.css").toExternalForm());
             scene.getStylesheets().add(getClass().getResource("/stylesheets/scene.css").toExternalForm());
             scene.getStylesheets().add(getClass().getResource("/stylesheets/comboBox.css").toExternalForm());
+            scene.getStylesheets().add(getClass().getResource("/stylesheets/comboBoxLittle.css").toExternalForm());
             scene.getStylesheets().add(getClass().getResource("/stylesheets/scrollPane.css").toExternalForm());
             stage.setScene(scene);
             stage.setTitle(FxmlUtils.getResourceBundle().getString("title.window.point.detail"));

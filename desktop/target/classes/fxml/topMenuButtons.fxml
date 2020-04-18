@@ -85,9 +85,9 @@
             <Insets />
          </HBox.margin>
       </VBox>
-      <VBox alignment="BOTTOM_CENTER">
+      <VBox alignment="BOTTOM_CENTER" styleClass="vbox" stylesheets="@../stylesheets/scene.css">
          <children>
-            <ComboBox fx:id="buildingComboBox" prefWidth="750.0" promptText="Wybierz budynek" styleClass="combo-box" stylesheets="@../stylesheets/comboBox.css">
+            <ComboBox fx:id="buildingComboBox" prefWidth="650.0" promptText="Wybierz budynek" styleClass="combo-box" stylesheets="@../stylesheets/comboBox.css">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
@@ -108,13 +108,29 @@
             <Insets left="10.0" right="10.0" />
          </HBox.margin>
       </VBox>
-      <VBox alignment="BOTTOM_CENTER" spacing="10.0" styleClass="vbox" stylesheets="@../stylesheets/scene.css">
+      <VBox alignment="BOTTOM_CENTER" spacing="10.0">
          <children>
-            <HBox spacing="10.0">
+            <HBox alignment="CENTER_LEFT" spacing="10.0">
             <children>
-               <ComboBox fx:id="outdoorGameTypeCombobox" promptText="Tryb normalny" styleClass="combo-box" stylesheets="@../stylesheets/comboBox.css"/>
-               <Button fx:id="addNewOutdoorGameButton" onAction="#addNewGame" text="Dodaj grę" styleClass="buttonLittle" stylesheets="@../stylesheets/confirm.css" contentDisplay="TOP" prefHeight="100.0" prefWidth="100.0" />
-               <Button fx:id="editOutdoorGameButton" disable="true" onAction="#editGame" text="Edytuj grę" styleClass="buttonLittle" stylesheets="@../stylesheets/confirm.css" contentDisplay="TOP" prefHeight="100.0" prefWidth="100.0" />
+               <Button fx:id="addNewOutdoorGameButton" contentDisplay="TOP" onAction="#addNewGame" prefHeight="100.0" prefWidth="100.0" styleClass="buttonLittle" stylesheets="@../stylesheets/confirm.css" text="Dodaj grę">
+                     <graphic>
+                        <ImageView fitHeight="70.0" fitWidth="95.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icons/add%20game.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               <Button fx:id="editOutdoorGameButton" contentDisplay="TOP" disable="true" onAction="#editGame" prefHeight="100.0" prefWidth="100.0" styleClass="buttonLittle" stylesheets="@../stylesheets/confirm.css" text="Edytuj grę">
+                     <graphic>
+                        <ImageView fitHeight="105.0" fitWidth="72.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icons/edit%20game.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               <ComboBox fx:id="outdoorGameTypeCombobox" prefHeight="48.0" prefWidth="250.0" promptText="Tryb normalny" styleClass="combo-box" stylesheets="@../stylesheets/comboBoxLittle.css" />
             </children>
             </HBox>
             <Label styleClass="label1" stylesheets="@../stylesheets/confirm.css" text="Gra terenowa" />

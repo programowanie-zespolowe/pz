@@ -107,6 +107,8 @@ public class PointDetailsController {
                 floorsCreateHBox.setVisible(false);
         });
 
+        direction.visibleProperty().bindBidirectional(directionEnabled.selectedProperty());
+
 
     }
 

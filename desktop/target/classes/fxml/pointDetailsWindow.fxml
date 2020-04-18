@@ -24,40 +24,45 @@
          <Insets bottom="10.0" left="10.0" right="10.0" />
       </GridPane.margin>
       <children>
-           <TextField fx:id="nameTextField" disable="true" promptText="Name:" styleClass="text-field1" stylesheets="@../stylesheets/confirm.css">
+         <HBox spacing="90.0">
+            <children>
+                <Button fx:id="addNewPointDetail" onAction="#AddPointDetail" styleClass="buttonConfirm" stylesheets="@../stylesheets/confirm.css" text="Dodaj parametr" textAlignment="CENTER" wrapText="true" />
+                 <TextField fx:id="nameTextField" disable="true" prefHeight="27.0" prefWidth="276.0" promptText="Name:" styleClass="text-field1" stylesheets="@../stylesheets/confirm.css" />
+            </children>
             <VBox.margin>
-               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               <Insets left="10.0" right="10.0" top="10.0" />
             </VBox.margin>
-         </TextField>
-         <HBox spacing="10.0">
+         </HBox>
+         <HBox spacing="50.0">
             <children>
                 <ListView fx:id="listView" prefHeight="255.0" prefWidth="179.0" stylesheets="@../stylesheets/confirm.css" />
-                <Button fx:id="addNewPointDetail" onAction="#AddPointDetail" prefHeight="30.0" prefWidth="200.0" styleClass="buttonConfirm" stylesheets="@../stylesheets/confirm.css" text="Dodaj parametr" textAlignment="CENTER" wrapText="true" />
-                <VBox spacing="10.0">
-                    <ComboBox fx:id="groupComboBox" disable="true" prefHeight="34.0" prefWidth="118.0" stylesheets="@../stylesheets/comboBox.css" />
+                <VBox alignment="CENTER" spacing="10.0" style="-fx-border-color: #A5A8A7;">
+                    <ComboBox fx:id="groupComboBox" disable="true" prefHeight="48.0" prefWidth="306.0" stylesheets="@../stylesheets/comboBoxLittle.css" />
                     <Label fx:id="noImageLabel" styleClass="labelGreen" stylesheets="@../stylesheets/confirm.css" text="Brak obrazka" />
                   <HBox spacing="10.0">
                      <children>
-                        <ScrollPane prefHeight="100.0" prefWidth="200.0" stylesheets="@../stylesheets/scrollPane.css">
+                        <ScrollPane prefHeight="64.0" prefWidth="242.0" stylesheets="@../stylesheets/scrollPane.css">
                            <content>
                                 <ImageView fx:id="imageView" />
                            </content>
                         </ScrollPane>
-                          <Button fx:id="browseImage" disable="true" onAction="#Browse" prefHeight="35.0" prefWidth="35.0" styleClass="buttonLittle" stylesheets="@../stylesheets/confirm.css">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                           <graphic>
-                              <ImageView fitHeight="25.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="/icons/plus_black.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
+                        <VBox alignment="TOP_CENTER">
+                           <children>
+                                <Button fx:id="browseImage" disable="true" onAction="#Browse" styleClass="buttonLittle" stylesheets="@../stylesheets/confirm.css">
+                                 <graphic>
+                                    <ImageView fitHeight="25.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="/icons/plus_black.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                           </children>
+                        </VBox>
                      </children>
                   </HBox>
-                    <TextField fx:id="imagePath" styleClass="text-field1" stylesheets="@../stylesheets/confirm.css" />
+                    <TextField fx:id="imagePath" editable="false" styleClass="text-field1" stylesheets="@../stylesheets/confirm.css" />
+                  <Label styleClass="label1" stylesheets="@../stylesheets/confirm.css" text="Przypisanie do kategorii" />
                 </VBox>
             </children>
             <VBox.margin>
@@ -75,98 +80,90 @@
          </HBox>
       </children>
    </VBox>
-   <Label styleClass="labelGreen" stylesheets="@../stylesheets/confirm.css" text="Szczegóły punktu">
+   <Label styleClass="labelGreen" stylesheets="@../stylesheets/confirm.css" text="Parametry punktu">
       <GridPane.margin>
          <Insets left="10.0" top="20.0" />
       </GridPane.margin>
    </Label>
-   <VBox prefHeight="124.0" prefWidth="579.0" style="-fx-border-color: #CACFCE;" GridPane.columnSpan="3" GridPane.rowIndex="1" GridPane.rowSpan="2">
+   <VBox prefHeight="265.0" prefWidth="580.0" style="-fx-border-color: #CACFCE;" GridPane.columnSpan="3" GridPane.rowIndex="1" GridPane.rowSpan="2">
       <children>
-         <HBox spacing="50.0">
+         <HBox spacing="40.0">
             <children>
-               <VBox spacing="10.0">
-                  <children>
-                      <CheckBox fx:id="noQrCodePointType" stylesheets="@../stylesheets/confirm.css" text="Brak kodu QR">
-                        <VBox.margin>
-                           <Insets left="10.0" top="2.0" />
-                        </VBox.margin>
-                     </CheckBox>
-                      <CheckBox fx:id="entryPointType" stylesheets="@../stylesheets/confirm.css" text="Wejście">
-                        <VBox.margin>
-                           <Insets left="10.0" />
-                        </VBox.margin>
-                     </CheckBox>
-                      <CheckBox fx:id="emergencyExitPointType" stylesheets="@../stylesheets/confirm.css" text="Wyjście ewakuacyjne">
-                        <VBox.margin>
-                           <Insets bottom="2.0" left="10.0" />
-                        </VBox.margin>
-                     </CheckBox>
-                  </children>
-               </VBox>
-               <VBox>
-                  <children>
-                     <HBox prefHeight="25.0" prefWidth="369.0" spacing="20.0">
-                        <children>
-                            <CheckBox fx:id="elevatorPointType" stylesheets="@../stylesheets/confirm.css" text="Winda" />
-                            <CheckBox fx:id="stairsPointType" stylesheets="@../stylesheets/confirm.css" text="Schody" />
-                        </children>
-                        <VBox.margin>
-                           <Insets left="5.0" right="5.0" top="2.0" />
-                        </VBox.margin>
-                     </HBox>
-                      <HBox fx:id="floorsCreateHBox" spacing="10.0" visible="false">
-                          <Label text="Dół:" />
-                          <Spinner fx:id="floorsDownSpinner" prefHeight="26.0" prefWidth="80.0" stylesheets="@../stylesheets/confirm.css">
-                              <valueFactory>
-                                  <SpinnerValueFactory.IntegerSpinnerValueFactory max="100" min="0" />
-                              </valueFactory>
-                          </Spinner>
-                          <Label text="Góra" />
-                          <Spinner fx:id="floorsUpSpinner" prefHeight="26.0" prefWidth="80.0" stylesheets="@../stylesheets/confirm.css">
-                              <valueFactory>
-                                  <SpinnerValueFactory.IntegerSpinnerValueFactory max="100" min="0" />
-                              </valueFactory>
-                          </Spinner>
-                        <VBox.margin>
-                           <Insets bottom="2.0" left="5.0" right="5.0" top="2.0" />
-                        </VBox.margin>
-                      </HBox>
-                  </children>
-               </VBox>
+                <CheckBox fx:id="entryPointType" stylesheets="@../stylesheets/confirm.css" text="Wejście" />
+                <CheckBox fx:id="emergencyExitPointType" stylesheets="@../stylesheets/confirm.css" text="Wyjście ewakuacyjne" />
             </children>
-            <padding>
-               <Insets top="5.0" />
-            </padding>
+            <VBox.margin>
+               <Insets left="10.0" right="10.0" top="10.0" />
+            </VBox.margin>
          </HBox>
-         <HBox alignment="CENTER_LEFT" spacing="75.0">
+         <HBox alignment="CENTER_LEFT" spacing="46.0">
             <children>
-                <CheckBox fx:id="directionEnabled" stylesheets="@../stylesheets/confirm.css" text="Direction enabled">
+                <CheckBox fx:id="elevatorPointType" stylesheets="@../stylesheets/confirm.css" text="Winda" />
+                <CheckBox fx:id="stairsPointType" stylesheets="@../stylesheets/confirm.css" text="Schody" />
+                <HBox fx:id="floorsCreateHBox" alignment="CENTER" prefHeight="27.0" prefWidth="339.0" spacing="10.0" visible="false">
+                  <children>
+                       <Label text="Dół:" />
+                       <Spinner fx:id="floorsDownSpinner" prefHeight="26.0" prefWidth="80.0" stylesheets="@../stylesheets/confirm.css">
+                           <valueFactory>
+                               <SpinnerValueFactory.IntegerSpinnerValueFactory max="100" min="0" />
+                           </valueFactory>
+                       </Spinner>
+                       <Label text="Góra:" />
+                       <Spinner fx:id="floorsUpSpinner" prefHeight="26.0" prefWidth="80.0" stylesheets="@../stylesheets/confirm.css">
+                           <valueFactory>
+                               <SpinnerValueFactory.IntegerSpinnerValueFactory max="100" min="0" />
+                           </valueFactory>
+                       </Spinner>
+                  </children>
+                </HBox>
+            </children>
+            <VBox.margin>
+               <Insets left="10.0" right="10.0" top="10.0" />
+            </VBox.margin>
+         </HBox>
+         <HBox alignment="CENTER_LEFT" spacing="120.0">
+            <children>
+                <CheckBox fx:id="directionEnabled" stylesheets="@../stylesheets/confirm.css" text="Kierunek z punktu włączony">
                   <HBox.margin>
-                     <Insets left="10.0" />
+                     <Insets />
                   </HBox.margin>
                </CheckBox>
-                <Spinner fx:id="direction" stylesheets="@../stylesheets/confirm.css">
+                <Spinner fx:id="direction" prefHeight="26.0" prefWidth="80.0" stylesheets="@../stylesheets/confirm.css">
                     <valueFactory>
                         <SpinnerValueFactory.IntegerSpinnerValueFactory max="359" min="0" />
                     </valueFactory>
                 </Spinner>
             </children>
-            <padding>
-               <Insets top="5.0" />
-            </padding>
+            <VBox.margin>
+               <Insets left="10.0" right="10.0" top="10.0" />
+            </VBox.margin>
          </HBox>
-         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+         <HBox alignment="CENTER_LEFT" prefHeight="150.0" spacing="50.0">
             <children>
+                <CheckBox fx:id="noQrCodePointType" stylesheets="@../stylesheets/confirm.css" text="Brak kodu QR">
+                  <HBox.margin>
+                     <Insets right="50.0" />
+                  </HBox.margin>
+               </CheckBox>
                 <ImageView fx:id="qrCodeImageView">
                   <HBox.margin>
-                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     <Insets bottom="10.0" left="10.0" right="50.0" top="10.0" />
                   </HBox.margin>
                </ImageView>
-                <Button onAction="#QrCodeToFile" prefHeight="30.0" prefWidth="200.0" styleClass="buttonConfirm" stylesheets="@../stylesheets/confirm.css" text="Zapisz kodu QR do pliku">
-                  <HBox.margin>
-                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                  </HBox.margin>
-               </Button>
+               <VBox alignment="CENTER_RIGHT" prefHeight="130.0" prefWidth="111.0">
+                  <children>
+                     <Label prefHeight="43.0" prefWidth="82.0" styleClass="label1" stylesheets="@../stylesheets/confirm.css" text="Zapisz kod QR do pliku" textAlignment="CENTER" wrapText="true" />
+                      <Button onAction="#QrCodeToFile" prefHeight="32.0" prefWidth="83.0" styleClass="buttonLittle" stylesheets="@../stylesheets/confirm.css" wrapText="true">
+                        <graphic>
+                           <ImageView fitHeight="28.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true">
+                              <image>
+                                 <Image url="/icons/download.png" />
+                              </image>
+                           </ImageView>
+                        </graphic>
+                     </Button>
+                  </children>
+               </VBox>
             </children>
             <VBox.margin>
                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -177,9 +174,9 @@
          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
       </GridPane.margin>
    </VBox>
-   <Label stylesheets="@../stylesheets/confirm.css" text="Kategorie dla punktów" GridPane.rowIndex="3">
+   <Label styleClass="labelGreen" stylesheets="@../stylesheets/confirm.css" text="Szczegóły punktu" GridPane.rowIndex="3">
       <GridPane.margin>
-         <Insets left="10.0" top="10.0" />
+         <Insets left="10.0" />
       </GridPane.margin>
    </Label>
    <HBox alignment="BOTTOM_CENTER" spacing="200.0" GridPane.columnSpan="3" GridPane.rowIndex="7">
@@ -196,11 +193,11 @@
    <rowConstraints>
       <RowConstraints />
       <RowConstraints maxHeight="326.4000061035156" minHeight="100.0" prefHeight="100.0" />
-      <RowConstraints maxHeight="200.0" minHeight="200.0" prefHeight="200.0" />
-      <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" />
-      <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" />
+      <RowConstraints maxHeight="200.0" minHeight="99.0" prefHeight="173.0" />
+      <RowConstraints maxHeight="141.0" minHeight="24.0" prefHeight="27.0" />
+      <RowConstraints maxHeight="143.0" minHeight="70.0" prefHeight="140.0" />
       <RowConstraints maxHeight="150.0" minHeight="150.0" prefHeight="150.0" />
       <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" />
-      <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" />
+      <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" />
    </rowConstraints>
 </GridPane>
