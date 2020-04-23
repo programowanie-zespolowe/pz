@@ -156,6 +156,11 @@ namespace WhereToGoEntities.WhereToGo.Models
                     .WithMany(p => p.OutdoorGame)
                     .HasForeignKey(d => d.IdBuilding)
                     .HasConstraintName("FK_OutdoorGame_Buildings").OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(d => d.IdFirstPointNavigation)
+                    .WithMany(p => p.OutdoorGame)
+                    .HasForeignKey(d => d.IdFirstPoint)
+                    .HasConstraintName("FK_OutdoorGame_OutdoorGamePath").OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<OutdoorGameHints>(entity =>
@@ -211,7 +216,7 @@ namespace WhereToGoEntities.WhereToGo.Models
                     .HasConstraintName("FK_OutdoorGamePath_Points1").OnDelete(DeleteBehavior.Cascade);
 
                 entity.HasOne(d => d.IdNextPointNavigation)
-                    .WithMany(p => p.OutdoorGamePathIdNextPointNavigation)
+                    .WithMany(p => p.InverseIdNextPointNavigation)
                     .HasForeignKey(d => d.IdNextPoint)
                     .HasConstraintName("FK_OutdoorGamePath_Points2").OnDelete(DeleteBehavior.Cascade);
 
@@ -221,7 +226,7 @@ namespace WhereToGoEntities.WhereToGo.Models
                     .HasConstraintName("FK_OutdoorGamePath_OutdoorGame").OnDelete(DeleteBehavior.Cascade);
 
                 entity.HasOne(d => d.IdPointNavigation)
-                    .WithMany(p => p.OutdoorGamePathIdPointNavigation)
+                    .WithMany(p => p.OutdoorGamePath)
                     .HasForeignKey(d => d.IdPoint)
                     .HasConstraintName("FK_OutdoorGamePath_Points").OnDelete(DeleteBehavior.Cascade);
             });
@@ -243,6 +248,11 @@ namespace WhereToGoEntities.WhereToGo.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.StartDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Name)
+                    .HasColumnName("Name")
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
 
                 entity.HasOne(d => d.IdOutdoorGameNavigation)
                     .WithMany(p => p.OutdoorGameRecordTime)

@@ -10,6 +10,7 @@ namespace WhereToGoEntities.WhereToGo.Models
         public string Mac { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
+        public string Name { get; set; }
 
         public virtual OutdoorGame IdOutdoorGameNavigation { get; set; }
     }

@@ -361,5 +361,153 @@ namespace linuxWS.Controllers
                 destPointLevel,
                 currentLevel);
         }
+        [HttpGet]
+        [Route("Buildings/OutdoorGame/{idBuilding}")]
+        public IEnumerable<MdlOutdoorGame> GetAllOutdoorGame(int idBuilding)
+        {
+            List<MdlOutdoorGame> listOutdoorGame = new List<MdlOutdoorGame>();
+            using (WhereToGoContext whereToGoEntities = new WhereToGoContext())
+            {
+                foreach (var element in whereToGoEntities.OutdoorGame.Where(i => i.IdBuilding == idBuilding && i.EndDateGame >= DateTime.Now))
+                {
+                    MdlOutdoorGame mdlOutdoorGame = new MdlOutdoorGame();
+                    mdlOutdoorGame.IdOutdoorGame = element.IdOutdoorGame;
+                    mdlOutdoorGame.IdBuilding = element.IdBuilding;
+                    mdlOutdoorGame.NameGame = element.NameGame;
+                    mdlOutdoorGame.ImageGame = element.ImageGame;
+                    mdlOutdoorGame.StartDateGame = element.StartDateGame;
+                    mdlOutdoorGame.EndDateGame = element.EndDateGame;
+                    mdlOutdoorGame.IdFirstPoint = element.IdFirstPoint;
+
+                    listOutdoorGame.Add(mdlOutdoorGame);
+                }
+                return listOutdoorGame.ToList();
+            }
+        }
+        [HttpGet]
+        [Route("Buildings/OutdoorGame/Game/{idOutdoorGame}/{idNextPoint}")]
+        public IEnumerable<MdlOutdoorGamePath> GetOutdoorGame(int idOutdoorGame, int idNextPoint)
+        {
+            List<MdlOutdoorGamePath> listOutdoorGamePath = new List<MdlOutdoorGamePath>();
+            using (WhereToGoContext whereToGoEntities = new WhereToGoContext())
+            {
+                if(idNextPoint == -1)
+                {
+                    foreach (var element in whereToGoEntities.OutdoorGame.Where(i => i.IdOutdoorGame == idOutdoorGame))
+                    {
+                        MdlOutdoorGame mdlOutdoorGame = new MdlOutdoorGame();
+                        mdlOutdoorGame.IdOutdoorGame = element.IdOutdoorGame;
+                        mdlOutdoorGame.IdFirstPoint = element.IdFirstPoint;
+                        foreach (var item in whereToGoEntities.OutdoorGamePath.Where(i => i.IdOutdoorGame == mdlOutdoorGame.IdOutdoorGame && i.IdQuestionPoint == mdlOutdoorGame.IdFirstPoint))
+                        {
+                            MdlOutdoorGamePath mdlOutdoorGamePath = new MdlOutdoorGamePath();
+                            mdlOutdoorGamePath.IdQuestionPoint = item.IdQuestionPoint;
+                            mdlOutdoorGamePath.IdOutdoorGame = item.IdOutdoorGame;
+                            mdlOutdoorGamePath.IdPoint = item.IdPoint;
+                            mdlOutdoorGamePath.Question = item.Question;
+                            mdlOutdoorGamePath.Answer = item.Answer;
+                            mdlOutdoorGamePath.IdNextPoint = item.IdNextPoint;
+                            mdlOutdoorGamePath.IdHintPoint = item.IdHintPoint;
+                            listOutdoorGamePath.Add(mdlOutdoorGamePath);
+                        }
+                    }
+                    return listOutdoorGamePath.ToList();
+                }
+                else
+                {
+                    foreach (var item in whereToGoEntities.OutdoorGamePath.Where(i => i.IdOutdoorGame == idOutdoorGame && i.IdQuestionPoint == idNextPoint))
+                    {
+                        MdlOutdoorGamePath mdlOutdoorGamePath = new MdlOutdoorGamePath();
+                        mdlOutdoorGamePath.IdQuestionPoint = item.IdQuestionPoint;
+                        mdlOutdoorGamePath.IdOutdoorGame = item.IdOutdoorGame;
+                        mdlOutdoorGamePath.IdPoint = item.IdPoint;
+                        mdlOutdoorGamePath.Question = item.Question;
+                        mdlOutdoorGamePath.Answer = item.Answer;
+                        mdlOutdoorGamePath.IdNextPoint = item.IdNextPoint;
+                        mdlOutdoorGamePath.IdHintPoint = item.IdHintPoint;
+                        listOutdoorGamePath.Add(mdlOutdoorGamePath);
+                    }
+                    return listOutdoorGamePath.ToList();
+                }
+            }
+        }
+        [HttpGet]
+        [Route("Buildings/OutdoorGame/Hint/{idOutdoorGame}/{idHintPoint}")]
+        public IEnumerable<MdlOutdoorGameHints> GetOutdoorGameHint(int idOutdoorGame, int idHintPoint)
+        {
+            List<MdlOutdoorGameHints> listOutdoorGameHints = new List<MdlOutdoorGameHints>();
+            using (WhereToGoContext whereToGoEntities = new WhereToGoContext())
+            {
+                foreach (var element in whereToGoEntities.OutdoorGameHints.Where(i => i.IdOutdoorGame == idOutdoorGame && i.IdHints == idHintPoint))
+                {
+                    MdlOutdoorGameHints mdlOutdoorGameHints = new MdlOutdoorGameHints();
+                    mdlOutdoorGameHints.IdHints = element.IdHints;
+                    mdlOutdoorGameHints.IdOutdoorGame = element.IdOutdoorGame;
+                    mdlOutdoorGameHints.IdPoint = element.IdPoint;
+                    mdlOutdoorGameHints.Hint = element.Hint;
+
+                    listOutdoorGameHints.Add(mdlOutdoorGameHints);
+                }
+                return listOutdoorGameHints.ToList();
+            }
+        }
+        [HttpPost]
+        [Route("Buildings/OutdoorGame/RecordTime/{idOutdoorGame}/{name}/{MAC}/{start}")]
+        public IActionResult PostOutdoorGameRecord(int idOutdoorGame, string name, string MAC, bool start)
+        {
+            using (WhereToGoContext whereToGoEntities = new WhereToGoContext())
+            {
+                OutdoorGameRecordTime mdlOutdoorGameRecord = new OutdoorGameRecordTime();
+                if (start == true)
+                {
+                    mdlOutdoorGameRecord.IdOutdoorGame = idOutdoorGame;
+                    mdlOutdoorGameRecord.Name = name;
+                    mdlOutdoorGameRecord.Mac = MAC;
+                    mdlOutdoorGameRecord.StartDate = DateTime.Now;
+                    mdlOutdoorGameRecord.EndDate = null;
+                    whereToGoEntities.OutdoorGameRecordTime.Add(mdlOutdoorGameRecord);
+                    whereToGoEntities.SaveChanges();
+                    return Ok(mdlOutdoorGameRecord.StartDate);
+                }
+                else
+                {
+                    mdlOutdoorGameRecord = whereToGoEntities.OutdoorGameRecordTime.Where(i => i.IdOutdoorGame == idOutdoorGame && i.Mac == MAC && i.Name == name).FirstOrDefault();
+                    mdlOutdoorGameRecord.EndDate = DateTime.Now;
+                    whereToGoEntities.OutdoorGameRecordTime.Update(mdlOutdoorGameRecord);
+                    whereToGoEntities.SaveChanges();
+
+                    int time = (mdlOutdoorGameRecord.EndDate - mdlOutdoorGameRecord.StartDate).Value.Minutes;
+                    return Ok(time);
+                }
+            }
+        }
+        [HttpGet]
+        [Route("Buildings/OutdoorGame/RecordTime/{idOutdoorGame}")]
+        public IEnumerable<MdlOutdoorGameRecord> GetOutdoorGameRecord(int idOutdoorGame)
+        {
+            List<MdlOutdoorGameRecord> listOutdoorGameRecord = new List<MdlOutdoorGameRecord>();
+            using (WhereToGoContext whereToGoEntities = new WhereToGoContext())
+            {
+                foreach (var element in whereToGoEntities.OutdoorGameRecordTime.Where(i => i.IdOutdoorGame == idOutdoorGame && i.EndDate != null))
+                {
+                    MdlOutdoorGameRecord mdlOutdoorGameRecord = new MdlOutdoorGameRecord();
+                    mdlOutdoorGameRecord.IdRecord = element.IdRecord;
+                    mdlOutdoorGameRecord.IdOutdoorGame = element.IdOutdoorGame;
+                    mdlOutdoorGameRecord.Name = element.Name;
+                    mdlOutdoorGameRecord.Mac = element.Mac;
+                    mdlOutdoorGameRecord.StartDate = element.StartDate;
+                    mdlOutdoorGameRecord.EndDate = element.EndDate;
+                    mdlOutdoorGameRecord.Time = (element.EndDate - element.StartDate).Value.Minutes;
+
+                    listOutdoorGameRecord.Add(mdlOutdoorGameRecord);
+                }
+                List<MdlOutdoorGameRecord> listOutdoorGameRecordTop10 = new List<MdlOutdoorGameRecord>();
+                foreach (var item in listOutdoorGameRecord.OrderBy(i => i.Time).Take(10))
+                {
+                    listOutdoorGameRecordTop10.Add(item);
+                }
+                return listOutdoorGameRecordTop10.ToList();
+            }
+        }
     }
 }

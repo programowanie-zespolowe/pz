@@ -21,6 +21,7 @@ namespace WhereToGoEntities.WhereToGo.Models
         public int? IdFirstPoint { get; set; }
 
         public virtual Buildings IdBuildingNavigation { get; set; }
+        public virtual OutdoorGamePath IdFirstPointNavigation { get; set; }
         public virtual ICollection<OutdoorGameHints> OutdoorGameHints { get; set; }
         public virtual ICollection<OutdoorGamePath> OutdoorGamePath { get; set; }
         public virtual ICollection<OutdoorGameRecordTime> OutdoorGameRecordTime { get; set; }
