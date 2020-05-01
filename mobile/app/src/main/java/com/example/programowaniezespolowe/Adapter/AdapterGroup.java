@@ -51,7 +51,7 @@ public class AdapterGroup extends BaseAdapter implements Filterable {
         if(convertView == null){
             convertView = layoutInflater.inflate(R.layout.category_raw, parent, false);
         }
-        byte[] decodeString = Base64.decode(groups.get(0).getImageGroup(), Base64.DEFAULT);
+        byte[] decodeString = Base64.decode(groups.get(position).getImageGroup(), Base64.DEFAULT);
         Bitmap bmp = BitmapFactory.decodeByteArray(decodeString, 0, decodeString.length);
         ImageView imageView = convertView.findViewById(R.id.iconCategory);
         imageView.setImageBitmap(bmp);
@@ -81,7 +81,7 @@ public class AdapterGroup extends BaseAdapter implements Filterable {
 
                 for(int i = 0; i < filterList.size(); i++){
                     if(filterList.get(i).getNameGroup().toUpperCase().contains(constraint)){
-                        Group g = new Group(groups.get(0
+                        Group g = new Group(groups.get(i
                         ).getImageGroup(), filterList.get(i).getNameGroup());
                         filter.add(g);
                     }

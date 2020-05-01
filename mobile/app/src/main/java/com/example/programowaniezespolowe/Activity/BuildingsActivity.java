@@ -44,7 +44,7 @@ public class BuildingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_buildings);
         connect = ConnectWebService.GetInstance();
         Intent intent = getIntent();
-        buildingId = intent.getIntExtra(MainActivity.BUILDING_ID, 0);
+        buildingId = intent.getIntExtra(ScanCode.BUILDING_ID, 0);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -71,7 +71,7 @@ public class BuildingsActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 int buildingChoose = buildingList.get(position).getIdBuilding();
                 Intent intent1 = new Intent(BuildingsActivity.this, CategoryActivity.class);
-                intent1.putExtra(MainActivity.BUILDING_ID, buildingChoose);
+                intent1.putExtra(ScanCode.BUILDING_ID, buildingChoose);
                 startActivity(intent1);
             }
         });

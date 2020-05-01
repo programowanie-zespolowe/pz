@@ -52,12 +52,12 @@ public class PointDetailAdapter extends BaseAdapter implements Filterable {
             convertView = layoutInflater.inflate(R.layout.point_detail_raw,parent, false);
         }
         byte[] decodeString;
-        if(pointDetailList.get(0).getIdGroup() == 5) {
-            decodeString = Base64.decode(pointDetailList.get(1).getImagePoint(), Base64.DEFAULT);
-        }else{
-            decodeString = Base64.decode(pointDetailList.get(0).getImagePoint(), Base64.DEFAULT);
-        }
-//        decodeString = Base64.decode(pointDetailList.get(position).getImagePoint(), Base64.DEFAULT);
+//        if(pointDetailList.get(position).getIdGroup() == 27) {
+//            decodeString = Base64.decode(pointDetailList.get(1).getImagePoint(), Base64.DEFAULT);
+//        }else{
+//            decodeString = Base64.decode(pointDetailList.get(0).getImagePoint(), Base64.DEFAULT);
+//        }
+        decodeString = Base64.decode(pointDetailList.get(position).getImagePoint(), Base64.DEFAULT);
         Bitmap bmp = BitmapFactory.decodeByteArray(decodeString, 0, decodeString.length);
         ImageView imageView = convertView.findViewById(R.id.iconPoint);
         imageView.setImageBitmap(bmp);
@@ -85,7 +85,7 @@ public class PointDetailAdapter extends BaseAdapter implements Filterable {
 
                 for(int i = 0; i < filterList.size(); i++){
                     if(filterList.get(i).getNamePoint().toUpperCase().contains(constraint)){
-                        PointDetail p = new PointDetail(filterList.get(0).getNamePoint(), filterList.get(i).getImagePoint());
+                        PointDetail p = new PointDetail(filterList.get(i).getNamePoint(), filterList.get(i).getImagePoint());
                         filter.add(p);
                     }
                 }

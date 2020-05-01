@@ -42,7 +42,7 @@ public class CategoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_category);
         groupList = new ArrayList<>();
         Intent intent = getIntent();
-        buildingId = intent.getIntExtra(MainActivity.BUILDING_ID, 0);
+        buildingId = intent.getIntExtra(ScanCode.BUILDING_ID, 0);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -69,7 +69,7 @@ public class CategoryActivity extends AppCompatActivity {
                 Intent intent1;
                 intent1 = new Intent(CategoryActivity.this, PointDetailActivity.class);
                 intent1.putExtra(GROUP_ID, idGroup);
-                intent1.putExtra(MainActivity.BUILDING_ID, buildingId);
+                intent1.putExtra(ScanCode.BUILDING_ID, buildingId);
                 startActivity(intent1);
             }
         });
@@ -118,7 +118,7 @@ public class CategoryActivity extends AppCompatActivity {
         switch(keyCode) {
             case(KeyEvent.KEYCODE_BACK):
                 Intent a1_intent = new Intent(this, BuildingsActivity.class);
-                a1_intent.putExtra(MainActivity.BUILDING_ID, buildingId);
+                a1_intent.putExtra(ScanCode.BUILDING_ID, buildingId);
                 startActivity(a1_intent);
                 finish();
                 return true;

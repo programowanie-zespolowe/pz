@@ -43,7 +43,7 @@ public class PointDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_point_detail);
         Intent intent = getIntent();
         idGroup = intent.getIntExtra(CategoryActivity.GROUP_ID, 0);
-        idBuilding = intent.getIntExtra(MainActivity.BUILDING_ID, 0);
+        idBuilding = intent.getIntExtra(ScanCode.BUILDING_ID, 0);
         pointDetailList = new ArrayList<>();
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -73,7 +73,7 @@ public class PointDetailActivity extends AppCompatActivity {
                 PointPath pointPath = PointPath.getInstance();
                 pointPath.setTargetPoint(target);
                 Intent intent1 = new Intent(PointDetailActivity.this, Navigation_activity.class);
-                intent1.putExtra(MainActivity.BUILDING_ID, idBuilding);
+                intent1.putExtra(ScanCode.BUILDING_ID, idBuilding);
                 intent1.putExtra(CategoryActivity.GROUP_ID, idGroup);
                 startActivity(intent1);
                 finish();
@@ -87,7 +87,7 @@ public class PointDetailActivity extends AppCompatActivity {
 
             case android.R.id.home:
                 Intent intent = new Intent(this, CategoryActivity.class);
-                intent.putExtra(MainActivity.BUILDING_ID, idBuilding);
+                intent.putExtra(ScanCode.BUILDING_ID, idBuilding);
                 startActivity(intent);
                 finish();
                 return true;
@@ -126,7 +126,7 @@ public class PointDetailActivity extends AppCompatActivity {
         switch(keyCode) {
             case(KeyEvent.KEYCODE_BACK):
                 Intent a1_intent = new Intent(this, CategoryActivity.class);
-                a1_intent.putExtra(MainActivity.BUILDING_ID, idBuilding);
+                a1_intent.putExtra(ScanCode.BUILDING_ID, idBuilding);
                 startActivity(a1_intent);
                 finish();
                 return true;

@@ -8,6 +8,7 @@ public class NextPoint {
     private boolean eleveator;
     private boolean stairs;
     private int level;
+    public int currentLevel;
     public int iconOnAnotherLevel;
     public double angleOnAnotherLevel;
     public double distanceOnAnotherLevel ;
@@ -90,5 +91,13 @@ public class NextPoint {
 
     public void setDistanceOnAnotherLevel(double distanceOnAnotherLevel) {
         distanceOnAnotherLevel = distanceOnAnotherLevel;
+    }
+
+    public int getCurrentLevel() {
+        return currentLevel;
+    }
+
+    public void setCurrentLevel(int currentLevel) {
+        currentLevel = currentLevel;
     }
 }

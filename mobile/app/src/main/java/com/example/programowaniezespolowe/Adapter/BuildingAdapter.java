@@ -51,7 +51,7 @@ public class BuildingAdapter extends BaseAdapter implements Filterable {
         if(convertView == null){
             convertView = layoutInflater.inflate(R.layout.building_raw, parent, false);
         }
-        byte[] decodeString = Base64.decode(buildings.get(0).getImageBuilding(), Base64.DEFAULT);
+        byte[] decodeString = Base64.decode(buildings.get(position).getImageBuilding(), Base64.DEFAULT);
         Bitmap bmp = BitmapFactory.decodeByteArray(decodeString, 0, decodeString.length);
         ImageView imageView = convertView.findViewById(R.id.buildingImage);
         imageView.setImageBitmap(bmp);

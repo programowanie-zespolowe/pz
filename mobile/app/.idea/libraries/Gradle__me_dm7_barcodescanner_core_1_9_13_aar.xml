@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="Gradle: me.dm7.barcodescanner:core:1.9.13@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/39d04768f32d244dd4246cd34007a7a7/jetified-core-1.9.13/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/39d04768f32d244dd4246cd34007a7a7/jetified-core-1.9.13/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/a0b8b712fbf16211476b55feb631bb70/jetified-core-1.9.13/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/a0b8b712fbf16211476b55feb631bb70/jetified-core-1.9.13/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

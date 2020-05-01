@@ -11,4 +11,14 @@
     <string name="buildings_hint">Wpisz nazwę szukanego budynku</string>
     <string name="button_accept">Jestem</string>
 
+    <string name="prosto">Idź prosto</string>
+    <string name="lewo">Skręć w lewo i idź</string>
+    <string name="prawo">Skręć w prawo i idź</string>
+    <string name="zawracanie">Zawróć</string>
+    <string name="schody_gora">Wejdź po schodach na piętro</string>
+    <string name="winda_gora">Wjedź windą na piętro</string>
+
+    <string name="schody_dol">Wejdź po schodach na piętro</string>
+    <string name="winda_dol">Wjedź windą na piętro</string>
+
 </resources>

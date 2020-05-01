@@ -1,5 +1,7 @@
 package com.example.programowaniezespolowe.Data;
 
+import com.example.programowaniezespolowe.Activity.ChooseActivity;
+
 public class PointPath {
     private static PointPath instance;
     private int previousPoint;
@@ -12,6 +14,10 @@ public class PointPath {
             instance = new PointPath();
         }
         return instance;
+    }
+
+    public static void setInstance(PointPath instance) {
+        PointPath.instance = instance;
     }
 
     public int getPreviousPoint() {
@@ -30,7 +36,9 @@ public class PointPath {
         if(instance.previousPoint == 0){
             instance.previousPoint = -1;
         }else{
-            instance.previousPoint = this.currentPoint;
+            if(ChooseActivity.getOption() == 1) {
+                instance.previousPoint = this.currentPoint;
+            }
         }
         instance.currentPoint = currentPoint;
     }

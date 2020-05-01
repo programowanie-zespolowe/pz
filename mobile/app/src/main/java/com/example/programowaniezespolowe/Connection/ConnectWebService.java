@@ -1,7 +1,6 @@
 package com.example.programowaniezespolowe.Connection;
 
 import com.example.programowaniezespolowe.Data.Device;
-import com.example.programowaniezespolowe.Data.Point;
 import com.example.programowaniezespolowe.Data.PointPath;
 import com.example.programowaniezespolowe.Data.Token;
 
@@ -11,23 +10,26 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.MessageFormat;
+import java.util.Date;
 
 public class ConnectWebService {
     private static ConnectWebService instance;
-    private final static String TOKEN = "http://54.37.136.172:91/api/token";
-    private final static String SELECTED_BUILDING =  "http://54.37.136.172:91/GetData/Buildings/Selected/{0}";
-    private final String Groups = "http://54.37.136.172:91/GetData/Buildings/{0}/Groups";
-    private final String PointDetail = "http://54.37.136.172:91/GetData/Buildings/Groups/{0}/PointsDetails";
+    private final String TOKEN = "http://54.37.136.172:91/api/token";
+    private final String SELECTED_BUILDING =  "http://54.37.136.172:91/GetData/Buildings/Selected/{0}";
+    private final String GROUPS = "http://54.37.136.172:91/GetData/Buildings/{0}/Groups";
+    private final String POINT_DETAIL = "http://54.37.136.172:91/GetData/Buildings/Groups/{0}/PointsDetails";
     private final String BUILDING_POINT = "http://54.37.136.172:91/GetData/Buildings/{0}/Points";
-//    Admin/GetData/Buildings/{idBuilding}/{idPrevPoint}/{idActualPoint}/{idDestPoint}
-    private final String GET_NEXT_POINT = "http://54.37.136.172:91/GetData/Buildings/{0}/{1}/{2}/{3}";
+    private final String NEXT_POINT = "http://54.37.136.172:91/GetData/Buildings/{0}/{1}/{2}/{3}";
+
+    private final String OUTDOOR_GAME = "http://54.37.136.172:91/GetData/Buildings/OutdoorGame/{0}";
+    private final String OUTDOOR_GAME_POINT =  "http://54.37.136.172:91/GetData/Buildings/OutdoorGame/Game/{0}/{1}";
+    private final String OUTDOOR_GAME_HINT =  "http://54.37.136.172:91/GetData/Buildings/OutdoorGame/Hint/{0}/{1}";
+    private final String OUTDOOR_TIME_GAME = "http://54.37.136.172:91/GetData/Buildings/OutdoorGame/RecordTime/{0}/{1}/{2}/{3}";
 
     private Token token;
     private static Device device;
@@ -105,6 +107,21 @@ public class ConnectWebService {
         return content;
 
     }
+    private String PostRequest(String url) throws IOException, JSONException {
+        URL address = new URL(url);
+        HttpURLConnection connection = (HttpURLConnection) address.openConnection();
+        connection.setRequestMethod("POST");
+        //connection.setRequestProperty("Content-Type", "application/json");
+        connection.setRequestProperty("Authorization", "Bearer " + token.getToken());
+        connection.setDoOutput(true);
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+        String  content = br.readLine();
+        connection.disconnect();
+
+        return content;
+
+    }
 
     private void getToken(String deviceName, String deviceMac){
         JSONObject jsonObject = new JSONObject();
@@ -118,6 +135,19 @@ public class ConnectWebService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public String getOutdoorTime(int idGame, String name, String mac, boolean start){
+        String newUrl = MessageFormat.format(OUTDOOR_TIME_GAME, idGame, name, mac, start);
+        try {
+            String jsonObject = PostRequest(newUrl);
+            return jsonObject;
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public JSONArray getSelectedBuilding(int buildingId){
@@ -147,7 +177,7 @@ public class ConnectWebService {
 
     public JSONArray getGroups(int buildingId){
         try {
-            JSONArray response = GetRequest( MessageFormat.format(Groups, buildingId));
+            JSONArray response = GetRequest( MessageFormat.format(GROUPS, buildingId));
             return response;
         } catch (IOException e) {
             e.printStackTrace();
@@ -159,7 +189,7 @@ public class ConnectWebService {
 
     public JSONArray getPointDetail(int buildingId){
         try {
-            JSONArray response = GetRequest(MessageFormat.format( PointDetail, buildingId));
+            JSONArray response = GetRequest(MessageFormat.format( POINT_DETAIL, buildingId));
             return response;
         } catch (IOException e) {
             e.printStackTrace();
@@ -171,13 +201,8 @@ public class ConnectWebService {
     //    Admin/GetData/Buildings/{idBuilding}/{idPrevPoint}/{idActualPoint}/{idDestPoint}
     public JSONObject getNextPoint(int idBuilding){
         PointPath p = PointPath.getInstance();
-//        int prev = 364;
-//        int cur = p.getCurrentPoint();
-//        int tar = p.getTargetPoint();
-//        String n = MessageFormat.format(GET_NEXT_POINT, idBuilding, prev, cur, tar);
-
         try {
-            JSONObject response = GetRequest2(MessageFormat.format(GET_NEXT_POINT, idBuilding, p.getPreviousPoint(), p.getCurrentPoint(), p.getTargetPoint()));
+            JSONObject response = GetRequest2(MessageFormat.format(NEXT_POINT, idBuilding, p.getPreviousPoint(), p.getCurrentPoint(), p.getTargetPoint()));
             return response;
         } catch (IOException e) {
             e.printStackTrace();
@@ -186,4 +211,38 @@ public class ConnectWebService {
         }
         return null;
     }
+    public JSONArray getOutdoorGame(int idbuilding){
+        try {
+            JSONArray response = GetRequest(MessageFormat.format( OUTDOOR_GAME, idbuilding));
+            return response;
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public JSONArray getFirstGamePoint(int idGame, int idNextPoint){
+        try {
+            JSONArray response = GetRequest(MessageFormat.format(OUTDOOR_GAME_POINT, idGame, idNextPoint));
+            return response;
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public JSONArray getHintGameP(int idGame, int idHintPoint){
+        try {
+            JSONArray response = GetRequest(MessageFormat.format(OUTDOOR_GAME_HINT, idGame, idHintPoint));
+            return response;
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }
