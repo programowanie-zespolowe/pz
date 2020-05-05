@@ -476,7 +476,7 @@ namespace linuxWS.Controllers
                     whereToGoEntities.OutdoorGameRecordTime.Update(mdlOutdoorGameRecord);
                     whereToGoEntities.SaveChanges();
 
-                    int time = (mdlOutdoorGameRecord.EndDate - mdlOutdoorGameRecord.StartDate).Value.Minutes;
+                    double time = (mdlOutdoorGameRecord.EndDate - mdlOutdoorGameRecord.StartDate).Value.TotalSeconds;
                     return Ok(time);
                 }
             }
@@ -497,7 +497,7 @@ namespace linuxWS.Controllers
                     mdlOutdoorGameRecord.Mac = element.Mac;
                     mdlOutdoorGameRecord.StartDate = element.StartDate;
                     mdlOutdoorGameRecord.EndDate = element.EndDate;
-                    mdlOutdoorGameRecord.Time = (element.EndDate - element.StartDate).Value.Minutes;
+                    mdlOutdoorGameRecord.Time = (int)(element.EndDate - element.StartDate).Value.TotalSeconds;
 
                     listOutdoorGameRecord.Add(mdlOutdoorGameRecord);
                 }
