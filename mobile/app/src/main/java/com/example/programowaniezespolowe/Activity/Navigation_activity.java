@@ -125,8 +125,9 @@ public class Navigation_activity extends AppCompatActivity{
 
             case android.R.id.home:
                 if(ChooseActivity.getOption() == 0){
-                    intent = new Intent(this, CategoryActivity.class);
+                    intent = new Intent(this, GameListActivity.class);
                     intent.putExtra("idGame", idGame);
+                    intent.putExtra(ScanCode.BUILDING_ID, idBuilding);
                 }else{
                     intent = new Intent(this, CategoryActivity.class);
                     intent.putExtra(ScanCode.BUILDING_ID, idBuilding);
@@ -144,8 +145,9 @@ public class Navigation_activity extends AppCompatActivity{
         switch(keyCode) {
             case(KeyEvent.KEYCODE_BACK):
                 if(ChooseActivity.getOption() == 0){
-                    intent = new Intent(this, CategoryActivity.class);
+                    intent = new Intent(this, GameListActivity.class);
                     intent.putExtra("idGame", idGame);
+                    intent.putExtra(ScanCode.BUILDING_ID, idBuilding);
                 }else{
                     intent = new Intent(this, CategoryActivity.class);
                     intent.putExtra(ScanCode.BUILDING_ID, idBuilding);
