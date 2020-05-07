@@ -25,9 +25,6 @@ import com.example.programowaniezespolowe.MyCanavas;
 import com.example.programowaniezespolowe.R;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
-
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 
@@ -74,43 +71,44 @@ public class Navigation_activity extends AppCompatActivity{
         pointPath = PointPath.getInstance();
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(R.string.nawigacja);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
-        mDrawer = findViewById(R.id.drawer_layout);
-        drawerToggle = setupDrawerToggle();
-        drawerToggle.setDrawerIndicatorEnabled(true);
-        mDrawer.addDrawerListener(drawerToggle);
-        drawerToggle.syncState();
-        nvDrawer = findViewById(R.id.nvView);
-        nvDrawer.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                int id = menuItem.getItemId();
-                Intent intent;
-                switch(menuItem.getItemId()){
-                    case R.id.budynki:
-                        pointPath.setPreviousPoint(-1);
-                        intent = new Intent(Navigation_activity.this, BuildingsActivity.class);
-                        intent.putExtra(ScanCode.BUILDING_ID, idBuilding);
-                        startActivity(intent);
-                        break;
-                    case R.id.pokoje:
-                        pointPath.setPreviousPoint(-1);
-                        intent = new Intent(Navigation_activity.this, PointDetailActivity.class);
-                        intent.putExtra(ScanCode.BUILDING_ID, idBuilding);
-                        intent.putExtra(CategoryActivity.GROUP_ID, idGroup);
-                        startActivity(intent);
-                        break;
-                    case R.id.nowy_kod:
-                        intent = new Intent(Navigation_activity.this, MainActivity.class);
-                        pointPath.setPreviousPoint(-1);
-                        startActivity(intent);
-                        break;
-                }
-                return true;
-            }
-        });
+//        mDrawer = findViewById(R.id.drawer_layout);
+//        drawerToggle = setupDrawerToggle();
+//        drawerToggle.setDrawerIndicatorEnabled(true);
+//        mDrawer.addDrawerListener(drawerToggle);
+//        drawerToggle.syncState();
+//        nvDrawer = findViewById(R.id.nvView);
+//        nvDrawer.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+//                int id = menuItem.getItemId();
+//                Intent intent;
+//                switch(menuItem.getItemId()){
+//                    case R.id.budynki:
+//                        pointPath.setPreviousPoint(-1);
+//                        intent = new Intent(Navigation_activity.this, BuildingsActivity.class);
+//                        intent.putExtra(ScanCode.BUILDING_ID, idBuilding);
+//                        startActivity(intent);
+//                        break;
+//                    case R.id.pokoje:
+//                        pointPath.setPreviousPoint(-1);
+//                        intent = new Intent(Navigation_activity.this, PointDetailActivity.class);
+//                        intent.putExtra(ScanCode.BUILDING_ID, idBuilding);
+//                        intent.putExtra(CategoryActivity.GROUP_ID, idGroup);
+//                        startActivity(intent);
+//                        break;
+//                    case R.id.nowy_kod:
+//                        intent = new Intent(Navigation_activity.this, MainActivity.class);
+//                        pointPath.setPreviousPoint(-1);
+//                        startActivity(intent);
+//                        break;
+//                }
+//                return true;
+//            }
+//        });
         textView = findViewById(R.id.instruction);
         iconImage= findViewById(R.id.testImage);
         stairsOrElevatorImage= findViewById(R.id.StairsOrElevator);
@@ -122,20 +120,39 @@ public class Navigation_activity extends AppCompatActivity{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent;
         switch (item.getItemId()) {
 
             case android.R.id.home:
+                if(ChooseActivity.getOption() == 0){
+                    intent = new Intent(this, CategoryActivity.class);
+                    intent.putExtra("idGame", idGame);
+                }else{
+                    intent = new Intent(this, CategoryActivity.class);
+                    intent.putExtra(ScanCode.BUILDING_ID, idBuilding);
+                }
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                Navigation_activity.this.finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent msg) {
+        Intent intent;
         switch(keyCode) {
             case(KeyEvent.KEYCODE_BACK):
-                Intent a1_intent = new Intent(this, ChooseActivity.class);
-                startActivity(a1_intent);
-                finish();
+                if(ChooseActivity.getOption() == 0){
+                    intent = new Intent(this, CategoryActivity.class);
+                    intent.putExtra("idGame", idGame);
+                }else{
+                    intent = new Intent(this, CategoryActivity.class);
+                    intent.putExtra(ScanCode.BUILDING_ID, idBuilding);
+                }
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                Navigation_activity.this.finish();
                 return true;
         }
         return false;

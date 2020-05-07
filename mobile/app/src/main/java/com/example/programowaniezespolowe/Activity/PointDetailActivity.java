@@ -31,7 +31,6 @@ public class PointDetailActivity extends AppCompatActivity {
     private SearchView searchView;
     private int idGroup;
     private int idBuilding;
-    private int pointNumber;
     private ConnectWebService connectWebService;
     private ArrayList<PointDetail> pointDetailList;
     private PointDetailAdapter pointDetailAdapter;

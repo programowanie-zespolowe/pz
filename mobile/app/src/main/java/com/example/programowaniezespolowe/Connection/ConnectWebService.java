@@ -30,6 +30,7 @@ public class ConnectWebService {
     private final String OUTDOOR_GAME_POINT =  "http://54.37.136.172:91/GetData/Buildings/OutdoorGame/Game/{0}/{1}";
     private final String OUTDOOR_GAME_HINT =  "http://54.37.136.172:91/GetData/Buildings/OutdoorGame/Hint/{0}/{1}";
     private final String OUTDOOR_TIME_GAME = "http://54.37.136.172:91/GetData/Buildings/OutdoorGame/RecordTime/{0}/{1}/{2}/{3}";
+    private final String OUTDOOR_REKORD = "http://54.37.136.172:91/GetData/Buildings/OutdoorGame/RecordTime/{0}";
 
     private Token token;
     private static Device device;
@@ -236,6 +237,17 @@ public class ConnectWebService {
     public JSONArray getHintGameP(int idGame, int idHintPoint){
         try {
             JSONArray response = GetRequest(MessageFormat.format(OUTDOOR_GAME_HINT, idGame, idHintPoint));
+            return response;
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public JSONArray getRekord(int idGame){
+        try {
+            JSONArray response = GetRequest(MessageFormat.format(OUTDOOR_REKORD, idGame));
             return response;
         } catch (IOException e) {
             e.printStackTrace();

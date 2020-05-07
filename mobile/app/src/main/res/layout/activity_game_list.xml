@@ -1,15 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.GameListActivity">
-
-    <GridView
-        android:id="@+id/gridGames"
+    android:orientation="vertical">
+    <include
+        layout="@layout/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:numColumns="3"/>
+        android:layout_height="wrap_content" />
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".Activity.GameListActivity">
 
-</RelativeLayout>
+        <GridView
+            android:id="@+id/gridGames"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:numColumns="3"/>
+
+    </RelativeLayout>
+</LinearLayout>
+<!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    tools:context=".Activity.GameListActivity">-->
+<!--    -->
+<!--    <GridView-->
+<!--        android:id="@+id/gridGames"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:numColumns="3"/>-->
+
+<!--</RelativeLayout>-->

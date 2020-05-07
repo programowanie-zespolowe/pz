@@ -105,9 +105,11 @@ public class CategoryActivity extends AppCompatActivity {
         switch (item.getItemId()) {
 
             case android.R.id.home:
-                Intent intent = new Intent(this, BuildingsActivity.class);
-                //intent.putExtra(BuildingsActivity.BUILDING_ID, buildingId);
+                Intent intent = new Intent(this, ChooseActivity.class);
+                intent.putExtra(ScanCode.BUILDING_ID, buildingId);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
+                CategoryActivity.this.finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -117,10 +119,11 @@ public class CategoryActivity extends AppCompatActivity {
 
         switch(keyCode) {
             case(KeyEvent.KEYCODE_BACK):
-                Intent a1_intent = new Intent(this, BuildingsActivity.class);
-                a1_intent.putExtra(ScanCode.BUILDING_ID, buildingId);
-                startActivity(a1_intent);
-                finish();
+                Intent intent = new Intent(this, ChooseActivity.class);
+                intent.putExtra(ScanCode.BUILDING_ID, buildingId);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                CategoryActivity.this.finish();
                 return true;
         }
         return false;

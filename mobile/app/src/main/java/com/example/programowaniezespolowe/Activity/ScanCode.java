@@ -1,7 +1,9 @@
 package com.example.programowaniezespolowe.Activity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
@@ -17,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -41,14 +44,11 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 public class ScanCode extends AppCompatActivity implements ZXingScannerView.ResultHandler {
 
-    private DrawerLayout mDrawer;
     private Toolbar toolbar;
-    private NavigationView nvDrawer;
+
     private ZXingScannerView scannerView;
     private ArrayList<Building> buildingList;
 
-    private ActionBarDrawerToggle drawerToggle;
-    private Button searchBuildings;
 
     public static final String BUILDING_ID = "buildingId";
     private ConnectWebService connect;
@@ -60,6 +60,8 @@ public class ScanCode extends AppCompatActivity implements ZXingScannerView.Resu
     private String answer;
     private int hintPoint;
     private String hint;
+
+    private static final int MY_CAMERA_REQUEST_CODE = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,42 +79,47 @@ public class ScanCode extends AppCompatActivity implements ZXingScannerView.Resu
         Device device = new Device(Build.MANUFACTURER + Build.MODEL, info.getMacAddress());
         OutdoorGameTime o = OutdoorGameTime.getInstance();
         o.setMacId(device.getMacId());
-        o.setName("test2");
         connect = ConnectWebService.GetInstance();
         connect.setDevice(device);
-        loadData();
+//        loadData();
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(R.string.title);
 
-        mDrawer = findViewById(R.id.drawer_layout);
-        drawerToggle = setupDrawerToggle();
-        drawerToggle.setDrawerIndicatorEnabled(true);
-        mDrawer.addDrawerListener(drawerToggle);
-        drawerToggle.syncState();
-        nvDrawer = findViewById(R.id.nvView);
-        nvDrawer.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                int id = menuItem.getItemId();
-                Intent intent;
-                System.out.println(id);
-                switch (menuItem.getItemId()) {
-                    case R.id.budynki:
-                        intent = new Intent(ScanCode.this, BuildingsActivity.class);
-                        startActivity(intent);
-                        break;
-                    case R.id.pokoje:
-                        intent = new Intent(ScanCode.this, PointDetailActivity.class);
-                        startActivity(intent);
-                        break;
-                }
-                return true;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_REQUEST_CODE);
             }
-        });
+        }
 
-        searchBuildings = findViewById(R.id.searchBtn);
-        searchBuildings.setOnClickListener(searchClickListener);
+//        mDrawer = findViewById(R.id.drawer_layout);
+//        drawerToggle = setupDrawerToggle();
+//        drawerToggle.setDrawerIndicatorEnabled(true);
+//        mDrawer.addDrawerListener(drawerToggle);
+//        drawerToggle.syncState();
+//        nvDrawer = findViewById(R.id.nvView);
+//        nvDrawer.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+//                int id = menuItem.getItemId();
+//                Intent intent;
+//                System.out.println(id);
+//                switch (menuItem.getItemId()) {
+//                    case R.id.budynki:
+//                        intent = new Intent(ScanCode.this, BuildingsActivity.class);
+//                        startActivity(intent);
+//                        break;
+//                    case R.id.pokoje:
+//                        intent = new Intent(ScanCode.this, PointDetailActivity.class);
+//                        startActivity(intent);
+//                        break;
+//                }
+//                return true;
+//            }
+//        });
+
+//        searchBuildings = findViewById(R.id.searchBtn);
+//        searchBuildings.setOnClickListener(searchClickListener);
 
         ViewGroup contentFrame = findViewById(R.id.content_frame);
         scannerView = new ZXingScannerView(this);
@@ -135,17 +142,17 @@ public class ScanCode extends AppCompatActivity implements ZXingScannerView.Resu
     }
 
 
-    private ActionBarDrawerToggle setupDrawerToggle() {
-        return new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.drawer_open, R.string.drawer_close);
-    }
-
-    private View.OnClickListener searchClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Intent intent = new Intent(ScanCode.this, BuildingsActivity.class);
-            startActivity(intent);
-        }
-    };
+//    private ActionBarDrawerToggle setupDrawerToggle() {
+//        return new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.drawer_open, R.string.drawer_close);
+//    }
+//
+//    private View.OnClickListener searchClickListener = new View.OnClickListener() {
+//        @Override
+//        public void onClick(View v) {
+//            Intent intent = new Intent(ScanCode.this, BuildingsActivity.class);
+//            startActivity(intent);
+//        }
+//    };
 
 
     @Override
@@ -169,17 +176,17 @@ public class ScanCode extends AppCompatActivity implements ZXingScannerView.Resu
         }, 2000);
 
     }
-    private void saveData(Building building) {
-        if(!isOnList(building.getIdBuilding())){
-            buildingList.add(building);
-            SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            Gson gson = new Gson();
-            String json = gson.toJson(buildingList);
-            editor.putString(BuildingsActivity.BUILDING_LIST, json);
-            editor.apply();
-        }
-    }
+//    private void saveData(Building building) {
+//        if(!isOnList(building.getIdBuilding())){
+//            buildingList.add(building);
+//            SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
+//            SharedPreferences.Editor editor = sharedPreferences.edit();
+//            Gson gson = new Gson();
+//            String json = gson.toJson(buildingList);
+//            editor.putString(BuildingsActivity.BUILDING_LIST, json);
+//            editor.apply();
+//        }
+//    }
     private boolean isOnList(int buildingId) {
         if (buildingList == null) {
             buildingList = new ArrayList<>();
@@ -193,17 +200,17 @@ public class ScanCode extends AppCompatActivity implements ZXingScannerView.Resu
         return false;
     }
 
-    private void loadData() {
-        SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
-        Gson gson = new Gson();
-        String json = sharedPreferences.getString(BuildingsActivity.BUILDING_LIST, null);
-        Type type = new TypeToken<ArrayList<Building>>() {
-        }.getType();
-        buildingList = gson.fromJson(json, type);
-        if(buildingList == null){
-            buildingList = new ArrayList<>();
-        }
-    }
+//    private void loadData() {
+//        SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
+//        Gson gson = new Gson();
+//        String json = sharedPreferences.getString(BuildingsActivity.BUILDING_LIST, null);
+//        Type type = new TypeToken<ArrayList<Building>>() {
+//        }.getType();
+//        buildingList = gson.fromJson(json, type);
+//        if(buildingList == null){
+//            buildingList = new ArrayList<>();
+//        }
+//    }
     private class getBuilding extends AsyncTask<Void, Void, JSONArray> {
 
         @Override
@@ -221,9 +228,9 @@ public class ScanCode extends AppCompatActivity implements ZXingScannerView.Resu
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            if(b != null) {
-                saveData(gson.fromJson(b, Building.class));
-            }
+//            if(b != null) {
+//                saveData(gson.fromJson(b, Building.class));
+//            }
         }
     }
 
@@ -231,8 +238,9 @@ public class ScanCode extends AppCompatActivity implements ZXingScannerView.Resu
         Intent intent = new Intent();
         if(ChooseActivity.getOption() == 1) {
             intent = new Intent(ScanCode.this, CategoryActivity.class);
-        }else if(ChooseActivity.getOption() == 0 && idGame == 0) {
-            intent = new Intent(ScanCode.this, GameListActivity.class);
+//            ChooseActivity.getOption() == 0 &&
+        }else if(idGame == 0) {
+            intent = new Intent(ScanCode.this, ChooseActivity.class);
         } else if(idGame != 0){
             intent = new Intent(ScanCode.this, GameActivity.class);
             intent.putExtra("idNextPoint", idNextPoint);
@@ -241,6 +249,9 @@ public class ScanCode extends AppCompatActivity implements ZXingScannerView.Resu
             intent.putExtra("hintPoint", hintPoint);
             intent.putExtra("hint", hint);
         }
+//        else{
+//            intent = new Intent(ScanCode.this, ChooseActivity.class);
+//        }
         intent.putExtra(ScanCode.BUILDING_ID, idBuilding);
         intent.putExtra("idGame", idGame);
         startActivity(intent);

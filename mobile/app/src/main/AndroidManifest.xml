@@ -17,15 +17,24 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activity.GameActivity"
-            android:parentActivityName=".Activity.GameListActivity"></activity>
+        <activity android:name=".Activity.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Activity.RankingActivity" />
+        <activity
+            android:name=".Activity.GameActivity"
+            android:parentActivityName=".Activity.GameListActivity" />
         <activity
             android:name=".Activity.GameListActivity"
             android:parentActivityName=".Activity.ChooseActivity" />
         <activity android:name=".Activity.ChooseActivity" />
         <activity android:name=".Activity.ScanCode" />
-        <activity android:name=".Activity.Navigation_activity"
-            />
+        <activity android:name=".Activity.Navigation_activity" />
         <activity
             android:name=".Activity.CategoryActivity"
             android:label="@string/category_title"
@@ -48,12 +57,7 @@
             android:label="@string/title_load_buildings"
             android:parentActivityName=".Activity.MainActivity" />
         <activity android:name=".Activity.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

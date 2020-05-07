@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void start(View view) {
-        Intent intent = new Intent(MainActivity.this, ChooseActivity.class);
+        Intent intent = new Intent(MainActivity.this, ScanCode.class);
         startActivity(intent);
     }
 }
