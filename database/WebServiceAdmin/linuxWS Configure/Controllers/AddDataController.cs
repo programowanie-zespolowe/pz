@@ -26,7 +26,6 @@ namespace WhereToGo.Admin.Controllers
         [HttpPost]
         public IActionResult PostBuildings(string NameBuilding, double scale, [FromForm] IFormFile ImageRead)
         {
-            string deNameBuilding = System.Net.WebUtility.UrlDecode(NameBuilding);
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             using (var ms = new MemoryStream())
@@ -34,7 +33,7 @@ namespace WhereToGo.Admin.Controllers
                 using WhereToGoContext whereToGo = new WhereToGoContext();
                 Buildings mdlBuildings = new Buildings();
                 mdlBuildings.IdUser = UserSettings.IdAdmin;
-                mdlBuildings.NameBuilding = deNameBuilding;
+                mdlBuildings.NameBuilding = NameBuilding;
                 mdlBuildings.Scale = scale;
                 if (ImageRead != null)
                 {
@@ -95,14 +94,13 @@ namespace WhereToGo.Admin.Controllers
         [HttpPost]
         public IActionResult PostGroups(string NameGroup, int IdBuilding, [FromForm] IFormFile ImageRead)
         {
-            string deNameGroup = System.Net.WebUtility.UrlDecode(NameGroup);
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             using (var ms = new MemoryStream())
             {
                 using WhereToGoContext whereToGo = new WhereToGoContext();
                 Groups mdlGroups = new Groups();
-                mdlGroups.NameGroup = deNameGroup;
+                mdlGroups.NameGroup = NameGroup;
                 if (ImageRead != null)
                 {
                     ImageRead.CopyTo(ms);
@@ -130,12 +128,11 @@ namespace WhereToGo.Admin.Controllers
         [HttpPost]
         public IActionResult PostPointType(string TypePoint)
         {
-            string deTypePoint = System.Net.WebUtility.UrlDecode(TypePoint);
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
                 using WhereToGoContext whereToGo = new WhereToGoContext();
                 PointType mdlPointType = new PointType();
-                mdlPointType.TypePoint = deTypePoint;
+                mdlPointType.TypePoint = TypePoint;
                 whereToGo.PointType.Add(mdlPointType);
             try
             {
@@ -186,7 +183,6 @@ namespace WhereToGo.Admin.Controllers
         [HttpPost]
         public IActionResult PostPoint(int idPoint, string NamePoint, int IdGroup, [FromForm] IFormFile ImageRead)
         {
-            string deNamePoint = System.Net.WebUtility.UrlDecode(NamePoint);
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             using (var ms = new MemoryStream())
@@ -194,7 +190,7 @@ namespace WhereToGo.Admin.Controllers
                 using WhereToGoContext whereToGo = new WhereToGoContext();
                 PointsDetail mdlPointsDetails = new PointsDetail();
                 mdlPointsDetails.IdPoint = idPoint;
-                mdlPointsDetails.NamePoint = deNamePoint;
+                mdlPointsDetails.NamePoint = NamePoint;
                 mdlPointsDetails.IdGroup = IdGroup;
                 if (ImageRead != null)
                 {
@@ -250,7 +246,6 @@ namespace WhereToGo.Admin.Controllers
         [HttpPost]
         public IActionResult OutdoorGame(int idBuilding, string nameGame, DateTime StartDateGame, DateTime EndDateGame, int idFirstPoint, [FromForm] IFormFile ImageRead)
         {
-            string denameGame = System.Net.WebUtility.UrlDecode(nameGame);
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             using (var ms = new MemoryStream())
@@ -258,7 +253,7 @@ namespace WhereToGo.Admin.Controllers
                 using WhereToGoContext whereToGo = new WhereToGoContext();
                 OutdoorGame mdlOutdoorGame = new OutdoorGame();
                 mdlOutdoorGame.IdBuilding = idBuilding;
-                mdlOutdoorGame.NameGame = denameGame;
+                mdlOutdoorGame.NameGame = nameGame;
                 mdlOutdoorGame.StartDateGame = StartDateGame;
                 mdlOutdoorGame.EndDateGame = EndDateGame;
                 if (idFirstPoint == -1)
@@ -290,8 +285,6 @@ namespace WhereToGo.Admin.Controllers
         [HttpPost]
         public IActionResult OutdoorGamePath(int idOutdoorGame, int idPoint, string Question, string Answer, int idNextPoint, int idHintPoint)
         {
-            string deQuestion = System.Net.WebUtility.UrlDecode(Question);
-            string deAnswer = System.Net.WebUtility.UrlDecode(Answer);
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             using (var ms = new MemoryStream())
@@ -300,8 +293,8 @@ namespace WhereToGo.Admin.Controllers
                 OutdoorGamePath mdlOutdoorGamePath = new OutdoorGamePath();
                 mdlOutdoorGamePath.IdOutdoorGame = idOutdoorGame;
                 mdlOutdoorGamePath.IdPoint = idPoint;
-                mdlOutdoorGamePath.Question = deQuestion;
-                mdlOutdoorGamePath.Answer = deAnswer;
+                mdlOutdoorGamePath.Question = Question;
+                mdlOutdoorGamePath.Answer = Answer;
                 if (idNextPoint == -1)
                     mdlOutdoorGamePath.IdNextPoint = null;
                 else
@@ -329,7 +322,6 @@ namespace WhereToGo.Admin.Controllers
         [HttpPost]
         public IActionResult OutdoorGameHints(int idOutdoorGame, int idPoint, string Hint)
         {
-            string deHint = System.Net.WebUtility.UrlDecode(Hint);
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             using (var ms = new MemoryStream())
@@ -338,7 +330,7 @@ namespace WhereToGo.Admin.Controllers
                 OutdoorGameHints mdlOutdoorGameHint = new OutdoorGameHints();
                 mdlOutdoorGameHint.IdOutdoorGame = idOutdoorGame;
                 mdlOutdoorGameHint.IdPoint = idPoint;
-                mdlOutdoorGameHint.Hint = deHint;
+                mdlOutdoorGameHint.Hint = Hint;
                 whereToGo.OutdoorGameHints.Add(mdlOutdoorGameHint);
                 try
                 {

@@ -21,7 +21,6 @@ namespace WhereToGo.Admin.Controllers
         [Route("Buildings/{idBuilding}/{NameBuilding}/{scale}")]
         public IActionResult PostBuildings(int  idBuilding, string NameBuilding, double scale, [FromForm] IFormFile ImageRead)
         {
-            string deNameBuilding = System.Net.WebUtility.UrlDecode(NameBuilding);
             using (var ms = new MemoryStream())
             {
                 using WhereToGoContext whereToGo = new WhereToGoContext();
@@ -29,7 +28,7 @@ namespace WhereToGo.Admin.Controllers
                 mdlBuildings = whereToGo.Buildings.Where(i => i.IdBuilding == idBuilding).FirstOrDefault();
 
                 mdlBuildings.IdUser = UserSettings.IdAdmin;
-                mdlBuildings.NameBuilding = deNameBuilding;
+                mdlBuildings.NameBuilding = NameBuilding;
                 mdlBuildings.Scale = scale;
                 if (ImageRead != null)
                 {
@@ -92,13 +91,12 @@ namespace WhereToGo.Admin.Controllers
         [Route("Groups/{idGroup}/{NameGroup}/{IdBuilding}")]
         public IActionResult PostGroup(int idGroup, string NameGroup, int IdBuilding, [FromForm] IFormFile ImageRead)
         {
-            string deNameGroup = System.Net.WebUtility.UrlDecode(NameGroup);
             using (var ms = new MemoryStream())
             {
                 using WhereToGoContext whereToGo = new WhereToGoContext();
                 Groups mdlGroups = new Groups();
                 mdlGroups = whereToGo.Groups.Where(i => i.IdGroup == idGroup).FirstOrDefault();
-                mdlGroups.NameGroup = deNameGroup;
+                mdlGroups.NameGroup = NameGroup;
                 if (ImageRead != null)
                 {
                     ImageRead.CopyTo(ms);
@@ -126,13 +124,12 @@ namespace WhereToGo.Admin.Controllers
         [Route("PointType/{idPointType}/{TypePoint}")]
         public IActionResult PostPointType(int idPointType, string TypePoint)
         {
-            string deTypePoint = System.Net.WebUtility.UrlDecode(TypePoint);
             using (var ms = new MemoryStream())
             {
                 using WhereToGoContext whereToGo = new WhereToGoContext();
                 PointType mdlPointType = new PointType();
                 mdlPointType = whereToGo.PointType.Where(i => i.IdPointType == idPointType).FirstOrDefault();
-                mdlPointType.TypePoint = deTypePoint;
+                mdlPointType.TypePoint = TypePoint;
                 whereToGo.PointType.Update(mdlPointType);
 
                 try
@@ -189,14 +186,13 @@ namespace WhereToGo.Admin.Controllers
         [Route("Points/{idPoint}/PointsDetail/{idPointDetail}/{NamePoint}/{IdGroup}")]
         public IActionResult PostPointDetail(int idPoint, int idPointDetail, string NamePoint, int IdGroup, [FromForm] IFormFile ImageRead)
         {
-            string deNamePoint = System.Net.WebUtility.UrlDecode(NamePoint);
             using (var ms = new MemoryStream())
             {
                 using WhereToGoContext whereToGo = new WhereToGoContext();
                 PointsDetail mdlPointDetails = new PointsDetail();
                 mdlPointDetails = whereToGo.PointsDetail.Where(i => i.IdPointDetails == idPointDetail && i.IdPoint == idPoint).FirstOrDefault();
                 mdlPointDetails.IdPoint = idPoint;
-                mdlPointDetails.NamePoint = deNamePoint;
+                mdlPointDetails.NamePoint = NamePoint;
                 mdlPointDetails.IdGroup = IdGroup;
                 if (ImageRead != null)
                 {
@@ -224,14 +220,13 @@ namespace WhereToGo.Admin.Controllers
         [Route("OutdoorGame/{idOutdoorGame}/{idBuilding}/{nameGame}/{StartDateGame}/{EndDateGame}/{idFirstPoint}")]
         public IActionResult OutdoorGame(int idOutdoorGame, int idBuilding, string nameGame, DateTime StartDateGame, DateTime EndDateGame, int idFirstPoint, [FromForm] IFormFile ImageRead)
         {
-            string denameGame = System.Net.WebUtility.UrlDecode(nameGame);
             using (var ms = new MemoryStream())
             {
                 using WhereToGoContext whereToGo = new WhereToGoContext();
                 OutdoorGame mdlOutdoorGame = new OutdoorGame();
                 mdlOutdoorGame = whereToGo.OutdoorGame.Where(i => i.IdOutdoorGame == idOutdoorGame).FirstOrDefault();
                 mdlOutdoorGame.IdBuilding = idBuilding;
-                mdlOutdoorGame.NameGame = denameGame;
+                mdlOutdoorGame.NameGame = nameGame;
                 mdlOutdoorGame.StartDateGame = StartDateGame;
                 mdlOutdoorGame.EndDateGame = EndDateGame;
                 if (idFirstPoint == -1)
@@ -264,8 +259,6 @@ namespace WhereToGo.Admin.Controllers
         [Route("OutdoorGamePath/{idQuestionPoint}/{idOutdoorGame}/{idPoint}/{Question}/{Answer}/{idNextPoint}/{idHintPoint}")]
         public IActionResult OutdoorGamePath(int idQuestionPoint, int idOutdoorGame, int idPoint, string Question, string Answer, int idNextpoint, int idHintPoint)
         {
-            string deQuestion = System.Net.WebUtility.UrlDecode(Question);
-            string deAnswer = System.Net.WebUtility.UrlDecode(Answer);
             using (var ms = new MemoryStream())
             {
                 using WhereToGoContext whereToGo = new WhereToGoContext();
@@ -273,8 +266,8 @@ namespace WhereToGo.Admin.Controllers
                 mdlOutdoorGamePath = whereToGo.OutdoorGamePath.Where(i => i.IdQuestionPoint == idQuestionPoint).FirstOrDefault();
                 mdlOutdoorGamePath.IdOutdoorGame = idOutdoorGame;
                 mdlOutdoorGamePath.IdPoint = idPoint;
-                mdlOutdoorGamePath.Question = deQuestion;
-                mdlOutdoorGamePath.Answer = deAnswer;
+                mdlOutdoorGamePath.Question = Question;
+                mdlOutdoorGamePath.Answer = Answer;
                 if (idNextpoint == -1)
                     mdlOutdoorGamePath.IdNextPoint = null;
                 else
@@ -302,7 +295,6 @@ namespace WhereToGo.Admin.Controllers
         [Route("OutdoorGameHints/{idHints}/{idOutdoorGame}/{idPoint}/{Hint}")]
         public IActionResult OutdoorGameHints(int idHints, int idOutdoorGame, int idPoint, string Hint)
         {
-            string deHint = System.Net.WebUtility.UrlDecode(Hint);
             using (var ms = new MemoryStream())
             {
                 using WhereToGoContext whereToGo = new WhereToGoContext();
@@ -310,7 +302,7 @@ namespace WhereToGo.Admin.Controllers
                 mdlOutdoorGameHint = whereToGo.OutdoorGameHints.Where(i => i.IdHints == idHints).FirstOrDefault();
                 mdlOutdoorGameHint.IdOutdoorGame = idOutdoorGame;
                 mdlOutdoorGameHint.IdPoint = idPoint;
-                mdlOutdoorGameHint.Hint = deHint;
+                mdlOutdoorGameHint.Hint = Hint;
                 whereToGo.OutdoorGameHints.Update(mdlOutdoorGameHint);
 
                 try
