@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -54,6 +55,8 @@ public class Navigation_activity extends AppCompatActivity{
     private String answer;
     private int hintPoint;
     private String hint;
+    private Button buttonAccept;
+    private Button buttonExit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,46 +76,14 @@ public class Navigation_activity extends AppCompatActivity{
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(R.string.nawigacja);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
-//        mDrawer = findViewById(R.id.drawer_layout);
-//        drawerToggle = setupDrawerToggle();
-//        drawerToggle.setDrawerIndicatorEnabled(true);
-//        mDrawer.addDrawerListener(drawerToggle);
-//        drawerToggle.syncState();
-//        nvDrawer = findViewById(R.id.nvView);
-//        nvDrawer.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-//            @Override
-//            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-//                int id = menuItem.getItemId();
-//                Intent intent;
-//                switch(menuItem.getItemId()){
-//                    case R.id.budynki:
-//                        pointPath.setPreviousPoint(-1);
-//                        intent = new Intent(Navigation_activity.this, BuildingsActivity.class);
-//                        intent.putExtra(ScanCode.BUILDING_ID, idBuilding);
-//                        startActivity(intent);
-//                        break;
-//                    case R.id.pokoje:
-//                        pointPath.setPreviousPoint(-1);
-//                        intent = new Intent(Navigation_activity.this, PointDetailActivity.class);
-//                        intent.putExtra(ScanCode.BUILDING_ID, idBuilding);
-//                        intent.putExtra(CategoryActivity.GROUP_ID, idGroup);
-//                        startActivity(intent);
-//                        break;
-//                    case R.id.nowy_kod:
-//                        intent = new Intent(Navigation_activity.this, MainActivity.class);
-//                        pointPath.setPreviousPoint(-1);
-//                        startActivity(intent);
-//                        break;
-//                }
-//                return true;
-//            }
-//        });
+        buttonAccept = findViewById(R.id.accept);
+        buttonExit = findViewById(R.id.exit);
+        buttonExit.setVisibility(View.INVISIBLE);
         textView = findViewById(R.id.instruction);
         iconImage= findViewById(R.id.testImage);
         stairsOrElevatorImage= findViewById(R.id.StairsOrElevator);
         anotherLevelImage = findViewById(R.id.AnotherLvl);
+
         new getNextPoint().execute();
     }
 
@@ -164,22 +135,27 @@ public class Navigation_activity extends AppCompatActivity{
     }
 
     public void acceptHere(View view) {
+        if(pointPath.getTargetPoint() == pointPath.getNextPoint()){
+            buttonAccept.setVisibility(View.GONE);
+            buttonExit.setVisibility(View.VISIBLE);
+        }
         pointPath.setPreviousPoint(pointPath.getCurrentPoint());
         pointPath.setCurrentPoint(pointPath.getNextPoint());
         if(pointPath.getTargetPoint() == pointPath.getCurrentPoint()){
+            if(ChooseActivity.getOption() == 0){
+                Intent intent = new Intent(Navigation_activity.this, ScanCode.class);
+                intent.putExtra("idGame", idGame);
+                intent.putExtra("idNextPoint", idNextPoint);
+                intent.putExtra("question", question);
+                intent.putExtra("answer", answer);
+                intent.putExtra("hintPoint", hintPoint);
+                intent.putExtra("hint", hint);
+                startActivity(intent);
+            }
                 textView.setTextSize(20);
                 textView.setText("Jestes na miejscu");
+
                 iconImage.setVisibility(View.GONE);
-                if(ChooseActivity.getOption() == 0){
-                    Intent intent = new Intent(Navigation_activity.this, ScanCode.class);
-                    intent.putExtra("idGame", idGame);
-                    intent.putExtra("idNextPoint", idNextPoint);
-                    intent.putExtra("question", question);
-                    intent.putExtra("answer", answer);
-                    intent.putExtra("hintPoint", hintPoint);
-                    intent.putExtra("hint", hint);
-                    startActivity(intent);
-                }
         }else{
             new getNextPoint().execute();
         }
@@ -271,6 +247,15 @@ public class Navigation_activity extends AppCompatActivity{
             id = R.drawable.ikona14;
         }
         return id;
+    }
+
+    public void exitHere(View view) {
+        Intent intent = new Intent(Navigation_activity.this, ChooseActivity.class);
+        intent.putExtra(ScanCode.BUILDING_ID, idBuilding);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        Navigation_activity.this.finish();
+
     }
 
 

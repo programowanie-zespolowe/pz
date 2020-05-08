@@ -82,11 +82,12 @@ public class GameActivity extends AppCompatActivity {
         hintButton = findViewById(R.id.cheat);
         if(hint != null){
             hintText.setVisibility(View.VISIBLE);
+            hintButton.setVisibility(View.INVISIBLE);
             showHint.setText(hint);
         }
         if(idNextPoint == -1) {
             try {
-                funkcjaTestowa();
+                getGamePoint();
             } catch (ExecutionException e) {
                 e.printStackTrace();
             } catch (InterruptedException e) {
@@ -161,7 +162,7 @@ public class GameActivity extends AppCompatActivity {
                }
                else {
                    try {
-                       funkcjaTestowa();
+                       getGamePoint();
                    } catch (ExecutionException e) {
                        e.printStackTrace();
                    } catch (InterruptedException e) {
@@ -251,7 +252,7 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-    private void funkcjaTestowa() throws ExecutionException, InterruptedException {
+    private void getGamePoint() throws ExecutionException, InterruptedException {
         AsyncTask jsonArray = new getFirstPoint().execute();
         JSONArray jsonArray1 = (JSONArray) jsonArray.get();
         Gson gson = new Gson();

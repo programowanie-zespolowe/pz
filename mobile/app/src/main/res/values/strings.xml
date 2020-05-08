@@ -10,6 +10,7 @@
     <string name="category_title">Wybierz kategorię</string>
     <string name="buildings_hint">Wpisz nazwę szukanego budynku</string>
     <string name="button_accept">Jestem</string>
+    <string name="button_exit">Zakończ</string>
     <string name="nawigacja">Nawigacja</string>
 
     <string name="prosto">Idź prosto</string>

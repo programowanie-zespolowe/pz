@@ -10,7 +10,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="252cb66b-14f3-498c-ab09-71884e5d831d" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/programowaniezespolowe/Activity/GameActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/programowaniezespolowe/Activity/GameActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/programowaniezespolowe/Activity/Navigation_activity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/programowaniezespolowe/Activity/Navigation_activity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/res/layout/activity_game_list.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/activity_game_list.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/res/layout/activity_point_detail.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/activity_point_detail.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/res/layout/category_raw.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/category_raw.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/res/layout/game_raw.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/game_raw.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/res/layout/navigation_activity.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/navigation_activity.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/values/strings.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -285,7 +293,14 @@
       <option name="project" value="LOCAL" />
       <updated>1588878367605</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="fix game">
+      <created>1588878694150</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1588878694150</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -318,6 +333,16 @@
           <url>file://$PROJECT_DIR$/src/main/java/com/example/programowaniezespolowe/Activity/RankingActivity.java</url>
           <line>34</line>
           <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/example/programowaniezespolowe/Connection/ConnectWebService.java</url>
+          <line>227</line>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/example/programowaniezespolowe/Activity/GameActivity.java</url>
+          <line>259</line>
+          <option name="timeStamp" value="15" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
