@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,7 +47,7 @@ public class GameActivity extends AppCompatActivity {
     private int idPoint;
     private int hintPoint;
     private String hint;
-    private Button hintButton;
+    private ImageButton hintButton;
     private TextView textViewQuestion;
     private TextView showHint;
     private TextView hintText;

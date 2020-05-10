@@ -9,6 +9,7 @@ import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -55,8 +56,8 @@ public class Navigation_activity extends AppCompatActivity{
     private String answer;
     private int hintPoint;
     private String hint;
-    private Button buttonAccept;
-    private Button buttonExit;
+    private ImageButton buttonAccept;
+    private ImageButton buttonExit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

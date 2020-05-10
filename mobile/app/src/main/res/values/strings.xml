@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">MobileApp</string>
+    <string name="app_name">ViaLinea</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
-    <string name="title">Skanowanie QR Codu</string>
+    <string name="title">Skanowanie QR Codu</string>>
     <string name="menu_header">Test</string>
     <string name="title_load_buildings">Wczytane budynki</string>
     <string name="search_room_hint">Wyszukaj pokój</string>
