@@ -28,4 +28,5 @@
     <string name="ranking">TOP 10 Graczy</string>
     <string name="wybierzGre">Wybór gry</string>
     <string name="wyborTrybu">Wybór trybu</string>
+    <string name="dialogHint">Wpisz swoj nick</string>
 </resources>

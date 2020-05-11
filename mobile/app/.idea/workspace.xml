@@ -10,48 +10,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="252cb66b-14f3-498c-ab09-71884e5d831d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable-v24/ekran_powitania.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable-v24/ikona.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable-v24/przycisk_gra.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable-v24/przycisk_jestem.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable-v24/przycisk_nawigacja.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable-v24/przycisk_podpowiedz.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable-v24/przycisk_sprawdz.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable-v24/przycisk_start.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable-v24/przycisk_zakoncz.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable-v24/tlo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable-v24/toolbar.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable-v24/wybor_trybu.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable-v24/wybor_trybu_toolbar.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/ikona9.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/programowaniezespolowe/Activity/GameActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/programowaniezespolowe/Activity/GameActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/programowaniezespolowe/Activity/Navigation_activity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/programowaniezespolowe/Activity/Navigation_activity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/drawable/ikona10.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/drawable/ikona10.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/drawable/ikona14.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/drawable/ikona14.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/drawable/ikona15.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/drawable/ikona15.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/drawable/ikona3.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/drawable/ikona3.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/drawable/ikona4.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/drawable/ikona4.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/drawable/ikona7.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/drawable/ikona7.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/drawable/ikona8.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/drawable/ikona8.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/drawable/ikona9.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/drawable/ikona91.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/drawable/ikona_lewo.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/drawable/ikona_lewo.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/drawable/przod.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/drawable/przod.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/layout/activity_buildings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/activity_buildings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/programowaniezespolowe/Activity/GameListActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/programowaniezespolowe/Activity/GameListActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/res/layout/activity_category.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/activity_category.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/layout/activity_choose.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/activity_choose.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/layout/activity_game.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/activity_game.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/res/layout/activity_game_list.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/activity_game_list.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/activity_main.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/res/layout/activity_point_detail.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/activity_point_detail.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/layout/activity_ranking.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/activity_ranking.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/layout/activity_scan_code.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/activity_scan_code.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/res/layout/dialog_user.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/dialog_user.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/layout/main_toolbar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/main_toolbar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/layout/menu_header.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/menu_header.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/layout/navigation_activity.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/navigation_activity.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/layout/toolbar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/toolbar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/res/layout/point_detail_raw.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/point_detail_raw.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/values/strings.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -104,6 +69,7 @@
   <component name="ProjectId" id="1YLXkTecF67hrlMg7UpHwwC09am" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="ApkExportedModule" value="app" />
     <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="Pixel_2_API_25" />
@@ -341,7 +307,14 @@
       <option name="project" value="LOCAL" />
       <updated>1588956738124</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="change layout">
+      <created>1589141704109</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1589141704109</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -366,7 +339,8 @@
     <MESSAGE value="add game" />
     <MESSAGE value="fix game" />
     <MESSAGE value="fix game hint, change game list, change navigation end button, change point list" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix game hint, change game list, change navigation end button, change point list" />
+    <MESSAGE value="change layout" />
+    <option name="LAST_COMMIT_MESSAGE" value="change layout" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -167,7 +167,7 @@ public class GameListActivity extends AppCompatActivity {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
         alertDialogBuilder.setView(promptUserView);
         final EditText userAnswer = (EditText) promptUserView.findViewById(R.id.user_name);
-        alertDialogBuilder.setTitle("What's your username?");
+        alertDialogBuilder.setTitle("Podaj swój nick:");
         alertDialogBuilder.setPositiveButton("Ok",new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 nickName = String.valueOf(userAnswer.getText());
