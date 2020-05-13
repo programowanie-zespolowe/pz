@@ -460,6 +460,15 @@ namespace linuxWS.Controllers
                 OutdoorGameRecordTime mdlOutdoorGameRecord = new OutdoorGameRecordTime();
                 if (start == true)
                 {
+                    if (whereToGoEntities.OutdoorGameRecordTime.Where(o => o.IdOutdoorGame == idOutdoorGame && o.Mac == MAC).Count() > 0)
+                    {
+                        return Ok(1);
+                    }
+                    if (whereToGoEntities.OutdoorGameRecordTime.Where(o => o.IdOutdoorGame == idOutdoorGame && o.Name == name).Count() > 0)
+                    {
+                        return Ok(2);
+                    }
+
                     mdlOutdoorGameRecord.IdOutdoorGame = idOutdoorGame;
                     mdlOutdoorGameRecord.Name = name;
                     mdlOutdoorGameRecord.Mac = MAC;
