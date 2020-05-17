@@ -10,34 +10,40 @@
         layout="@layout/toolbar"
         android:layout_width="match_parent"
         android:layout_height="60dp" />
-
     <LinearLayout
+        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/wybor_trybu"
-        android:gravity="center"
         android:orientation="vertical">
 
+        <TextView
+            android:layout_width="388dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="100dp"
+            android:gravity="center"
+            android:text="Co chcesz robić ? \nWybierz grę terenową, bądź nawiguj po budynku"
+            android:textSize="20sp" />
         <LinearLayout
-            android:layout_width="365dp"
-            android:layout_height="400dp">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
             <ImageButton
                 android:id="@+id/gra_terenowa"
                 style="@style/Widget.AppCompat.Button"
-                android:layout_width="182dp"
-                android:layout_height="263dp"
-                android:layout_gravity="bottom"
-                android:background="@drawable/przycisk_gra"
+                android:layout_width="150dp"
+                android:layout_height="43dp"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_marginRight="25dp"
+                android:background="@drawable/gra_terenowa"
                 android:onClick="chooseGame"
                 android:text="Gra Terenowa" />
 
             <ImageButton
                 android:id="@+id/nawigacja"
-                android:layout_width="182dp"
-                android:layout_height="263dp"
-                android:layout_gravity="bottom"
-                android:background="@drawable/przycisk_nawigacja"
+                android:layout_width="150dp"
+                android:layout_height="43dp"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:background="@drawable/nawiguj"
                 android:onClick="chooseNavigation"
                 android:text="Nawigacja" />
 

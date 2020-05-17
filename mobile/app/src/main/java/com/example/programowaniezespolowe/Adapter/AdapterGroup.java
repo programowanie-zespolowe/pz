@@ -81,8 +81,7 @@ public class AdapterGroup extends BaseAdapter implements Filterable {
 
                 for(int i = 0; i < filterList.size(); i++){
                     if(filterList.get(i).getNameGroup().toUpperCase().contains(constraint)){
-                        Group g = new Group(groups.get(i
-                        ).getImageGroup(), filterList.get(i).getNameGroup());
+                        Group g = new Group(filterList.get(i).getImageGroup(), filterList.get(i).getNameGroup());
                         filter.add(g);
                     }
                 }

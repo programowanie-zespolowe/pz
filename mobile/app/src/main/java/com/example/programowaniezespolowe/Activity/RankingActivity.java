@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.programowaniezespolowe.Connection.ConnectWebService;
+import com.example.programowaniezespolowe.Data.Point;
+import com.example.programowaniezespolowe.Data.PointPath;
 import com.example.programowaniezespolowe.Data.RekordTime;
 import com.example.programowaniezespolowe.R;
 import com.google.gson.Gson;
@@ -75,6 +77,8 @@ public class RankingActivity extends AppCompatActivity {
     }
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent msg) {
+        PointPath p = PointPath.getInstance();
+        p.setPreviousPoint(-1);
         switch(keyCode) {
             case(KeyEvent.KEYCODE_BACK):
                 Intent a1_intent = new Intent(this, ChooseActivity.class);
@@ -87,6 +91,8 @@ public class RankingActivity extends AppCompatActivity {
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        PointPath p = PointPath.getInstance();
+        p.setPreviousPoint(-1);
         switch (item.getItemId()) {
 
             case android.R.id.home:

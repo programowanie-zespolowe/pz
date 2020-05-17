@@ -1,18 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/ekran_powitania"
+    android:orientation="vertical"
     android:gravity="center"
-    android:orientation="vertical">
+    android:background="#e3e8e7"
+    >
+
+    <ImageView
+        android:layout_width="203dp"
+        android:layout_height="80dp"
+        android:layout_gravity="right"
+        android:layout_marginTop="80dp"
+        android:src="@drawable/maze" />
+
+    <TextView
+        android:layout_width="318dp"
+        android:layout_height="105dp"
+        android:text="Witaj w aplikacji ViaLinea. Naciśnij przycisk Start i zeskanuj QR Code z budynku."
+        android:textSize="20dp" />
 
     <ImageButton
         android:id="@+id/scan"
-        android:layout_width="316dp"
-        android:layout_height="278dp"
-        android:layout_marginTop="200dp"
-        android:background="@drawable/przycisk_start"
+        android:layout_width="150dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="80dp"
+        android:background="@drawable/start"
         android:onClick="start"
         android:text="Start" />
 </LinearLayout>

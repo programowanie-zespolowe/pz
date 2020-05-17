@@ -2,7 +2,7 @@
     <string name="app_name">ViaLinea</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
-    <string name="title">Skanowanie QR Codu</string>>
+    <string name="title">Skanowanie QR Codu</string>
     <string name="menu_header">Test</string>
     <string name="title_load_buildings">Wczytane budynki</string>
     <string name="search_room_hint">Wyszukaj pokój</string>
@@ -28,5 +28,4 @@
     <string name="ranking">TOP 10 Graczy</string>
     <string name="wybierzGre">Wybór gry</string>
     <string name="wyborTrybu">Wybór trybu</string>
-    <string name="dialogHint">Wpisz swoj nick</string>
 </resources>

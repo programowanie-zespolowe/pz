@@ -73,7 +73,7 @@ public class ConnectWebService {
     private JSONObject GetRequest2(String url) throws IOException, JSONException {
         if(token.getToken() == null){
             getToken(device.getName(), device.getMacId());
-            //getToken("Test", "00:00:00:00:00:00");
+            //getToken("Test", "00:00:00:00:00:22");
         }
 
         URL address = new URL(url);

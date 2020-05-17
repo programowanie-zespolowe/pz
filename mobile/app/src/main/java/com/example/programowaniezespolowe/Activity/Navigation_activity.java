@@ -79,7 +79,7 @@ public class Navigation_activity extends AppCompatActivity{
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         buttonAccept = findViewById(R.id.accept);
         buttonExit = findViewById(R.id.exit);
-        buttonExit.setVisibility(View.INVISIBLE);
+        buttonExit.setVisibility(View.GONE);
         textView = findViewById(R.id.instruction);
         iconImage= findViewById(R.id.testImage);
         stairsOrElevatorImage= findViewById(R.id.StairsOrElevator);
@@ -136,7 +136,7 @@ public class Navigation_activity extends AppCompatActivity{
     }
 
     public void acceptHere(View view) {
-        if(pointPath.getTargetPoint() == pointPath.getNextPoint()){
+        if(pointPath.getTargetPoint() == pointPath.getNextPoint() && ChooseActivity.getOption() == 1){
             buttonAccept.setVisibility(View.GONE);
             buttonExit.setVisibility(View.VISIBLE);
         }
@@ -153,15 +153,18 @@ public class Navigation_activity extends AppCompatActivity{
                 intent.putExtra("hint", hint);
                 startActivity(intent);
             }
-                textView.setTextSize(20);
-                textView.setText("Jestes na miejscu");
-
+//                textView.setTextSize(20);
+//                textView.setText("Jestes na miejscu");
                 iconImage.setVisibility(View.GONE);
         }else{
             new getNextPoint().execute();
         }
     }
     private void dissplayPath(){
+//                if(pointPath.getTargetPoint() == pointPath.getNextPoint()){
+//            buttonAccept.setVisibility(View.GONE);
+//            buttonExit.setVisibility(View.VISIBLE);
+//        }
         stairsOrElevatorImage.setVisibility(View.GONE);
         anotherLevelImage.setVisibility(View.GONE);
         int id = 0;

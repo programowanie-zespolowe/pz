@@ -136,14 +136,15 @@ public class GameActivity extends AppCompatActivity {
                Toast.makeText(getApplicationContext(), "BRAWO!!!", Toast.LENGTH_SHORT).show();
                if (idNextPoint == 0) {
                    AsyncTask asyncTask = new getTime().execute();
-                   String s = null;
+                   String d = null;
                    try {
-                       s = (String) asyncTask.get();
+                       d = (String) asyncTask.get();
                    } catch (ExecutionException e) {
                        e.printStackTrace();
                    } catch (InterruptedException e) {
                        e.printStackTrace();
                    }
+                   String s = d;
                    double czasDouble = Double.parseDouble(s);
                    int czas = (int)czasDouble;
                    FinishGame finishGame = new FinishGame();
@@ -241,7 +242,8 @@ public class GameActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(Void... voids) {
             connectWebService = ConnectWebService.GetInstance();
-            return connectWebService.getOutdoorTime(idGame, outdoorGameTime.getName(), outdoorGameTime.getMacId(), false);
+//            return connectWebService.getOutdoorTime(idGame, outdoorGameTime.getName(), outdoorGameTime.getMacId(), false);
+            return connectWebService.getOutdoorTime(idGame, outdoorGameTime.getName(), "11:05:11:11:17:00", false);
         }
     }
     private class getFirstPoint extends AsyncTask<Void, Void, JSONArray> {
@@ -270,6 +272,8 @@ public class GameActivity extends AppCompatActivity {
         }
         pointPath = PointPath.getInstance();
         pointPath.setTargetPoint(idPoint);
+        answer = outdoorGamePath.getAnswer();
+        question = outdoorGamePath.getQuestion();
         if(outdoorGamePath.getIdHintPoint() != null) {
             hintPoint = outdoorGamePath.getIdHintPoint();
         }else{
@@ -282,13 +286,14 @@ public class GameActivity extends AppCompatActivity {
         }
         if(pointPath.getCurrentPoint() == idPoint){
             answer = outdoorGamePath.getAnswer();
+            question = outdoorGamePath.getQuestion();
             textViewQuestion.setText(outdoorGamePath.getQuestion());
         }else {
             Intent intent = new Intent(GameActivity.this, Navigation_activity.class);
             intent.putExtra(ScanCode.BUILDING_ID, idBuilding);
             intent.putExtra("idGame", idGame);
             intent.putExtra("idNextPoint", idNextPoint);
-            intent.putExtra("question", outdoorGamePath.getQuestion());
+            intent.putExtra("question", question);
             intent.putExtra("answer", outdoorGamePath.getAnswer());
             intent.putExtra("hintPoint", outdoorGamePath.getIdHintPoint());
             startActivity(intent);

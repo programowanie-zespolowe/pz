@@ -75,8 +75,8 @@ public class GameListActivity extends AppCompatActivity {
 //        if(outdoorGameTime.getName() == null) {
 //            dialog();
 //        }
-        SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
-        loadIdGame = sharedPreferences.getInt("idGame", 0);
+//        SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
+//        loadIdGame = sharedPreferences.getInt("idGame", 0);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -93,7 +93,6 @@ public class GameListActivity extends AppCompatActivity {
 
     private void startGameActivity(int position) {
         Intent intent = null;
-
         GameActivity.gameName = games.get(position).getNameGame();
         outdoorGameTime.setIdOutdoorGame(idGame);
         AsyncTask asyncTask = new getTime().execute();
@@ -105,17 +104,26 @@ public class GameListActivity extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.setDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz");
-        Gson gson = gsonBuilder.create();
-        Date date = gson.fromJson(test, Date.class);
-        outdoorGameTime.setStart(date);
-
-        int idGamePoint = games.get(position).getIdFirstPoint();
-        intent = new Intent(GameListActivity.this, GameActivity.class);
-        intent.putExtra(ScanCode.BUILDING_ID, idBuilding);
-        intent.putExtra("idGame", idGame);
-        startActivity(intent);
+        String liczba = test.toString();
+//        if (!(test.equals(null))) {
+            if(liczba.equals("1")){
+                startRankingActivity(idGame);
+            } else if(liczba.equals("2")) {
+                Toast.makeText(getApplicationContext(), "Nick zajęty", Toast.LENGTH_SHORT).show();
+                dialog();
+//            }
+        } else{
+            GsonBuilder gsonBuilder = new GsonBuilder();
+            gsonBuilder.setDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz");
+            Gson gson = gsonBuilder.create();
+            Date date = gson.fromJson(test, Date.class);
+            outdoorGameTime.setStart(date);
+            int idGamePoint = games.get(position).getIdFirstPoint();
+            intent = new Intent(GameListActivity.this, GameActivity.class);
+            intent.putExtra(ScanCode.BUILDING_ID, idBuilding);
+            intent.putExtra("idGame", idGame);
+            startActivity(intent);
+        }
     }
 
     private boolean isGameFinished(int idGame){
@@ -167,7 +175,7 @@ public class GameListActivity extends AppCompatActivity {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
         alertDialogBuilder.setView(promptUserView);
         final EditText userAnswer = (EditText) promptUserView.findViewById(R.id.user_name);
-        alertDialogBuilder.setTitle("Podaj swój nick:");
+        alertDialogBuilder.setTitle("Podaj nick");
         alertDialogBuilder.setPositiveButton("Ok",new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 nickName = String.valueOf(userAnswer.getText());
@@ -240,7 +248,8 @@ public class GameListActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(Void... voids) {
             connectWebService = ConnectWebService.GetInstance();
-            return connectWebService.getOutdoorTime(idGame, outdoorGameTime.getName(), outdoorGameTime.getMacId(), true);
+//            return connectWebService.getOutdoorTime(idGame, outdoorGameTime.getName(), outdoorGameTime.getMacId(), true);
+            return connectWebService.getOutdoorTime(idGame, outdoorGameTime.getName(), "11:05:11:11:17:00", true);
         }
 
         @Override
