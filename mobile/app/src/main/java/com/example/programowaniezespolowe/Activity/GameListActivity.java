@@ -7,7 +7,6 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -21,21 +20,15 @@ import android.widget.Toast;
 
 import com.example.programowaniezespolowe.Adapter.GameAdapter;
 import com.example.programowaniezespolowe.Connection.ConnectWebService;
-import com.example.programowaniezespolowe.Data.FinishGame;
 import com.example.programowaniezespolowe.Data.OutdoorGame;
-import com.example.programowaniezespolowe.Data.OutdoorGamePath;
 import com.example.programowaniezespolowe.Data.OutdoorGameTime;
-import com.example.programowaniezespolowe.Data.PointPath;
 import com.example.programowaniezespolowe.R;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class GameListActivity extends AppCompatActivity {
@@ -72,18 +65,11 @@ public class GameListActivity extends AppCompatActivity {
         gameAdapter = new GameAdapter(this, games);
         outdoorGameTime = OutdoorGameTime.getInstance();
         new getOutGame().execute();
-//        if(outdoorGameTime.getName() == null) {
-//            dialog();
-//        }
-//        SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
-//        loadIdGame = sharedPreferences.getInt("idGame", 0);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 idGame = games.get(position).getIdOutdoorGame();
-                if(isGameFinished(idGame)){
-                    startRankingActivity(idGame);
-                }else {
+                if(isGameFinished()){
                     positionClicked = position;
                     dialog();
                 }
@@ -105,20 +91,16 @@ public class GameListActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         String liczba = test.toString();
-//        if (!(test.equals(null))) {
-            if(liczba.equals("1")){
-                startRankingActivity(idGame);
-            } else if(liczba.equals("2")) {
-                Toast.makeText(getApplicationContext(), "Nick zajęty", Toast.LENGTH_SHORT).show();
-                dialog();
-//            }
+        if(liczba.equals("2")) {
+            Toast.makeText(getApplicationContext(), "Nick zajęty", Toast.LENGTH_SHORT).show();
+            dialog();
+
         } else{
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.setDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz");
             Gson gson = gsonBuilder.create();
             Date date = gson.fromJson(test, Date.class);
             outdoorGameTime.setStart(date);
-            int idGamePoint = games.get(position).getIdFirstPoint();
             intent = new Intent(GameListActivity.this, GameActivity.class);
             intent.putExtra(ScanCode.BUILDING_ID, idBuilding);
             intent.putExtra("idGame", idGame);
@@ -126,38 +108,26 @@ public class GameListActivity extends AppCompatActivity {
         }
     }
 
-    private boolean isGameFinished(int idGame){
-        FinishGame finishGame = getFinishGame(idGame);
-        if(finishGame == null){
+    private boolean isGameFinished(){
+        AsyncTask asyncTask = new getRekordTime().execute();
+        String odp= null;
+        try {
+            odp = (String) asyncTask.get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        if(odp!= null){
+            double czasDouble = Double.parseDouble(odp);
+            int czas = (int)czasDouble;
+            startRankingActivity(czas);
             return false;
         }
         return true;
     }
 
-    private FinishGame getFinishGame(int idGame){
-        SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        String finishGames = sharedPreferences.getString("finishGames", null);
-        Gson gson = new Gson();
-        if(finishGames == null){
-            return null;
-        }
-        FinishGame[] fg =  gson.fromJson(finishGames, FinishGame[].class);
-
-        for(int i = 0; i < fg.length; i++){
-            if(idGame == fg[i].getIdGame()){
-                return fg[i];
-            }
-        }
-        return null;
-    }
-
-    private void startRankingActivity(int idGame){
-        FinishGame finishGame = getFinishGame(idGame);
-        if(finishGame == null){
-            return;
-        }
-        int czas = finishGame.getLiczbaSekund();
+    private void startRankingActivity(int czas){
         long diffSeconds = czas % 60;
         long diffMinutes = (czas % 3600) / 60;
         long diffHours = czas / 3600;
@@ -216,6 +186,27 @@ public class GameListActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private class getRekordTime extends AsyncTask<Void, Void, String>{
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            connectWebService = ConnectWebService.GetInstance();
+            return connectWebService.getRekordTime(idGame, outdoorGameTime.getMacId());
+
+        }
+
+        @Override
+        protected void onPostExecute(String jsonObject) {
+            onCancelled();
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+        }
+    }
+
+
     private  class getOutGame extends AsyncTask<Void, Void, JSONArray> {
 
         @Override
@@ -248,8 +239,7 @@ public class GameListActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(Void... voids) {
             connectWebService = ConnectWebService.GetInstance();
-//            return connectWebService.getOutdoorTime(idGame, outdoorGameTime.getName(), outdoorGameTime.getMacId(), true);
-            return connectWebService.getOutdoorTime(idGame, outdoorGameTime.getName(), "11:05:11:11:17:00", true);
+            return connectWebService.getOutdoorTime(idGame, outdoorGameTime.getName(), outdoorGameTime.getMacId(), true);
         }
 
         @Override

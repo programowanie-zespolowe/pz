@@ -11,9 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.programowaniezespolowe.Connection.ConnectWebService;
-import com.example.programowaniezespolowe.Data.Point;
 import com.example.programowaniezespolowe.Data.PointPath;
-import com.example.programowaniezespolowe.Data.RekordTime;
 import com.example.programowaniezespolowe.R;
 import com.google.gson.Gson;
 

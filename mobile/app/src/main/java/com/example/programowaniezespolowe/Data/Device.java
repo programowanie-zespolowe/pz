@@ -1,8 +1,5 @@
 package com.example.programowaniezespolowe.Data;
 
-import android.content.Context;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
 
 public class Device {
     private String name;

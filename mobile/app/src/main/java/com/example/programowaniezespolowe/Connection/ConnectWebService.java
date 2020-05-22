@@ -15,7 +15,6 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.MessageFormat;
-import java.util.Date;
 
 public class ConnectWebService {
     private static ConnectWebService instance;
@@ -31,6 +30,7 @@ public class ConnectWebService {
     private final String OUTDOOR_GAME_HINT =  "http://54.37.136.172:91/GetData/Buildings/OutdoorGame/Hint/{0}/{1}";
     private final String OUTDOOR_TIME_GAME = "http://54.37.136.172:91/GetData/Buildings/OutdoorGame/RecordTime/{0}/{1}/{2}/{3}";
     private final String OUTDOOR_REKORD = "http://54.37.136.172:91/GetData/Buildings/OutdoorGame/RecordTime/{0}";
+    private final String REKORD_TIME = "http://54.37.136.172:91/GetData/Buildings/OutdoorGame/RecordTime/{0}/{1}";
 
     private Token token;
     private static Device device;
@@ -51,10 +51,22 @@ public class ConnectWebService {
         token = new Token();
     }
 
+    public String getRekordTime(int idGame, String mac){
+        String newUrl = MessageFormat.format(REKORD_TIME, idGame, mac);
+        try {
+            String jsonObject = PostRequest(newUrl);
+            return jsonObject;
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     private JSONArray GetRequest(String url) throws IOException, JSONException {
         if(token.getToken() == null){
             getToken(device.getName(), device.getMacId());
-            //getToken("Test", "00:00:00:00:00:00");
         }
 
         URL address = new URL(url);
@@ -73,7 +85,6 @@ public class ConnectWebService {
     private JSONObject GetRequest2(String url) throws IOException, JSONException {
         if(token.getToken() == null){
             getToken(device.getName(), device.getMacId());
-            //getToken("Test", "00:00:00:00:00:22");
         }
 
         URL address = new URL(url);
@@ -112,7 +123,6 @@ public class ConnectWebService {
         URL address = new URL(url);
         HttpURLConnection connection = (HttpURLConnection) address.openConnection();
         connection.setRequestMethod("POST");
-        //connection.setRequestProperty("Content-Type", "application/json");
         connection.setRequestProperty("Authorization", "Bearer " + token.getToken());
         connection.setDoOutput(true);
 
@@ -199,7 +209,7 @@ public class ConnectWebService {
         }
         return null;
     }
-    //    Admin/GetData/Buildings/{idBuilding}/{idPrevPoint}/{idActualPoint}/{idDestPoint}
+
     public JSONObject getNextPoint(int idBuilding){
         PointPath p = PointPath.getInstance();
         try {

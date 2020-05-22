@@ -52,11 +52,6 @@ public class PointDetailAdapter extends BaseAdapter implements Filterable {
             convertView = layoutInflater.inflate(R.layout.point_detail_raw,parent, false);
         }
         byte[] decodeString;
-//        if(pointDetailList.get(position).getIdGroup() == 27) {
-//            decodeString = Base64.decode(pointDetailList.get(1).getImagePoint(), Base64.DEFAULT);
-//        }else{
-//            decodeString = Base64.decode(pointDetailList.get(0).getImagePoint(), Base64.DEFAULT);
-//        }
         decodeString = Base64.decode(pointDetailList.get(position).getImagePoint(), Base64.DEFAULT);
         Bitmap bmp = BitmapFactory.decodeByteArray(decodeString, 0, decodeString.length);
         ImageView imageView = convertView.findViewById(R.id.iconPoint);

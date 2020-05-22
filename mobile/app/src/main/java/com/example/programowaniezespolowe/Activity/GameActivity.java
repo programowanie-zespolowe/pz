@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -136,15 +135,14 @@ public class GameActivity extends AppCompatActivity {
                Toast.makeText(getApplicationContext(), "BRAWO!!!", Toast.LENGTH_SHORT).show();
                if (idNextPoint == 0) {
                    AsyncTask asyncTask = new getTime().execute();
-                   String d = null;
+                   String s = null;
                    try {
-                       d = (String) asyncTask.get();
+                       s = (String) asyncTask.get();
                    } catch (ExecutionException e) {
                        e.printStackTrace();
                    } catch (InterruptedException e) {
                        e.printStackTrace();
-                   }
-                   String s = d;
+                   };
                    double czasDouble = Double.parseDouble(s);
                    int czas = (int)czasDouble;
                    FinishGame finishGame = new FinishGame();
@@ -242,8 +240,7 @@ public class GameActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(Void... voids) {
             connectWebService = ConnectWebService.GetInstance();
-//            return connectWebService.getOutdoorTime(idGame, outdoorGameTime.getName(), outdoorGameTime.getMacId(), false);
-            return connectWebService.getOutdoorTime(idGame, outdoorGameTime.getName(), "11:05:11:11:17:00", false);
+            return connectWebService.getOutdoorTime(idGame, outdoorGameTime.getName(), outdoorGameTime.getMacId(), false);
         }
     }
     private class getFirstPoint extends AsyncTask<Void, Void, JSONArray> {

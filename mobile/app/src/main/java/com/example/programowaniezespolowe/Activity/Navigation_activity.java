@@ -8,33 +8,23 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.drawerlayout.widget.DrawerLayout;
-
 import com.example.programowaniezespolowe.Connection.ConnectWebService;
 import com.example.programowaniezespolowe.Data.NextPoint;
-import com.example.programowaniezespolowe.Data.OutdoorGamePath;
 import com.example.programowaniezespolowe.Data.PointPath;
 import com.example.programowaniezespolowe.MyCanavas;
 import com.example.programowaniezespolowe.R;
-import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import org.json.JSONObject;
 
 
 
 public class Navigation_activity extends AppCompatActivity{
-    private DrawerLayout mDrawer;
     private Toolbar toolbar;
-    private NavigationView nvDrawer;
     private int idGroup;
     private int idBuilding;
     private int idGame;
@@ -45,12 +35,6 @@ public class Navigation_activity extends AppCompatActivity{
     private ImageView iconImage;
     private ImageView stairsOrElevatorImage;
     private ImageView anotherLevelImage;
-
-    private ActionBarDrawerToggle drawerToggle;
-
-    private OutdoorGamePath outdoorGamePath;
-
-    int idPoint;
     int idNextPoint ;
     private String question;
     private String answer;
@@ -131,9 +115,6 @@ public class Navigation_activity extends AppCompatActivity{
         }
         return false;
     }
-    private ActionBarDrawerToggle setupDrawerToggle() {
-        return new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.drawer_open,  R.string.drawer_close);
-    }
 
     public void acceptHere(View view) {
         if(pointPath.getTargetPoint() == pointPath.getNextPoint() && ChooseActivity.getOption() == 1){
@@ -153,18 +134,12 @@ public class Navigation_activity extends AppCompatActivity{
                 intent.putExtra("hint", hint);
                 startActivity(intent);
             }
-//                textView.setTextSize(20);
-//                textView.setText("Jestes na miejscu");
                 iconImage.setVisibility(View.GONE);
         }else{
             new getNextPoint().execute();
         }
     }
     private void dissplayPath(){
-//                if(pointPath.getTargetPoint() == pointPath.getNextPoint()){
-//            buttonAccept.setVisibility(View.GONE);
-//            buttonExit.setVisibility(View.VISIBLE);
-//        }
         stairsOrElevatorImage.setVisibility(View.GONE);
         anotherLevelImage.setVisibility(View.GONE);
         int id = 0;
@@ -180,7 +155,6 @@ public class Navigation_activity extends AppCompatActivity{
         instrukcje += getString(idText) + " " + (int)nextPoint.getDistance() + " metrów.";
         if(nextPoint.isStairs() || nextPoint.isEleveator()){
             if(nextPoint.isStairs()){
-//                idStairsOrElevator = R.drawable.schody;
                 if(nextPoint.getCurrentLevel() < nextPoint.getLevel()){
                     idStairsOrElevator = R.drawable.ikona3;
                     idText = R.string.schody_gora;
