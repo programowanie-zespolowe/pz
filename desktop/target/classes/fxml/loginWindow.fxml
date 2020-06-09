@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<GridPane fx:id="gp" alignment="CENTER" hgap="10" prefHeight="173.0" prefWidth="150.0" vgap="10" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginWindowController">
+   <columnConstraints>
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
+   <children>
+       <Label alignment="CENTER" styleClass="labelGreen" stylesheets="@../stylesheets/confirm.css" text="%lw.label" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER" />
+      <TextField fx:id="loginTextField" promptText="%lw.name" styleClass="text-field1" stylesheets="@../stylesheets/confirm.css" text="admin2" GridPane.rowIndex="1" />
+      <PasswordField fx:id="passwordField" promptText="%lw.password" stylesheets="@../stylesheets/confirm.css" text="F5s4+FzNDGY=" GridPane.rowIndex="2" />
+      <Button fx:id="loginButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleLoginAction" styleClass="buttonConfirm" stylesheets="@../stylesheets/confirm.css" text="%lw.button" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets></Button>
+   </children>
+   <stylesheets>
+      <URL value="@../stylesheets/scene.css" />
+      <URL value="@../stylesheets/confirm.css" />
+   </stylesheets>
+</GridPane>

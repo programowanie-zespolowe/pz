@@ -1,0 +1,39 @@
+.root{
+    -fx-background-color: #E3E8E7 ;
+    -fx-text-fill: #C0C0C0;
+}
+
+.scroll-pane .viewport{
+    -fx-background-color: #E3E8E7;
+}
+
+.hbox {
+    -fx-background-color: tranparent;
+    -fx-border-style: hidden hidden solid hidden;
+    -fx-border-color: #A5A8A7;
+}
+.vbox {
+    -fx-background-color: tranparent;
+    -fx-border-style: hidden solid hidden hidden;
+    -fx-border-color: #A5A8A7;
+}
+
+.context-menu{
+    -fx-background-color: #808080;
+    -fx-border-color: black;
+}
+
+.context-menu .label{
+    -fx-effect: dropshadow( one-pass-box , black , 0, 0.0 , 0 , -1 );
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #DCDCDC;
+}
+
+.context-menu .menu-item{
+    -fx-background-color: #808080;
+}
+
+.context-menu .menu-item:hover{
+    -fx-background-color: black;
+}

@@ -1,0 +1,26 @@
+.buttonConfirm1{
+    -fx-background-color:
+    /*
+    przed naciśnięciem
+    linear-gradient(from 0px 0px to 0px 50px, gray, darkgray 50%, dimgray 99%, white);
+     */
+    /*
+    po naciśnięciu
+    linear-gradient(from 0px 0px to 0px 50px, white, dimgray 50%, darkgray 99%, gray);
+     */
+    -fx-background-radius: 5;
+
+    -fx-text-fill: black;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(one-pass-box, black, 0, 1.0, 0, 5);
+}
+
+.button:pressed{
+    -fx-background-color: #c3c4c4;
+    -fx-background-radius: 5;
+
+    -fx-text-fill: black;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}

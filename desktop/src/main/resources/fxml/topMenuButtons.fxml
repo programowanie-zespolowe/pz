@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<HBox alignment="CENTER" styleClass="hbox" stylesheets="@../stylesheets/scene.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.TopMenuButtonsController">
+   <children>
+      <VBox alignment="CENTER" styleClass="vbox" stylesheets="@../stylesheets/scene.css">
+         <HBox.margin>
+            <Insets />
+         </HBox.margin>
+         <children>
+            <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icons/maze_z%20napisem.png" />
+               </image>
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" />
+               </VBox.margin>
+            </ImageView>
+         </children>
+      </VBox>
+      <VBox alignment="BOTTOM_CENTER" spacing="10.0" styleClass="vbox" stylesheets="@../stylesheets/scene.css">
+         <children>
+            <Button fx:id="buttonDodajBudynek" contentDisplay="TOP" mnemonicParsing="false" onAction="#addBuilding" prefHeight="100.0" prefWidth="100.0" styleClass="buttonLittle" stylesheets="@../stylesheets/confirm.css" text="Dodaj">
+               <graphic>
+                  <ImageView fitHeight="58.0" fitWidth="87.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/add_house.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" />
+               </VBox.margin>
+            </Button>
+            <Label alignment="CENTER" styleClass="label1" stylesheets="@../stylesheets/confirm.css" text="Nowy" />
+         </children>
+         <HBox.margin>
+            <Insets />
+         </HBox.margin>
+      </VBox>
+      <VBox alignment="BOTTOM_CENTER" spacing="10.0" styleClass="vbox" stylesheets="@../stylesheets/scene.css">
+         <children>
+            <HBox spacing="10.0">
+               <children>
+                  <Button fx:id="groupButton" contentDisplay="TOP" onAction="#showGroups" prefHeight="100.0" prefWidth="100.0" styleClass="buttonLittle" stylesheets="@../stylesheets/confirm.css" text="%mw.button.groups" wrapText="true">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <graphic>
+                        <ImageView fitHeight="55.0" fitWidth="113.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icons/framework1.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="editBuilding" contentDisplay="TOP" onAction="#editBuilding" prefHeight="100.0" prefWidth="100.0" styleClass="buttonLittle" stylesheets="@../stylesheets/confirm.css" text="Edytuj">
+                     <graphic>
+                        <ImageView fitHeight="58.0" fitWidth="62.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icons/blueprint.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" />
+               </VBox.margin>
+            </HBox>
+            <Label styleClass="label1" stylesheets="@../stylesheets/confirm.css" text="Narzędzia" />
+         </children>
+         <HBox.margin>
+            <Insets />
+         </HBox.margin>
+      </VBox>
+      <VBox alignment="BOTTOM_CENTER" styleClass="vbox" stylesheets="@../stylesheets/scene.css">
+         <children>
+            <ComboBox fx:id="buildingComboBox" prefWidth="650.0" promptText="Wybierz budynek" styleClass="combo-box" stylesheets="@../stylesheets/comboBox.css">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </ComboBox>
+            <HBox>
+               <children>
+                  <Label minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="130.0" stylesheets="@../stylesheets/confirm.css" text="%mw.label.scale" textAlignment="CENTER">
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </Label>
+                  <Label fx:id="scaleLabel" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="100.0" stylesheets="@../stylesheets/confirm.css" textAlignment="CENTER" />
+               </children>
+            </HBox>
+            <Label styleClass="label1" stylesheets="@../stylesheets/confirm.css" text="Wybrany budynek" />
+         </children>
+         <HBox.margin>
+            <Insets left="10.0" right="10.0" />
+         </HBox.margin>
+      </VBox>
+      <VBox alignment="BOTTOM_CENTER" spacing="10.0">
+         <children>
+            <HBox alignment="CENTER_LEFT" spacing="10.0">
+            <children>
+               <Button fx:id="addNewOutdoorGameButton" contentDisplay="TOP" onAction="#addNewGame" prefHeight="100.0" prefWidth="100.0" styleClass="buttonLittle" stylesheets="@../stylesheets/confirm.css" text="Dodaj grę">
+                     <graphic>
+                        <ImageView fitHeight="70.0" fitWidth="95.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icons/add%20game.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               <Button fx:id="editOutdoorGameButton" contentDisplay="TOP" disable="true" onAction="#editGame" prefHeight="100.0" prefWidth="100.0" styleClass="buttonLittle" stylesheets="@../stylesheets/confirm.css" text="Edytuj grę">
+                     <graphic>
+                        <ImageView fitHeight="105.0" fitWidth="72.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icons/edit%20game.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               <ComboBox fx:id="outdoorGameTypeCombobox" prefHeight="48.0" prefWidth="250.0" promptText="Tryb normalny" styleClass="combo-box" stylesheets="@../stylesheets/comboBoxLittle.css" />
+            </children>
+            </HBox>
+            <Label styleClass="label1" stylesheets="@../stylesheets/confirm.css" text="Gra terenowa" />
+         </children>
+      </VBox>
+   </children>
+</HBox>

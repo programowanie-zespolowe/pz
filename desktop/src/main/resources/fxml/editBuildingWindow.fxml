@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.SpinnerValueFactory.DoubleSpinnerValueFactory?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<GridPane prefHeight="271.0" prefWidth="557.0" stylesheets="@../stylesheets/scene.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.EditBuildingController">
+    <Label stylesheets="@../stylesheets/confirm.css" text="Skala:" GridPane.rowIndex="1">
+      <GridPane.margin>
+         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+      </GridPane.margin>
+   </Label>
+    <Label stylesheets="@../stylesheets/confirm.css" text="Nazwa:">
+      <GridPane.margin>
+         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+      </GridPane.margin>
+   </Label>
+    <TextField fx:id="imagePath" editable="false" styleClass="text-field1" stylesheets="@../stylesheets/confirm.css" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="3">
+      <GridPane.margin>
+         <Insets bottom="10.0" right="60.0" top="10.0" />
+      </GridPane.margin></TextField>
+    <Button onAction="#Browse" prefHeight="26.0" prefWidth="39.0" styleClass="buttonLittle" stylesheets="@../stylesheets/confirm.css" GridPane.columnIndex="4" GridPane.rowIndex="2">
+      <GridPane.margin>
+         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+      </GridPane.margin>
+      <graphic>
+         <ImageView fitHeight="27.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="/icons/plus_black.png" />
+            </image>
+         </ImageView>
+      </graphic></Button>
+    <ImageView fx:id="imageView" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2">
+      <GridPane.margin>
+         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+      </GridPane.margin></ImageView>
+    <TextField fx:id="nameTextField" styleClass="text-field1" stylesheets="@../stylesheets/confirm.css" GridPane.columnIndex="1" GridPane.columnSpan="4">
+      <GridPane.margin>
+         <Insets right="60.0" />
+      </GridPane.margin></TextField>
+    <Spinner fx:id="spinnerScale" stylesheets="@../stylesheets/confirm.css" GridPane.columnIndex="1" GridPane.rowIndex="1">
+        <valueFactory>
+            <SpinnerValueFactory.DoubleSpinnerValueFactory max="359" min="0" />
+        </valueFactory>
+    </Spinner>
+   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="80.0" GridPane.columnSpan="5" GridPane.rowIndex="4">
+      <children>
+      
+          <Button onAction="#Close" prefHeight="40.0" prefWidth="80.0" styleClass="buttonConfirm" stylesheets="@../stylesheets/confirm.css" text="Zamknij" />
+          <Button onAction="#DeleteAndClose" prefHeight="40.0" prefWidth="80.0" styleClass="buttonConfirm" stylesheets="@../stylesheets/confirm.css" text="Usuń" />
+          <Button onAction="#SaveAndClose" prefHeight="40.0" prefWidth="80.0" styleClass="buttonConfirm" stylesheets="@../stylesheets/confirm.css" text="Zapisz" />
+      </children>
+      <GridPane.margin>
+         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+      </GridPane.margin>
+   </HBox>
+   <columnConstraints>
+      <ColumnConstraints />
+      <ColumnConstraints maxWidth="152.80003662109374" minWidth="97.60002441406247" prefWidth="97.60002441406247" />
+      <ColumnConstraints maxWidth="185.5999755859375" minWidth="10.0" prefWidth="123.199951171875" />
+      <ColumnConstraints maxWidth="186.4000244140625" minWidth="10.0" prefWidth="124.800048828125" />
+      <ColumnConstraints maxWidth="114.39997558593751" minWidth="10.0" prefWidth="114.39997558593751" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" />
+      <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" />
+   </rowConstraints>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
+
+</GridPane>

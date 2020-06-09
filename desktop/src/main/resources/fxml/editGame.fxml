@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<?import tornadofx.control.DateTimePicker?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.geometry.Rectangle2D?>
+<AnchorPane prefHeight="500.0" prefWidth="543.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.EditGameController">
+    <GridPane>
+        <DateTimePicker fx:id="startDatePicker" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+        <DateTimePicker fx:id="endDatePicker" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+        <Label styleClass="labelGreen" stylesheets="/stylesheets/confirm.css" text="Nazwa gry :" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+        <TextField fx:id="nameTextField" promptText="Wprowadź nazwę gry" styleClass="text-field1" stylesheets="/stylesheets/confirm.css" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+        <Label stylesheets="/stylesheets/confirm.css" text="Rozpoczęcie gry:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+
+        <Label stylesheets="/stylesheets/confirm.css" text="Zakończenie gry:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+
+        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0" GridPane.columnSpan="2" GridPane.rowIndex="3">
+            <children>
+                <Label fx:id="noImageLabel" styleClass="labelGreen" stylesheets="/stylesheets/confirm.css" text="Brak obrazka" />
+                <ScrollPane prefHeight="100.0" prefWidth="286.0" stylesheets="/stylesheets/scrollPane.css">
+                    <content>
+                        <ImageView fx:id="gameImage" visible="false">
+                        </ImageView>
+                    </content>
+                </ScrollPane>
+                <Button onAction="#pickImage" styleClass="buttonLittle" stylesheets="/stylesheets/confirm.css" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                    <graphic>
+                        <ImageView fitHeight="27.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="/icons/plus_black.png" />
+                            </image>
+                        </ImageView>
+                    </graphic></Button>
+            </children>
+        </HBox>
+
+        <Label text="Elementy gry" styleClass="labelGreen" stylesheets="/stylesheets/confirm.css" GridPane.rowIndex="4" />
+
+        <HBox spacing="10.0" style="-fx-border-color: #A5A8A7;" GridPane.columnSpan="2" GridPane.rowIndex="5">
+            <children>
+
+                <ListView fx:id="pointsListView" prefWidth="100.0">
+                    <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" top="10.0" />
+                    </HBox.margin>
+                </ListView>
+                <VBox alignment="CENTER" prefWidth="50.0" spacing="10.0" styleClass="vbox" stylesheets="/stylesheets/confirm.css">
+                    <children>
+                        <Button fx:id="upButton" onAction="#upClicked" text="↑" contentDisplay="GRAPHIC_ONLY" styleClass="buttonLittle" stylesheets="/stylesheets/confirm.css">
+                            <graphic>
+                                <ImageView fitHeight="30.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="/icons/up-arrow.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic></Button>
+                        <Button fx:id="downButton" contentDisplay="GRAPHIC_ONLY" onAction="#downClicked" text="↓" styleClass="buttonLittle" stylesheets="/stylesheets/confirm.css">
+                            <graphic>
+                                <ImageView fitHeight="30.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="/icons/down-arrow.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                            <VBox.margin>
+                                <Insets bottom="30.0" />
+                            </VBox.margin></Button>
+                        <Button fx:id="deleteButton" contentDisplay="GRAPHIC_ONLY" onAction="#deleteClicked" styleClass="buttonLittle" stylesheets="/stylesheets/confirm.css" text="❌" >
+                            <graphic>
+                                <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="/icons/close.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic></Button>
+                    </children>
+                    <HBox.margin>
+                        <Insets right="20.0" />
+                    </HBox.margin>
+                </VBox>
+                <VBox fx:id="pointDetailsVBox" alignment="CENTER" spacing="10.0" visible="false">
+                    <TextField fx:id="questionTextField" prefHeight="27.0" prefWidth="290.0" promptText="Zagadka" styleClass="text-field1" stylesheets="/stylesheets/confirm.css" />
+                    <TextField fx:id="answerTextFeild" prefWidth="290.0" promptText="Odpowiedź" styleClass="text-field1" stylesheets="/stylesheets/confirm.css" />
+                    <Button fx:id="deleteHint" onAction="#deleteHint" styleClass="buttonConfirm" stylesheets="/stylesheets/confirm.css" text="Usuń punkt podpowiedzi" />
+                    <Button fx:id="selectHint" onAction="#selectHint" styleClass="buttonConfirm" stylesheets="/stylesheets/confirm.css" text="Wybierz punkt podpowiedzi" />
+                    <TextField fx:id="hintTextField" promptText="Podpowiedź" styleClass="text-field1" stylesheets="/stylesheets/confirm.css" />
+                    <HBox.margin>
+                        <Insets bottom="10.0" top="10.0" />
+                    </HBox.margin>
+                </VBox>
+            </children>
+        </HBox>
+        <HBox alignment="CENTER" spacing="100.0" GridPane.columnSpan="2" GridPane.rowIndex="6">
+            <children>
+                <Button onAction="#deleteGame" prefHeight="30.0" prefWidth="100.0" styleClass="buttonConfirm" stylesheets="/stylesheets/confirm.css" text="Usuń grę" />
+                <Button onAction="#saveGame" prefHeight="30.0" prefWidth="100.0" styleClass="buttonConfirm" stylesheets="/stylesheets/confirm.css" text="Zapisz" />
+            </children>
+            <GridPane.margin>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="20.0" />
+            </GridPane.margin>
+        </HBox>
+        <columnConstraints>
+            <ColumnConstraints maxWidth="250.0" minWidth="250.0" prefWidth="250.0" />
+            <ColumnConstraints maxWidth="250.0" minWidth="250.0" prefWidth="250.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" />
+            <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" />
+            <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" />
+            <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" />
+            <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" />
+            <RowConstraints maxHeight="200.0" minHeight="200.0" prefHeight="200.0" />
+            <RowConstraints />
+        </rowConstraints>
+        <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+        </padding>
+
+    </GridPane>
+
+</AnchorPane>
