@@ -1,0 +1,10 @@
+C:\Users\bbadaczewski\source\repos\linuxWS\WhereToGoEntities\bin\Release\netcoreapp3.1\WhereToGoEntities.deps.json
+C:\Users\bbadaczewski\source\repos\linuxWS\WhereToGoEntities\bin\Release\netcoreapp3.1\WhereToGoEntities.dll
+C:\Users\bbadaczewski\source\repos\linuxWS\WhereToGoEntities\obj\Release\netcoreapp3.1\WhereToGoEntities.csprojAssemblyReference.cache
+C:\Users\bbadaczewski\source\repos\linuxWS\WhereToGoEntities\obj\Release\netcoreapp3.1\WhereToGoEntities.AssemblyInfoInputs.cache
+C:\Users\bbadaczewski\source\repos\linuxWS\WhereToGoEntities\obj\Release\netcoreapp3.1\WhereToGoEntities.AssemblyInfo.cs
+C:\Users\bbadaczewski\source\repos\linuxWS\WhereToGoEntities\bin\Release\netcoreapp3.1\WhereToGoEntities.runtimeconfig.json
+C:\Users\bbadaczewski\source\repos\linuxWS\WhereToGoEntities\bin\Release\netcoreapp3.1\WhereToGoEntities.runtimeconfig.dev.json
+C:\Users\bbadaczewski\source\repos\linuxWS\WhereToGoEntities\bin\Release\netcoreapp3.1\WhereToGoEntities.pdb
+C:\Users\bbadaczewski\source\repos\linuxWS\WhereToGoEntities\obj\Release\netcoreapp3.1\WhereToGoEntities.dll
+C:\Users\bbadaczewski\source\repos\linuxWS\WhereToGoEntities\obj\Release\netcoreapp3.1\WhereToGoEntities.pdb

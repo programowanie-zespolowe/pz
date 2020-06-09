@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29509.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LinuxWS", "linuxWS\LinuxWS.csproj", "{E7D763CC-E5D7-451E-AC32-96F12A93FF2A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhereToGoEntities", "WhereToGoEntities\WhereToGoEntities.csproj", "{911358EA-597B-4CE7-9A74-9957CE65254D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E7D763CC-E5D7-451E-AC32-96F12A93FF2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7D763CC-E5D7-451E-AC32-96F12A93FF2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7D763CC-E5D7-451E-AC32-96F12A93FF2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7D763CC-E5D7-451E-AC32-96F12A93FF2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{911358EA-597B-4CE7-9A74-9957CE65254D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{911358EA-597B-4CE7-9A74-9957CE65254D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{911358EA-597B-4CE7-9A74-9957CE65254D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{911358EA-597B-4CE7-9A74-9957CE65254D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1402B0C1-1B46-4964-BE19-A89B8F4E54CD}
+	EndGlobalSection
+EndGlobal

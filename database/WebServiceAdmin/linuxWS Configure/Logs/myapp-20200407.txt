@@ -1,0 +1,6 @@
+2020-04-07T17:10:49.3771931+02:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2020-04-07T17:10:49.3954948+02:00  [INF] Hosting environment: "Development" (c3307c92)
+2020-04-07T17:10:49.3982191+02:00  [INF] Content root path: "C:\Users\bbadaczewski\Documents\pz\database\WebServiceAdmin\linuxWS Configure" (b5d60022)
+2020-04-07T17:14:12.0291534+02:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2020-04-07T17:14:12.0505524+02:00  [INF] Hosting environment: "Development" (c3307c92)
+2020-04-07T17:14:12.0537649+02:00  [INF] Content root path: "C:\Users\bbadaczewski\Documents\pz\database\WebServiceAdmin\linuxWS Configure" (b5d60022)
